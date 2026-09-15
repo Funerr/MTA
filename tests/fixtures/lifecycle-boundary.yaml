@@ -1,0 +1,10 @@
+# 框架边界集成夹具：仅验证生命周期节点的注册、解析与执行传播。
+# 不表达任何手机业务流程，不作为业务用例交付。
+beforeEach:
+  - device.prepare: { target: home }
+afterEach:
+  - device.recover: {}
+cases:
+  - name: 生命周期边界检查
+    steps:
+      - home: {}

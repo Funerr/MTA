@@ -1,0 +1,12 @@
+# 实际环境配置（含模型密钥）不入库
+.env
+
+# 依赖与锁产物
+node_modules/
+
+# 原生运行产物（报告、截图等），不作为经验资产入库
+midscene_run/
+.midscene/
+
+# TypeScript / 测试临时产物
+*.tsbuildinfo

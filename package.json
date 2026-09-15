@@ -1,0 +1,24 @@
+{
+  "name": "mta",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:cases": "midscene-test",
+    "nodes": "midscene-test nodes",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "midscene-test nodes"
+  },
+  "engines": {
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
+  },
+  "devDependencies": {
+    "@midscene/test": "1.12.7",
+    "@midscene/android": "1.12.7",
+    "@types/node": "^20.0.0",
+    "dotenv": "^16.4.5",
+    "typescript": "^5.8.3",
+    "vitest": "^5.0.1",
+    "zod": "^3.25.76"
+  }
+}
