@@ -9,6 +9,8 @@
 | `@midscene/test` | `1.12.7` | 官方测试 CLI（`midscene-test`）、`defineNode`、`defineTestProject` / `defineProjectSetup`、`createMidsceneNodes` |
 | `@midscene/android` | `1.12.7` | `AndroidDevice` / `AndroidAgent` / `getConnectedDevices` / `agentFromAdbDevice` |
 | `zod` | `^3.25.76` | Node `inputSchema`（必须从 `zod/v4` 子路径导入，与 `@midscene/test` 内部一致） |
+| `@midscene/core` | `1.12.7` | Experience Promotion 直接消费 `Agent.dump`、`callActionInActionSpace`、`TaskExecutor.runPlans`、`createDefaultMobileActions` |
+| `sharp` | `0.34.5` | Experience Promotion 图像管线 `png-sharp@1`（解码/裁剪/重编码） |
 | `dotenv` | `^16.4.5` | 官方模板同款 `.env` 加载 |
 | `typescript` | `^5.8.3` | 类型检查（`tsc --noEmit`） |
 | `@types/node` | `^20.0.0` | 官方模板同款 |

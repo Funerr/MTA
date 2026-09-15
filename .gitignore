@@ -8,5 +8,12 @@ node_modules/
 midscene_run/
 .midscene/
 
+# 经验运行动态数据不入库（目录说明保留）；示例资产在 tests/fixtures/ 下受控管理
+experiences/*
+!experiences/README.md
+
 # TypeScript / 测试临时产物
 *.tsbuildinfo
+
+# macOS
+.DS_Store

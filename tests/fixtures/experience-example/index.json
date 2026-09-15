@@ -1,0 +1,394 @@
+{
+  "format": "mta-experience-index",
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-15T15:55:25.426Z",
+  "experiences": [
+    {
+      "schemaVersion": 1,
+      "requestKey": "c033e63e04a6fdb5d279136901741e2af50adda310d573fd41de7bfc308961da",
+      "source": {
+        "casePath": "cases/settings.yaml",
+        "caseName": "settings-display",
+        "stepPath": "steps[2]",
+        "node": "aiAct",
+        "prompt": "打开显示设置",
+        "callId": "call-20260915-0001",
+        "midsceneVersion": "1.12.7",
+        "adapterVersion": "trace-adapter@1",
+        "capturedAt": "2026-09-15T10:05:00.000Z"
+      },
+      "createdAt": "2026-09-15T15:55:25.418Z",
+      "updatedAt": "2026-09-15T15:55:25.418Z",
+      "variants": [
+        {
+          "variantId": "4e0481901b59239858e05c7f05cb76e4269e404611db08efb239bbb435c540e6",
+          "environment": {
+            "platform": "android",
+            "model": "Pixel 8",
+            "systemBuild": "AP4A.250105.002",
+            "resolution": {
+              "width": 1080,
+              "height": 2400
+            },
+            "orientation": "portrait",
+            "language": "zh-CN",
+            "theme": "light",
+            "executionCompatVersion": "midscene@1.12.7+adapter@1"
+          },
+          "environmentFingerprint": "fca7c62311019bc88da2c36673179910f4fd3009c99e769f87d6c2f51d080ba4",
+          "entryFingerprint": "3aa6e7194504fbffd4bfb19dfca2247754365cfaa1c4b0c697cfbe449eeea32e",
+          "revisions": [
+            {
+              "revision": 1,
+              "status": "candidate",
+              "entryEvidence": {
+                "screenshot": {
+                  "asset": {
+                    "digest": "c23189e2da3e7eca2d157a384cfd8f4df4e3ee2bbf116bf033d24aaf3801e6be",
+                    "byteSize": 10970,
+                    "mimeType": "image/png"
+                  },
+                  "width": 1080,
+                  "height": 2400
+                },
+                "signature": {
+                  "algorithm": "ahash",
+                  "version": "1",
+                  "params": {
+                    "hashSize": 8
+                  },
+                  "value": "ahash:5:c23189e2da3e7eca"
+                }
+              },
+              "terminalEvidence": {
+                "screenshot": {
+                  "asset": {
+                    "digest": "7a74621c417dbe337585bcd5382f66ae1444665481ad51b9ee2d41a925a7258f",
+                    "byteSize": 10970,
+                    "mimeType": "image/png"
+                  },
+                  "width": 1080,
+                  "height": 2400
+                },
+                "signature": {
+                  "algorithm": "ahash",
+                  "version": "1",
+                  "params": {
+                    "hashSize": 8
+                  },
+                  "value": "ahash:8:7a74621c417dbe33"
+                }
+              },
+              "actions": [
+                {
+                  "type": "Tap",
+                  "before": {
+                    "screenshot": {
+                      "asset": {
+                        "digest": "7302b6fdc4302930e96257bc97bb4ab925156522f6f0801866ad6e1cbdfb9193",
+                        "byteSize": 10972,
+                        "mimeType": "image/png"
+                      },
+                      "width": 1080,
+                      "height": 2400
+                    },
+                    "signature": {
+                      "algorithm": "ahash",
+                      "version": "1",
+                      "params": {
+                        "hashSize": 8
+                      },
+                      "value": "ahash:10:7302b6fdc4302930"
+                    }
+                  },
+                  "after": {
+                    "screenshot": {
+                      "asset": {
+                        "digest": "c1d414a655f8c924f220e32f97905c6984a5fbe5f66b4812ecfa99e4b202206e",
+                        "byteSize": 10971,
+                        "mimeType": "image/png"
+                      },
+                      "width": 1080,
+                      "height": 2400
+                    },
+                    "signature": {
+                      "algorithm": "ahash",
+                      "version": "1",
+                      "params": {
+                        "hashSize": 8
+                      },
+                      "value": "ahash:9:c1d414a655f8c924"
+                    }
+                  },
+                  "target": {
+                    "image": {
+                      "asset": {
+                        "digest": "132be817e73a2684d073044fd0f424c07191db7c9d76287a01d817e5496912ff",
+                        "byteSize": 253,
+                        "mimeType": "image/png"
+                      },
+                      "width": 200,
+                      "height": 96
+                    },
+                    "contextImage": {
+                      "asset": {
+                        "digest": "764e60f153efecac251e4d79e64cf30d684e168152e34f32c648ab6116b12a83",
+                        "byteSize": 555,
+                        "mimeType": "image/png"
+                      },
+                      "width": 400,
+                      "height": 192
+                    },
+                    "bbox": {
+                      "x": 120,
+                      "y": 400,
+                      "width": 200,
+                      "height": 96
+                    },
+                    "textHint": "tap 提示",
+                    "stateBefore": {
+                      "asset": {
+                        "digest": "a5a0cce06e551e5ebe12a518ab816b8802e8a7b10e95f6bd330b84c3700930ad",
+                        "byteSize": 253,
+                        "mimeType": "image/png"
+                      },
+                      "width": 200,
+                      "height": 96
+                    }
+                  }
+                },
+                {
+                  "type": "Input",
+                  "before": {
+                    "screenshot": {
+                      "asset": {
+                        "digest": "0c4f5ef1c796030634b24bc1df3e98e101a4b747aa6dc35132ffc0c41bf65255",
+                        "byteSize": 10970,
+                        "mimeType": "image/png"
+                      },
+                      "width": 1080,
+                      "height": 2400
+                    },
+                    "signature": {
+                      "algorithm": "ahash",
+                      "version": "1",
+                      "params": {
+                        "hashSize": 8
+                      },
+                      "value": "ahash:12:0c4f5ef1c7960306"
+                    }
+                  },
+                  "after": {
+                    "screenshot": {
+                      "asset": {
+                        "digest": "7f9862a3e38be79c2b339e93c4b22e16fa27a503fff52476230a0e2afb7883f2",
+                        "byteSize": 10970,
+                        "mimeType": "image/png"
+                      },
+                      "width": 1080,
+                      "height": 2400
+                    },
+                    "signature": {
+                      "algorithm": "ahash",
+                      "version": "1",
+                      "params": {
+                        "hashSize": 8
+                      },
+                      "value": "ahash:11:7f9862a3e38be79c"
+                    }
+                  },
+                  "target": {
+                    "image": {
+                      "asset": {
+                        "digest": "b110593b00b76f9f91c5177d15cde41fee282ea1c2f2d0737ff5c071fd1b55fa",
+                        "byteSize": 560,
+                        "mimeType": "image/png"
+                      },
+                      "width": 880,
+                      "height": 120
+                    },
+                    "contextImage": {
+                      "asset": {
+                        "digest": "40d0c6ebf39c31a903e7eded45daa11e34a711b2ec2b1866c00369a7d5513eea",
+                        "byteSize": 1679,
+                        "mimeType": "image/png"
+                      },
+                      "width": 1760,
+                      "height": 240
+                    },
+                    "bbox": {
+                      "x": 100,
+                      "y": 800,
+                      "width": 880,
+                      "height": 120
+                    },
+                    "textHint": "input 提示",
+                    "stateBefore": {
+                      "asset": {
+                        "digest": "87769d80f1e192f31d48457bf470d211035bf2c0522ed9682b1e383ecfa39739",
+                        "byteSize": 561,
+                        "mimeType": "image/png"
+                      },
+                      "width": 880,
+                      "height": 120
+                    }
+                  },
+                  "params": {
+                    "text": "显示",
+                    "mode": "append"
+                  }
+                },
+                {
+                  "type": "Scroll",
+                  "before": {
+                    "screenshot": {
+                      "asset": {
+                        "digest": "d961016042dd1ed8930a51657c22a6950a02e128e0ff80ff125df7817a173158",
+                        "byteSize": 10970,
+                        "mimeType": "image/png"
+                      },
+                      "width": 1080,
+                      "height": 2400
+                    },
+                    "signature": {
+                      "algorithm": "ahash",
+                      "version": "1",
+                      "params": {
+                        "hashSize": 8
+                      },
+                      "value": "ahash:13:d961016042dd1ed8"
+                    }
+                  },
+                  "after": {
+                    "screenshot": {
+                      "asset": {
+                        "digest": "b2cbffd5e4ea41423c467c7c016e3a856556119356361427fdd9a46787ee53ca",
+                        "byteSize": 10970,
+                        "mimeType": "image/png"
+                      },
+                      "width": 1080,
+                      "height": 2400
+                    },
+                    "signature": {
+                      "algorithm": "ahash",
+                      "version": "1",
+                      "params": {
+                        "hashSize": 8
+                      },
+                      "value": "ahash:12:b2cbffd5e4ea4142"
+                    }
+                  },
+                  "target": {
+                    "image": {
+                      "asset": {
+                        "digest": "3fb79c61cf76b6d73e73b0b8665ddf4d6c996566f21f31305b7979aa8c0c9b4d",
+                        "byteSize": 2804,
+                        "mimeType": "image/png"
+                      },
+                      "width": 1080,
+                      "height": 600
+                    },
+                    "contextImage": {
+                      "asset": {
+                        "digest": "149d20f72ff4c5e8dea476738bb0ba292b0925b1b307b2ddf9cbbf49b7c22ac0",
+                        "byteSize": 9453,
+                        "mimeType": "image/png"
+                      },
+                      "width": 2160,
+                      "height": 1200
+                    },
+                    "bbox": {
+                      "x": 0,
+                      "y": 1500,
+                      "width": 1080,
+                      "height": 600
+                    },
+                    "textHint": "scroll 提示",
+                    "stateBefore": {
+                      "asset": {
+                        "digest": "d554b089e8e8544b850aae2572408b363c328c839b8e1e8b910b3efa9d0200b2",
+                        "byteSize": 2804,
+                        "mimeType": "image/png"
+                      },
+                      "width": 1080,
+                      "height": 600
+                    }
+                  },
+                  "params": {
+                    "direction": "down",
+                    "distancePx": 640,
+                    "anchor": {
+                      "x": 540,
+                      "y": 1800
+                    }
+                  }
+                },
+                {
+                  "type": "Home",
+                  "before": {
+                    "screenshot": {
+                      "asset": {
+                        "digest": "d67b939293ffdd66e586deede565d4f723af48b3f10dfede6309232e731886d8",
+                        "byteSize": 10970,
+                        "mimeType": "image/png"
+                      },
+                      "width": 1080,
+                      "height": 2400
+                    },
+                    "signature": {
+                      "algorithm": "ahash",
+                      "version": "1",
+                      "params": {
+                        "hashSize": 8
+                      },
+                      "value": "ahash:11:d67b939293ffdd66"
+                    }
+                  },
+                  "after": {
+                    "screenshot": {
+                      "asset": {
+                        "digest": "6ef1cf50a7005dde4412b863c3784cde28a65d4bc485d883e855319840891148",
+                        "byteSize": 10971,
+                        "mimeType": "image/png"
+                      },
+                      "width": 1080,
+                      "height": 2400
+                    },
+                    "signature": {
+                      "algorithm": "ahash",
+                      "version": "1",
+                      "params": {
+                        "hashSize": 8
+                      },
+                      "value": "ahash:10:6ef1cf50a7005dde"
+                    }
+                  }
+                }
+              ],
+              "eligibilityPolicyVersion": "policy@1",
+              "nativeResult": {
+                "category": "undefined"
+              },
+              "evidenceComplete": true,
+              "learnedAt": "2026-09-15T15:55:25.418Z",
+              "stats": {
+                "learned": 1,
+                "replaySuccess": 0,
+                "replayFailure": 0
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "call-20260915-0001": {
+      "requestKey": "c033e63e04a6fdb5d279136901741e2af50adda310d573fd41de7bfc308961da",
+      "variantId": "4e0481901b59239858e05c7f05cb76e4269e404611db08efb239bbb435c540e6",
+      "revision": 1,
+      "kind": "publish",
+      "at": "2026-09-15T15:55:25.426Z"
+    }
+  }
+}

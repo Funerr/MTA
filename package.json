@@ -13,10 +13,13 @@
     "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
   },
   "devDependencies": {
-    "@midscene/test": "1.12.7",
     "@midscene/android": "1.12.7",
+    "@midscene/core": "1.12.7",
+    "@midscene/harmony": "1.12.7",
+    "@midscene/test": "1.12.7",
     "@types/node": "^20.0.0",
     "dotenv": "^16.4.5",
+    "sharp": "0.34.5",
     "typescript": "^5.8.3",
     "vitest": "^5.0.1",
     "zod": "^3.25.76"
