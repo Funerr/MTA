@@ -3,7 +3,7 @@ import * as fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promoteExperience } from '../../src/experience/promotion/promoter';
-import { CONTEXT_PAD_RATIO } from '../../src/experience/promotion/constants';
+import { CONTEXT_PAD_RATIO, ELIGIBILITY_POLICY_VERSION } from '../../src/experience/promotion/constants';
 import { defaultImagePipeline, expandBox, type ImagePipeline } from '../../src/experience/promotion/image';
 import { openExperienceStore } from '../../src/experience/store/experience-store';
 import { deriveRequestKey } from '../../src/experience/schema/request-key';
@@ -360,6 +360,27 @@ describe('资格策略（任务 2.3）', () => {
     expect(result.result).toBe('skipped');
     if (result.result !== 'skipped') return;
     expect(result.reason).toMatch(/未登记/);
+  });
+
+  it('allowSemanticChecks=true 的 v1 策略不发布，避免误放开判断学习', async () => {
+    const { execution } = await makeSupportedChainExecution();
+    const result = await promoteExperience({
+      callId: 'call-policy-semantic',
+      dump: execution,
+      request: promoteRequest(),
+      environment: makeEnvironment(),
+      source: source(),
+      store: openExperienceStore(root),
+      policy: {
+        version: ELIGIBILITY_POLICY_VERSION,
+        allowSemanticChecks: true,
+        allowDynamicOutput: false,
+      },
+      capturedAt,
+    });
+    expect(result.result).toBe('skipped');
+    if (result.result !== 'skipped') return;
+    expect(result.reason).toMatch(/allowSemanticChecks/);
   });
 });
 

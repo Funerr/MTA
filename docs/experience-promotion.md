@@ -6,7 +6,7 @@
 
 ## 1. 取数边界（已用真实包验证）
 
-验证入口：`tests/helpers/midscene-agent-harness.ts`。加载实际 Agent，设备用 `ScriptedAndroidDevice` 替换，定位用 `locatedPixelResult` 跳过模型，不编写业务 YAML。
+验证入口：`tests/helpers/midscene-agent-harness.ts`。加载实际 Agent，设备用 `ScriptedAndroidDevice` 替换，定位用 `locatedPixelResult` 跳过模型，不编写业务 YAML。公开取数路径是 `Agent.callActionInActionSpace`；`TaskExecutor.runPlans` 只用于证明批量 flush 时序，不是公开稳定面。
 
 公开采集点：
 
@@ -44,6 +44,7 @@
 - 请求须通过 `deriveRequestKey`（未登记 options/context 不合格）。
 - `nativeResult.category` 仅 `undefined`（动态文本/判断不学习）。
 - 轨迹含 Insight `Assert/Query/WaitFor/Boolean/Number/String` → skipped。
+- v1 策略 `allowSemanticChecks` / `allowDynamicOutput` 必须为 false，传入 true 整链 skipped。
 - 失败、取消、空链、缺帧、跨调用混杂 → skipped。
 
 学习结果：`promoted` / `skipped` / `failed`。Store `eventId = callId`，重复学习幂等。裁剪或写盘失败为 `failed`，不留下可查询残链，也不再次调用模型。

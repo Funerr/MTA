@@ -13,6 +13,7 @@ import { CONTEXT_PAD_RATIO, TRACE_ADAPTER_VERSION } from './constants';
 import {
   DEFAULT_ELIGIBILITY_POLICY,
   checkNativeResult,
+  checkPolicyConstraints,
   checkRequestEligibility,
   checkTracePolicy,
   type EligibilityPolicy,
@@ -184,6 +185,9 @@ export async function promoteExperience(input: PromoteInput): Promise<PromoteRes
   }
   const policy = input.policy ?? DEFAULT_ELIGIBILITY_POLICY;
   const nativeResult = input.nativeResult ?? { category: 'undefined' };
+
+  const policyConstraints = checkPolicyConstraints(policy);
+  if (!policyConstraints.ok) return skipped(callId, policyConstraints.reason);
 
   const requestCheck = checkRequestEligibility(input.request);
   if (!requestCheck.ok) return skipped(callId, requestCheck.reason);

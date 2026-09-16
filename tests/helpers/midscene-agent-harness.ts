@@ -17,7 +17,8 @@ export const HARNESS_HEIGHT = 200;
 export const NATIVE_FIXTURE_SOURCE = {
   packages: `@midscene/core@${LOCKED_MIDSCENE_VERSION} / @midscene/android@${LOCKED_MIDSCENE_VERSION}`,
   entry: 'tests/helpers/midscene-agent-harness.ts',
-  method: 'Agent.callActionInActionSpace 与 TaskExecutor.runPlans',
+  method:
+    '公开路径 Agent.callActionInActionSpace；批量 flush 时序仅用 TaskExecutor.runPlans（非公开稳定面，不作为 Runtime 依赖）',
   deviceBoundary: 'ScriptedAndroidDevice + createDefaultMobileActions',
   modelBoundary: 'locatedPixelResult 跳过定位模型；modelConfig 仅为通过非 Web VL 检查',
 } as const;
@@ -150,6 +151,10 @@ type AgentInternals = {
   resolveModelRuntime: (intent: string) => unknown;
 };
 
+/**
+ * 仅用于证明 1.12.7 批量 flush 的 dump 时序（最后任务才有 after-calling）。
+ * resolveModelRuntime / taskExecutor 不是 Agent 公开稳定面；公开取数请用 callActionInActionSpace。
+ */
 export async function runPlannedActions(
   agent: Agent,
   plans: Array<{ type: string; param: Record<string, unknown>; thought?: string }>,

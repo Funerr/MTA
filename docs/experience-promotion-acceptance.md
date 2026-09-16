@@ -24,9 +24,12 @@
 | Locate | `Planning/Locate` | `uiContext.screenshot.id` | 无 `after-calling` | prompt | 无设备动作 |
 | Tap | `Action Space/Tap` | Locate 同一 `uiContext.screenshot` | 本任务 `recorder.timing=after-calling`，**id 与 before 不同** | `param.locate.rect={left:24,top:40,width:40,height:24}`，`center=[44,52]` | `tap({x:44,y:52})`，与 center 一致（dpr=1） |
 | Home（第二次调用） | `Action Space/AndroidHomeButton` | 新 execution 的 `uiContext.screenshot` | 本任务 `after-calling` | 无 locate | `home` |
+| Scroll | `Action Space/Scroll` | `uiContext.screenshot` | `after-calling`，id 与 before 不同 | `scrollType=singleAction`，`direction=down`，`distance=40`，`locate.rect={left:8,top:80,width:100,height:40}` | `scroll` |
+| LongPress | `Action Space/LongPress` | `uiContext.screenshot` | `after-calling` | `duration=800`，`locate.rect={left:20,top:48,width:48,height:36}` | `longPress` |
+| Back | `Action Space/AndroidBackButton` | `uiContext.screenshot` | `after-calling` | 无 locate | `back` |
 | call 隔离 | — | — | — | 两次调用产生两个不同的 `execution.id` | — |
 
-批量 `runPlans(Tap→Input→Home)`：只给最后一个任务打 `after-calling`；中间动作 after = 后续任务中与 before id 不同的 `uiContext.screenshot`。Input 保留 `value`/`mode`。
+批量 `runPlans(Tap→Input→Scroll→LongPress→Back→Home)`：只给最后一个任务打 `after-calling`；中间动作 after = 后续任务中与 before id 不同的 `uiContext.screenshot`。六类动作参数均出现在原生 dump 中。
 
 ## 2. 兼容性结论（任务 1.2）
 
@@ -46,11 +49,10 @@
 | 检查 | 命令 | 结果 |
 | --- | --- | --- |
 | 类型检查 | `pnpm run typecheck`（tsc --noEmit, strict） | ✅ 通过，无错误 |
-| 框架测试 | `pnpm test`（vitest） | ✅ 13 个文件 130 项全部通过 |
-| Promotion 专项 | `vitest run tests/unit/experience-trace-adapter.test.ts tests/unit/experience-promoter.test.ts tests/integration/experience-promotion-native.test.ts` | ✅ 3 个文件 23 项全部通过 |
+| Promotion 测试 | `vitest run tests/unit/experience-trace-adapter.test.ts tests/unit/experience-promoter.test.ts tests/integration/experience-promotion-native.test.ts` | ✅ 3 个文件 25 项全部通过 |
 | 设备/模型依赖 | — | ✅ 无真实设备、无模型密钥；原生夹具用 `ScriptedAndroidDevice` + `locatedPixelResult` |
 
-原生集成夹具生成 Tap→Input→Home 轨迹后 `promoteExperience` 发布 candidate，重载动作类型、bbox、Input 参数与来源版本一致；promote 期间设备动作次数不增加（不二次 AI）。
+原生集成夹具生成 Tap→Input→Scroll→LongPress→Back→Home 轨迹后 `promoteExperience` 发布 candidate，重载动作类型、bbox、参数与来源版本一致；promote 期间设备动作次数不增加（不二次 AI）。`runPlans` 仅用于批量 flush 时序，公开取数路径是 `callActionInActionSpace`。
 
 Replay / Runtime 未实现。设备业务执行不是验收前提。
 
@@ -66,6 +68,7 @@ Replay / Runtime 未实现。设备业务执行不是验收前提。
 | 未知动作（如 Swipe） | skipped | 整链拒绝，Store 无残链 |
 | Scroll `scrollTo*` / 无 distance | skipped | 无法映射固定像素距离 |
 | Insight Assert 等 | skipped | 未建模语义检查；原生结果保持有效 |
+| `allowSemanticChecks=true` | skipped | v1 策略不允许放开判断学习 |
 | 动态返回类别（string 等） | skipped | v1 只学习 `undefined` |
 | 空链（仅 Finished） | skipped | 动作链为空 |
 | 未登记 options | skipped | 请求不合格 |

@@ -50,6 +50,8 @@ function summarizeTasks(execution: Record<string, unknown>) {
 
 const TAP_BOX = { x: 24, y: 40, width: 40, height: 24 };
 const INPUT_BOX = { x: 16, y: 120, width: 80, height: 28 };
+const SCROLL_BOX = { x: 8, y: 80, width: 100, height: 40 };
+const LONG_BOX = { x: 20, y: 48, width: 48, height: 36 };
 
 describe('原生取数契约（任务 1.1 / 1.2）', () => {
   let agent: ReturnType<typeof createHarnessAgent> | undefined;
@@ -116,12 +118,66 @@ describe('原生取数契约（任务 1.1 / 1.2）', () => {
     expect(device.actions.at(-1)).toEqual({ kind: 'home' });
     expect(NATIVE_FIXTURE_SOURCE.method).toMatch(/callActionInActionSpace/);
   });
+
+  it('公开 callActionInActionSpace 可取出 Scroll/LongPress/Back 的 dump 参数', async () => {
+    const device = new ScriptedAndroidDevice(await makeHarnessFrames(16));
+    agent = createHarnessAgent(device);
+
+    await agent.callActionInActionSpace('Scroll', {
+      locate: locatedTarget('列表', SCROLL_BOX),
+      scrollType: 'singleAction',
+      direction: 'down',
+      distance: 40,
+    });
+    const scrollExec = agent.dump.executions[0] as unknown as Record<string, unknown>;
+    const scrollTable = summarizeTasks(scrollExec);
+    const scroll = scrollTable.find((row) => row.subType === 'Scroll');
+    expect(scroll?.status).toBe('finished');
+    expect(scroll?.before).toBeTruthy();
+    expect(scroll?.after).toBeTruthy();
+    expect(scroll?.param).toMatchObject({
+      scrollType: 'singleAction',
+      direction: 'down',
+      distance: 40,
+      locate: {
+        center: [58, 100],
+        rect: { left: 8, top: 80, width: 100, height: 40 },
+      },
+    });
+    expect(device.actions.some((item) => item.kind === 'scroll')).toBe(true);
+
+    await agent.callActionInActionSpace('LongPress', {
+      locate: locatedTarget('图标', LONG_BOX),
+      duration: 800,
+    });
+    const longExec = agent.dump.executions[1] as unknown as Record<string, unknown>;
+    const longPress = summarizeTasks(longExec).find((row) => row.subType === 'LongPress');
+    expect(longPress?.status).toBe('finished');
+    expect(longPress?.before).toBeTruthy();
+    expect(longPress?.after).toBeTruthy();
+    expect(longPress?.param).toMatchObject({
+      duration: 800,
+      locate: {
+        center: [44, 66],
+        rect: { left: 20, top: 48, width: 48, height: 36 },
+      },
+    });
+    expect(device.actions.some((item) => item.kind === 'longPress')).toBe(true);
+
+    await agent.callActionInActionSpace('AndroidBackButton', {});
+    const backExec = agent.dump.executions[2] as unknown as Record<string, unknown>;
+    const back = summarizeTasks(backExec).find((row) => row.subType === 'AndroidBackButton');
+    expect(back?.status).toBe('finished');
+    expect(back?.before).toBeTruthy();
+    expect(back?.after).toBeTruthy();
+    expect(device.actions.at(-1)).toEqual({ kind: 'back' });
+  });
 });
 
 describe('原生轨迹自动发布（任务 3.1）', () => {
   it('runPlans 生成的完整轨迹可发布 candidate，重载后与原生动作一致', async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), 'mta-promotion-native-'));
-    const device = new ScriptedAndroidDevice(await makeHarnessFrames(16));
+    const device = new ScriptedAndroidDevice(await makeHarnessFrames(32));
     const nativeAgent = createHarnessAgent(device);
     const aiCallsBefore = device.actions.length;
     try {
@@ -136,11 +192,37 @@ describe('原生轨迹自动发布（任务 3.1）', () => {
           },
           thought: '输入',
         },
+        {
+          type: 'Scroll',
+          param: {
+            locate: locatedTarget('列表', SCROLL_BOX),
+            scrollType: 'singleAction',
+            direction: 'down',
+            distance: 40,
+          },
+          thought: '滚动',
+        },
+        {
+          type: 'LongPress',
+          param: {
+            locate: locatedTarget('图标', LONG_BOX),
+            duration: 800,
+          },
+          thought: '长按',
+        },
+        { type: 'AndroidBackButton', param: {}, thought: '返回' },
         { type: 'AndroidHomeButton', param: {}, thought: '回主屏' },
       ]);
       expect(nativeAgent.dump.executions).toHaveLength(1);
       const nativeActions = [...device.actions];
-      expect(nativeActions.map((item) => item.kind)).toEqual(['tap', 'typeText', 'home']);
+      expect(nativeActions.map((item) => item.kind)).toEqual([
+        'tap',
+        'typeText',
+        'scroll',
+        'longPress',
+        'back',
+        'home',
+      ]);
 
       const store = openExperienceStore(root);
       const request = promoteRequest();
@@ -180,16 +262,38 @@ describe('原生轨迹自动发布（任务 3.1）', () => {
       if (!found.ok) return;
       expect(found.value).toHaveLength(1);
       const chain = found.value[0]!;
-      expect(chain.actions.map((action) => action.type)).toEqual(['Tap', 'Input', 'Home']);
+      expect(chain.actions.map((action) => action.type)).toEqual([
+        'Tap',
+        'Input',
+        'Scroll',
+        'LongPress',
+        'Back',
+        'Home',
+      ]);
       expect(chain.source.callId).toBe('call-native-3-1');
       expect(chain.source.midsceneVersion).toBe(LOCKED_MIDSCENE_VERSION);
       expect(chain.source.adapterVersion).toBe(TRACE_ADAPTER_VERSION);
       const tap = chain.actions[0];
       const input = chain.actions[1];
-      if (tap.type !== 'Tap' || input.type !== 'Input') return;
+      const scroll = chain.actions[2];
+      const longPress = chain.actions[3];
+      if (
+        tap.type !== 'Tap' ||
+        input.type !== 'Input' ||
+        scroll.type !== 'Scroll' ||
+        longPress.type !== 'LongPress'
+      ) {
+        return;
+      }
       expect(tap.target.bbox).toEqual({ x: 24, y: 40, width: 40, height: 24 });
       expect(input.params).toEqual({ text: '显示', mode: 'replace' });
       expect(input.target.bbox).toEqual({ x: 16, y: 120, width: 80, height: 28 });
+      expect(scroll.params).toEqual({
+        direction: 'down',
+        distancePx: 40,
+        anchor: { x: 58, y: 100 },
+      });
+      expect(longPress.params).toEqual({ durationMs: 800 });
       const reloadedTap = await store.readAssetImage(tap.target.image.asset);
       expect(reloadedTap.ok).toBe(true);
       expect(chain.entryEvidence.screenshot.width).toBe(HARNESS_WIDTH);

@@ -15,7 +15,7 @@ export const IMAGE_SIGNATURE_ALGORITHM = 'mean-rgb-grid';
 export const IMAGE_SIGNATURE_VERSION = '1';
 export const IMAGE_SIGNATURE_GRID = 8;
 
-/** context 裁剪相对目标 bbox 的单侧扩边比例，记录在上下文图签名参数中。 */
+/** context 裁剪相对目标 bbox 的单侧扩边比例，写入入口 signature.params.padRatio。 */
 export const CONTEXT_PAD_RATIO = 0.25;
 
 export function executionCompatVersion(
