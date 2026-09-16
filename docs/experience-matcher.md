@@ -94,4 +94,4 @@ v1 **默认关闭**。`textHint` 在关闭时跳过，不构成接受条件。�
 - 模板对主题/系统绘制差异敏感；变化应走后续 AI 回退，而不是放宽本版本阈值。
 - 耗时是测量结果（本机验证集约数毫秒到数十毫秒），不承诺绝对性能倍数。
 - Promotion 当前不写入 `stateBefore`；调用方若要校验开关前置状态，需自行提供状态图与 `stateBox`。
-- Matcher 不读 Store、不截屏、不发设备指令。Replay / Runtime 尚未接入。
+- Matcher 不读 Store、不截屏、不发设备指令。Replay 见 [experience-replay.md](experience-replay.md)；Runtime 见 [experience-runtime.md](experience-runtime.md)。

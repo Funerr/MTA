@@ -91,6 +91,7 @@ describe('真实配置加载与双项目 Node 注册', () => {
       'recentApps',
       'device.prepare',
       'device.recover',
+      'experienceAct',
     ]) {
       expect(android.resolveNode(name), `android ${name}`).toBeDefined();
       expect(harmony.resolveNode(name), `harmony ${name}`).toBeDefined();
@@ -116,16 +117,23 @@ describe('真实配置加载与双项目 Node 注册', () => {
     expect(android.nodes.get('device.recover')).toBe(
       harmony.nodes.get('device.recover'),
     );
+    expect(android.nodes.get('experienceAct')).toBe(
+      harmony.nodes.get('experienceAct'),
+    );
 
     // 与框架定义的契约一致（配置加载器与测试运行器是不同模块实例，按契约比对）
     const prepare = android.nodes.get('device.prepare')!;
     const recover = android.nodes.get('device.recover')!;
+    const experienceAct = android.nodes.get('experienceAct')!;
     expect(prepare.name).toBe(devicePrepareNode.name);
     expect(recover.name).toBe(deviceRecoverNode.name);
+    expect(experienceAct.name).toBe('experienceAct');
     expect(() => prepare.inputSchema!.parse({ target: 'home' })).not.toThrow();
     expect(() => prepare.inputSchema!.parse({ target: 'launcher' })).toThrow();
     expect(() => recover.inputSchema!.parse({})).not.toThrow();
     expect(() => recover.inputSchema!.parse({ reset: true })).toThrow();
+    expect(() => experienceAct.inputSchema!.parse({ prompt: 'generic-replay-target' })).not.toThrow();
+    expect(() => experienceAct.inputSchema!.parse({ instruction: 'generic-replay-target' })).toThrow();
     expect(android.nodes.has('device.unknown')).toBe(false);
     expect(harmony.nodes.has('device.unknown')).toBe(false);
   });

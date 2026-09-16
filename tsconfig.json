@@ -14,6 +14,7 @@
     "midscene.config.ts",
     "vitest.config.ts",
     "src/**/*.ts",
-    "tests/**/*.ts"
+    "tests/**/*.ts",
+    "experiments/visual-assert/**/*.ts"
   ]
 }

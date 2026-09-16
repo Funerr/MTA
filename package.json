@@ -5,6 +5,7 @@
   "scripts": {
     "test": "vitest run",
     "test:cases": "midscene-test",
+    "experiment:visual-assert": "vitest run tests/unit/experience-visual-assert.test.ts",
     "nodes": "node scripts/generate-node-references.mjs",
     "typecheck": "tsc --noEmit",
     "postinstall": "node scripts/generate-node-references.mjs"

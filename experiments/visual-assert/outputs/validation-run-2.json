@@ -1,0 +1,6879 @@
+{
+  "split": "validation",
+  "summary": {
+    "evalConfigVersion": "visual-assert-eval@1",
+    "dataVersion": "visual-assert-fixtures@1",
+    "protocolVersion": "visual-assert-protocol@1",
+    "matcherConfigVersion": "visual-matcher@1",
+    "split": "validation",
+    "sampleCount": 53,
+    "errorCount": 0,
+    "overall": {
+      "semanticType": "all",
+      "sampleCount": 53,
+      "humanTrue": 20,
+      "humanFalse": 20,
+      "humanUnknown": 13,
+      "supported": 20,
+      "contradicted": 20,
+      "unknown": 13,
+      "errors": 0,
+      "falsePass": 0,
+      "falseReject": 0,
+      "falsePassRate": 0,
+      "falseRejectRate": 0,
+      "unknownRate": 0.24528301886792453,
+      "coverage": 0.7547169811320755,
+      "totalLatencyMs": 1652.134206000006
+    },
+    "byType": [
+      {
+        "semanticType": "binary-control",
+        "sampleCount": 24,
+        "humanTrue": 10,
+        "humanFalse": 10,
+        "humanUnknown": 4,
+        "supported": 10,
+        "contradicted": 10,
+        "unknown": 4,
+        "errors": 0,
+        "falsePass": 0,
+        "falseReject": 0,
+        "falsePassRate": 0,
+        "falseRejectRate": 0,
+        "unknownRate": 0.16666666666666666,
+        "coverage": 0.8333333333333334,
+        "totalLatencyMs": 775.1849550000043
+      },
+      {
+        "semanticType": "explicit-text",
+        "sampleCount": 24,
+        "humanTrue": 10,
+        "humanFalse": 10,
+        "humanUnknown": 4,
+        "supported": 10,
+        "contradicted": 10,
+        "unknown": 4,
+        "errors": 0,
+        "falsePass": 0,
+        "falseReject": 0,
+        "falsePassRate": 0,
+        "falseRejectRate": 0,
+        "unknownRate": 0.16666666666666666,
+        "coverage": 0.8333333333333334,
+        "totalLatencyMs": 876.943709000001
+      },
+      {
+        "semanticType": "open-semantic",
+        "sampleCount": 5,
+        "humanTrue": 0,
+        "humanFalse": 0,
+        "humanUnknown": 5,
+        "supported": 0,
+        "contradicted": 0,
+        "unknown": 5,
+        "errors": 0,
+        "falsePass": 0,
+        "falseReject": 0,
+        "falsePassRate": null,
+        "falseRejectRate": null,
+        "unknownRate": 1,
+        "coverage": null,
+        "totalLatencyMs": 0.005542000000787084
+      }
+    ],
+    "verdict": {
+      "conclusion": "go",
+      "reasons": [
+        "冻结集满足预设 go 条件；仅建议另开生产化 Change，不替代原生 aiAssert"
+      ],
+      "checks": {
+        "noDataOrExecutionErrors": true,
+        "falsePassIsZero": true,
+        "coverageMeetsThreshold": true,
+        "unsupportedAreUnknown": true,
+        "unknownLabelsStayUnknown": true
+      }
+    },
+    "ocr": {
+      "enabled": false,
+      "bundledModel": false
+    }
+  },
+  "samples": [
+    {
+      "sampleId": "val-wifi/on-original",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 33.28491700000086,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.770415999999386
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9944074034185885,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.28950414161130805,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.466167000000496
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-wifi/off-original",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 32.50445800000125,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9944074034185885,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.28950414161130805,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.206167000000278
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.270332999998573
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-wifi/on-shift-x-p1",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 41.99474999999984,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 22.26458300000013
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9944074034185885,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.28950414161130805,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.668750000000728
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-wifi/off-shift-x-p1",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 34.953332999999475,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9944074034185885,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.28950414161130805,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 17.894625000000815
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 17.025792000000365
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-wifi/on-shift-x-m1",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 35.710541999998895,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9463937165913734,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.803624999998647
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9410583594834426,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.28950414161130805,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.85674999999901
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 0.9463937165913734,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-wifi/off-shift-x-m1",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 33.91337500000009,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.940363026792207,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.28950414161130805,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.880334000001312
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9458286151090449,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 17.00799999999981
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 0.9458286151090449,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-wifi/on-shift-y-p1",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 35.83729099999982,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.84662500000013
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9944074034185885,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.28950414161130805,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.940042000000176
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-wifi/off-shift-y-p1",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 33.39429100000052,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9944074034185885,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.28950414161130805,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.548542000000452
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.79633300000023
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-wifi/on-shift-y-m1",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 33.46137500000077,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 17.137791999999536
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9944074034185885,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.28950414161130805,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.306749999999738
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-wifi/off-shift-y-m1",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 32.68333299999904,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9944074034185885,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.28950414161130805,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.32341699999961
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.341291999999157
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-wifi/removed",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "unknown",
+      "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
+      "code": "insufficient-evidence",
+      "latencyMs": 34.5993750000016,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 6,
+              "value": 0.90625,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.216583000001265
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 6,
+              "value": 0.90625,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.36908299999959
+        }
+      },
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-wifi/other-page",
+      "semanticType": "binary-control",
+      "assertion": "Wi-Fi 开关已开启",
+      "decision": "unknown",
+      "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
+      "code": "insufficient-evidence",
+      "latencyMs": 14.234707999999955,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "page-mismatch",
+          "reason": "页面筛选失败：当前画面与历史页不兼容",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 48,
+              "value": 0.25,
+              "threshold": 0.75,
+              "passed": false
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 7.267499999999927
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "page-mismatch",
+          "reason": "页面筛选失败：当前画面与历史页不兼容",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 48,
+              "value": 0.25,
+              "threshold": 0.75,
+              "passed": false
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 6.95379099999991
+        }
+      },
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-wifi/open-semantic",
+      "semanticType": "open-semantic",
+      "assertion": "页面正常",
+      "decision": "unknown",
+      "reason": "开放语义或未支持断言类型：不使用图像相似度代替语义正确性",
+      "code": "unsupported-semantic",
+      "latencyMs": 0.0012079999996785773,
+      "matcher": {},
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-bluetooth/on-original",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 32.96470899999986,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.46049999999923
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.37986228874860406,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.473291999998764
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-bluetooth/off-original",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 33.45087500000045,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.37986228874860406,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.74749999999949
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.68487499999901
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-bluetooth/on-shift-x-p1",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 32.92262499999924,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.50866599999972
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.37986228874860406,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.397666999999274
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-bluetooth/off-shift-x-p1",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 33.10262500000135,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.37986228874860406,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.643957999998747
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.44404200000099
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-bluetooth/on-shift-x-m1",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 32.79541600000084,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.370249999999942
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.37986228874860406,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.412791000000652
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-bluetooth/off-shift-x-m1",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 32.94050000000061,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.37986228874860406,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.444875000001048
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.481416999999055
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-bluetooth/on-shift-y-p1",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 34.242207999999664,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.902750000001106
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.37986228874860406,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 17.31170899999961
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-bluetooth/off-shift-y-p1",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 33.03575000000092,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.37986228874860406,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.580832999999984
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.43316599999889
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-bluetooth/on-shift-y-m1",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 33.69445799999994,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.97033300000112
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.37986228874860406,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.7062909999986
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-bluetooth/off-shift-y-m1",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 32.822000000000116,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "state-mismatch",
+          "reason": "目标操作前局部状态不匹配（例如开关已翻转）",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": -0.37986228874860406,
+              "threshold": 0.88,
+              "passed": false
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.50562499999978
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.3020000000015
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-bluetooth/removed",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "unknown",
+      "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
+      "code": "insufficient-evidence",
+      "latencyMs": 32.567707999998674,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 10,
+              "value": 0.84375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.357082999998966
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 8,
+              "value": 0.875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 16.199666000000434
+        }
+      },
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-bluetooth/other-page",
+      "semanticType": "binary-control",
+      "assertion": "蓝牙开关已开启",
+      "decision": "unknown",
+      "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
+      "code": "insufficient-evidence",
+      "latencyMs": 14.074333000000479,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "page-mismatch",
+          "reason": "页面筛选失败：当前画面与历史页不兼容",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 54,
+              "value": 0.15625,
+              "threshold": 0.75,
+              "passed": false
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 6.90179100000023
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "page-mismatch",
+          "reason": "页面筛选失败：当前画面与历史页不兼容",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 52,
+              "value": 0.1875,
+              "threshold": 0.75,
+              "passed": false
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 7.163125000000946
+        }
+      },
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-bluetooth/open-semantic",
+      "semanticType": "open-semantic",
+      "assertion": "页面正常",
+      "decision": "unknown",
+      "reason": "开放语义或未支持断言类型：不使用图像相似度代替语义正确性",
+      "code": "unsupported-semantic",
+      "latencyMs": 0.0007079999995767139,
+      "matcher": {},
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-settings-title/on-original",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 39.184667000001355,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1.0000000000000002,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 20.14716700000099
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.99762499999997
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1.0000000000000002,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-settings-title/off-original",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 38.166041000000405,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.119666000000507
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0.9999999999999998,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.02562500000022
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 0.9999999999999998,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-settings-title/on-shift-x-p1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 39.82816699999967,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1.0000000000000002,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 21.00495899999987
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.79479199999878
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1.0000000000000002,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-settings-title/off-shift-x-p1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 37.76262499999939,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.779207999999926
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0.9999999999999998,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.965374999999767
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 0.9999999999999998,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-settings-title/on-shift-x-m1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 41.36812500000087,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1.0000000000000002,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 21.995624999999563
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.325291999999536
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1.0000000000000002,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-settings-title/off-shift-x-m1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 38.22895900000003,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.1942080000008
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0.9999999999999998,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.01379200000156
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 0.9999999999999998,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-settings-title/on-shift-y-p1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 38.149749999998676,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1.0000000000000002,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.003709000000526
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.132000000001426
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1.0000000000000002,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-settings-title/off-shift-y-p1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 40.36633299999994,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 21.30620799999997
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0.9999999999999998,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.023167000001195
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 0.9999999999999998,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-settings-title/on-shift-y-m1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 38.09808399999929,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1.0000000000000002,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.00683299999946
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.070584000000963
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1.0000000000000002,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-settings-title/off-shift-y-m1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 38.42645799999991,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.12695800000074
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0.9999999999999998,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.281166000000667
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 0.9999999999999998,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-settings-title/removed",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "unknown",
+      "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
+      "code": "insufficient-evidence",
+      "latencyMs": 43.78325000000041,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.50199999999859
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 24.254791999999725
+        }
+      },
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-settings-title/other-page",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「设置」标题",
+      "decision": "unknown",
+      "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
+      "code": "insufficient-evidence",
+      "latencyMs": 15.24487500000032,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "page-mismatch",
+          "reason": "页面筛选失败：当前画面与历史页不兼容",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 48,
+              "value": 0.25,
+              "threshold": 0.75,
+              "passed": false
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 7.933542000000671
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "page-mismatch",
+          "reason": "页面筛选失败：当前画面与历史页不兼容",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 50,
+              "value": 0.21875,
+              "threshold": 0.75,
+              "passed": false
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 7.292209000001094
+        }
+      },
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-settings-title/open-semantic",
+      "semanticType": "open-semantic",
+      "assertion": "页面正常",
+      "decision": "unknown",
+      "reason": "开放语义或未支持断言类型：不使用图像相似度代替语义正确性",
+      "code": "unsupported-semantic",
+      "latencyMs": 0.00204200000007404,
+      "matcher": {},
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-airplane-label/on-original",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 38.94954200000029,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1.0000000000000002,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.24395800000093
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.664833999999246
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1.0000000000000002,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-airplane-label/off-original",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 37.93108300000131,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.807666999999128
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0.9999999999999998,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.090416999999434
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 0.9999999999999998,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-airplane-label/on-shift-x-p1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 38.31812499999978,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1.0000000000000002,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.142291000000114
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 6,
+              "value": 0.90625,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.15333400000054
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1.0000000000000002,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-airplane-label/off-shift-x-p1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 37.757917000000816,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.094250000000102
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0.9999999999999998,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.643999999998414
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 0.9999999999999998,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-airplane-label/on-shift-x-m1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 36.98925000000054,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1.0000000000000002,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.969739109783697,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.411334000000352
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.554000000000087
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1.0000000000000002,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 0.969739109783697,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-airplane-label/off-shift-x-m1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 37.42766699999993,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.780749999999898
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0.9999999999999998,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 0.9699129921470306,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.617958999999246
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 0.9999999999999998,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 0.9699129921470306,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-airplane-label/on-shift-y-p1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 37.135457999998835,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1.0000000000000002,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.694707999999082
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 6,
+              "value": 0.90625,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.42500000000109
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1.0000000000000002,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-airplane-label/off-shift-y-p1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 37.03633300000001,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.475500000000466
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0.9999999999999998,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.543417000000773
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 2,
+          "value": 0.96875,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 0.9999999999999998,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-airplane-label/on-shift-y-m1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "supported",
+      "reason": "当前画面与声称状态的完整参考一致",
+      "code": "observed-positive",
+      "latencyMs": 36.97566700000061,
+      "matcher": {
+        "positive": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 1.0000000000000002,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.371707999998762
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 2,
+              "value": 0.96875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.58729200000016
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 4,
+          "value": 0.9375,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 1.0000000000000002,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": true,
+      "expectedDecision": "supported"
+    },
+    {
+      "sampleId": "val-airplane-label/off-shift-y-m1",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "contradicted",
+      "reason": "当前画面与相反状态的完整参考一致，断言被反对",
+      "code": "observed-negative",
+      "latencyMs": 37.22254199999952,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 4,
+              "value": 0.9375,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.536791999998968
+        },
+        "negative": {
+          "decision": "match",
+          "reason": "环境、页面、目标、上下文均通过硬阈值",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 0,
+              "value": 1,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0.9999999999999998,
+              "threshold": 0.92,
+              "passed": true
+            },
+            "context": {
+              "value": 1,
+              "threshold": 0.8,
+              "passed": true
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.660665999999765
+        }
+      },
+      "scores": {
+        "environment": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true
+        },
+        "screen": {
+          "hamming": 0,
+          "value": 1,
+          "threshold": 0.75,
+          "passed": true
+        },
+        "target": {
+          "value": 0.9999999999999998,
+          "threshold": 0.92,
+          "passed": true
+        },
+        "context": {
+          "value": 1,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state": {
+          "value": 1,
+          "threshold": 0.88,
+          "passed": true,
+          "skipped": true
+        },
+        "text": {
+          "value": 1,
+          "threshold": 1,
+          "passed": true,
+          "skipped": true
+        },
+        "top1Top2Gap": {
+          "value": 1,
+          "threshold": 0.05,
+          "passed": true
+        }
+      },
+      "ocr": {
+        "mode": "disabled"
+      },
+      "group": "validation",
+      "humanLabel": false,
+      "expectedDecision": "contradicted"
+    },
+    {
+      "sampleId": "val-airplane-label/removed",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "unknown",
+      "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
+      "code": "insufficient-evidence",
+      "latencyMs": 38.11474999999882,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 8,
+              "value": 0.875,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 18.65483299999869
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "target-missing",
+          "reason": "有限搜索范围内未找到足够相似的目标模板",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 6,
+              "value": 0.90625,
+              "threshold": 0.75,
+              "passed": true
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 19.44091599999956
+        }
+      },
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-airplane-label/other-page",
+      "semanticType": "explicit-text",
+      "assertion": "屏幕显示「飞行模式」",
+      "decision": "unknown",
+      "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
+      "code": "insufficient-evidence",
+      "latencyMs": 14.478041000000303,
+      "matcher": {
+        "positive": {
+          "decision": "no-match",
+          "code": "page-mismatch",
+          "reason": "页面筛选失败：当前画面与历史页不兼容",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 52,
+              "value": 0.1875,
+              "threshold": 0.75,
+              "passed": false
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 7.711166999999477
+        },
+        "negative": {
+          "decision": "no-match",
+          "code": "page-mismatch",
+          "reason": "页面筛选失败：当前画面与历史页不兼容",
+          "scores": {
+            "environment": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true
+            },
+            "screen": {
+              "hamming": 54,
+              "value": 0.15625,
+              "threshold": 0.75,
+              "passed": false
+            },
+            "target": {
+              "value": 0,
+              "threshold": 0.92,
+              "passed": false
+            },
+            "context": {
+              "value": 0,
+              "threshold": 0.8,
+              "passed": false
+            },
+            "state": {
+              "value": 1,
+              "threshold": 0.88,
+              "passed": true,
+              "skipped": true
+            },
+            "text": {
+              "value": 1,
+              "threshold": 1,
+              "passed": true,
+              "skipped": true
+            },
+            "top1Top2Gap": {
+              "value": 1,
+              "threshold": 0.05,
+              "passed": true
+            }
+          },
+          "timingMs": 6.75012500000048
+        }
+      },
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-airplane-label/open-semantic",
+      "semanticType": "open-semantic",
+      "assertion": "页面正常",
+      "decision": "unknown",
+      "reason": "开放语义或未支持断言类型：不使用图像相似度代替语义正确性",
+      "code": "unsupported-semantic",
+      "latencyMs": 0.0012920000008307397,
+      "matcher": {},
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    },
+    {
+      "sampleId": "val-wifi/open-semantic-extra",
+      "semanticType": "open-semantic",
+      "assertion": "无明显异常",
+      "decision": "unknown",
+      "reason": "开放语义或未支持断言类型：不使用图像相似度代替语义正确性",
+      "code": "unsupported-semantic",
+      "latencyMs": 0.0002920000006270129,
+      "matcher": {},
+      "group": "validation",
+      "humanLabel": "unknown",
+      "expectedDecision": "unknown"
+    }
+  ],
+  "errorMessages": []
+}

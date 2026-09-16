@@ -1,0 +1,17 @@
+{
+  "decisionsEqual": true,
+  "countsEqual": true,
+  "verdict": {
+    "conclusion": "go",
+    "reasons": [
+      "冻结集满足预设 go 条件；仅建议另开生产化 Change，不替代原生 aiAssert"
+    ],
+    "checks": {
+      "noDataOrExecutionErrors": true,
+      "falsePassIsZero": true,
+      "coverageMeetsThreshold": true,
+      "unsupportedAreUnknown": true,
+      "unknownLabelsStayUnknown": true
+    }
+  }
+}

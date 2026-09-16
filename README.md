@@ -54,13 +54,15 @@ pnpm run test:cases --project harmony        # 仅运行 harmony 项目
 
 ## 可注册能力
 
-两平台原生 Nodes 存在大量同名节点（`aiAct`、`launch`、`home`…），因此**按项目本地注册**，互不覆盖；全局仅注册两平台结构兼容的框架生命周期节点。可用 Nodes 见按平台生成的参考：
+两平台原生 Nodes 存在大量同名节点（`aiAct`、`launch`、`home`…），因此**按项目本地注册**，互不覆盖；全局注册两平台结构兼容的框架生命周期节点与实验 `experienceAct`。可用 Nodes 见按平台生成的参考：
 
 - [midscene-node-reference.android.md](midscene-node-reference.android.md) —— android 项目：原生 AI Nodes（`aiAct`、`aiAssert`、`aiTap`、`aiAsk` 等）、原生设备 Nodes（`launch`、`terminate`、`runAdbShell`、`back`、`home`、`recentApps`）与通用生命周期节点。
 - [midscene-node-reference.harmony.md](midscene-node-reference.harmony.md) —— harmony 项目：同名原生 AI/设备 Nodes（鸿蒙侧 shell 节点为 `runHdcShell`）与通用生命周期节点。
-- **框架通用生命周期 Nodes**（`src/nodes/device-lifecycle.ts`，两平台共享）：
+- **框架通用节点**（`src/nodes/`，两平台共享）：
   - `device.prepare: { target: home }` —— 严格只接受该输入；返回当前平台主屏。仅是原生导航基线，不解锁设备、不重置网络、不准备业务初始状态。
   - `device.recover: {}` —— 严格只接受空对象；返回当前平台主屏，保留系统设置与业务状态。可在准备或用例步骤部分完成后调用。
+  - `experienceAct: { prompt }` —— 实验性经验动作。仅对使用方登记的可重复纯动作目标尝试视觉重放；默认资格表为空，未登记或含判断时回退一次原生 `aiAct`。不覆盖原生 `aiAssert`。
+- **可选透明接入**：默认关闭。设置 `EXPERIENCE_ENABLED=true` 后，本仓库 YAML 的 `aiAct` 对合格纯动作复用 Experience Runtime；图片、未知 options、未登记目标仍原样走原生。不拦截脚本直接调用 `agent.aiAct`。说明见 [docs/experience-transparent-ai-act.md](docs/experience-transparent-ai-act.md)。
 
 两个节点均直接传播设备操作失败，超时与重试交给原生运行器，不吞异常、不私自重试。
 
@@ -73,13 +75,14 @@ pnpm run test:cases --project harmony        # 仅运行 harmony 项目
 | `src/setup/android.ts` / `src/setup/harmony.ts` | 平台各自的设备选择、会话生命周期与项目 setup |
 | `src/nodes/` | 框架通用 Nodes（两平台结构兼容） |
 | `scripts/generate-node-references.mjs` | 按项目生成两份 Node 参考（官方 CLI 双项目时需 `--project` 选择） |
-| `src/experience/`、`experiences/` | Experience 预留占位（后续 Change 实现，当前为空） |
+| `src/experience/`、`experiences/` | Experience 资产、Promotion、Matcher、Replay、Runtime；实验入口 `experienceAct`；可选 YAML `aiAct` 透明接入（默认关闭） |
 | `cases/android/`、`cases/harmony/` | 使用方业务用例目录（按平台，仅使用方写入） |
+| `experiments/visual-assert/` | 视觉断言离线评估实验（不接入生产 `aiAssert`） |
 | `tests/` | 框架自身测试与夹具，不进入任何平台的业务发现范围 |
-| `docs/` | 依赖版本核对记录、验收记录 |
+| `docs/` | 依赖版本核对、框架验收与 Experience 能力说明（含 YAML `aiAct` 透明接入） |
 
 ## 框架验证
 
-- `pnpm test`：157 项框架测试（单元 + 原生边界集成，含双平台生命周期与鸿蒙选择/会话单测），证据与覆盖分层见 [docs/acceptance.md](docs/acceptance.md)。
+- `pnpm test`：254 项框架测试（单元 + 原生边界集成，含双平台生命周期、鸿蒙选择/会话与视觉断言离线评估），证据与覆盖分层见 [docs/acceptance.md](docs/acceptance.md)；YAML `aiAct` 透明接入见 [docs/experience-transparent-ai-act-acceptance.md](docs/experience-transparent-ai-act-acceptance.md)。
 - 边界集成测试加载**实际锁定的** `@midscene/test`/`@midscene/android`/`@midscene/harmony` 包与真实 `midscene.config.ts`，仅将设备/Agent 边界替换为受控替身；真实硬件与模型调用未在框架验收中覆盖。
 - 有真实设备时，可选执行连接/截图/释放单能力检查（见验收记录的“可选设备检查”一节，Android 与 HarmonyOS 分列），该检查不是框架验收的必要条件。

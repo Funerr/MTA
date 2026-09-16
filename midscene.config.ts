@@ -17,6 +17,10 @@ import {
   frameworkNodes,
   type DeviceLifecycleProjectContext,
 } from './src/nodes';
+import {
+  loadExperienceIntegrationConfig,
+  wrapMidsceneNodesWithExperience,
+} from './src/experience/integration';
 
 loadEnv({ path: fileURLToPath(new URL('.env', import.meta.url)) });
 
@@ -33,15 +37,24 @@ const getHarmonyAgent = ({
 // 原生 aiAct / aiAssert / launch / terminate / back / home / recentApps 等
 // 参数与错误契约全部保留 Midscene 原生定义，android 侧另有 runAdbShell、
 // harmony 侧另有 runHdcShell。
-const androidNodes = createMidsceneNodes<AndroidProjectContext>({
-  agentClass: AndroidAgent,
-  getAgent: getAndroidAgent,
-});
+// experience.enabled 默认关闭：包装返回原始 aiAct 定义，不实例化 Runtime/Store。
+const experienceIntegration = loadExperienceIntegrationConfig();
 
-const harmonyNodes = createMidsceneNodes<HarmonyProjectContext>({
-  agentClass: HarmonyAgent,
-  getAgent: getHarmonyAgent,
-});
+const androidNodes = wrapMidsceneNodesWithExperience(
+  createMidsceneNodes<AndroidProjectContext>({
+    agentClass: AndroidAgent,
+    getAgent: getAndroidAgent,
+  }),
+  experienceIntegration,
+);
+
+const harmonyNodes = wrapMidsceneNodesWithExperience(
+  createMidsceneNodes<HarmonyProjectContext>({
+    agentClass: HarmonyAgent,
+    getAgent: getHarmonyAgent,
+  }),
+  experienceIntegration,
+);
 
 export default defineTestProject<DeviceLifecycleProjectContext>({
   // 双执行项目串行执行：一个项目一个设备会话，并发为 1。
@@ -68,6 +81,6 @@ export default defineTestProject<DeviceLifecycleProjectContext>({
       nodes: harmonyNodes,
     },
   ],
-  // 全局仅保留两平台结构兼容的框架生命周期节点。
+  // 全局保留两平台结构兼容的框架节点：生命周期 + 实验 experienceAct。
   nodes: [...frameworkNodes],
 });

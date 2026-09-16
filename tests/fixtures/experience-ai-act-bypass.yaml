@@ -1,0 +1,17 @@
+# 框架边界夹具：富媒体 / 未知 options / 含判断请求的解析样本。
+# 不表达任何手机业务流程，不作为业务用例交付。
+cases:
+  - name: aiAct 旁路样本
+    steps:
+      - aiAct:
+          prompt:
+            prompt: generic-replay-target
+            images:
+              - name: ref
+                url: data:image/png;base64,aaa
+      - aiAct:
+          prompt: generic-replay-target
+          options:
+            cacheable: true
+            context: 请确认屏幕文案
+      - aiAct: 断言屏幕显示主屏

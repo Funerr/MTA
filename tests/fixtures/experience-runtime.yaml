@@ -1,0 +1,6 @@
+# 框架边界夹具：仅验证 experienceAct 注册与 prompt 解析。
+# 不表达任何手机业务流程，不作为业务用例交付。
+cases:
+  - name: experienceAct 接入检查
+    steps:
+      - experienceAct: generic-replay-target
