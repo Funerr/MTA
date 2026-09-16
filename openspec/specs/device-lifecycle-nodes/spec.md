@@ -2,13 +2,13 @@
 
 ## Purpose
 
-为 YAML 用例提供最小、可复用的设备起点准备与结束恢复能力，以返回 Android 主屏作为首期明确基线。让用例作者能够直接声明生命周期行为，并在准备、测试或恢复失败时获得真实可见的执行结果。
+为 YAML 用例提供最小、可复用的设备起点准备与结束恢复能力，以返回当前平台主屏（android 或 harmony 项目）作为明确基线。让用例作者能够直接声明生命周期行为，并在准备、测试或恢复失败时获得真实可见的执行结果。
 
 ## Requirements
 
 ### Requirement: 准备设备到 Home
 
-`device.prepare` SHALL 接受且仅接受 `{ target: home }`，在当前运行绑定且已解锁的设备上返回 Home。Node MUST 对已有 Home 状态保持幂等，不承担解锁、重置网络、恢复出厂或业务初始状态准备。
+`device.prepare` SHALL 接受且仅接受 `{ target: home }`，在当前运行绑定且已解锁的设备（android 或 harmony 项目）上返回该平台主屏。Node MUST 对已有 Home 状态保持幂等，不承担解锁、重置网络、恢复出厂或业务初始状态准备。
 
 #### Scenario: 从其他页面准备
 
@@ -27,7 +27,7 @@
 
 ### Requirement: 恢复设备到 Home
 
-`device.recover` SHALL 接受空对象 `{}`，在当前绑定设备上返回 Home，且能够在准备或用例步骤仅部分完成时调用。它 MUST 保留当前系统设置，包括使用方业务状态；恢复成功仅表示完成此 Home 基线恢复。
+`device.recover` SHALL 接受空对象 `{}`，在当前绑定设备（android 或 harmony 项目）上返回该平台主屏，且能够在准备或用例步骤仅部分完成时调用。它 MUST 保留当前系统设置，包括使用方业务状态；恢复成功仅表示完成此 Home 基线恢复。
 
 #### Scenario: 用例成功后恢复
 
