@@ -1,6 +1,6 @@
 # src/experience/
 
-Experience 能力：视觉经验资产契约、本地文件 Store，以及 Promotion（把单次原生执行轨迹转为 candidate）。
+Experience 能力：视觉经验资产契约、本地文件 Store、Promotion（把单次原生执行轨迹转为 candidate），以及 Matcher（本地验证历史画面/目标）。
 
 ## 目录
 
@@ -17,8 +17,11 @@ Experience 能力：视觉经验资产契约、本地文件 Store，以及 Promo
   - `trace-adapter.ts` — 按 execution/call 隔离，映射六类动作，缺证整链拒绝
   - `promoter.ts` — 资格检查、裁剪签名、Store 原子发布（`callId` 幂等）
   - `image.ts` — `png-sharp@1` 解码/裁剪与 `mean-rgb-grid` 签名
+- `matcher/` — 本地视觉匹配（不调用 VLM / 网络 OCR / 设备动作）
+  - `match.ts` — `matchScreen` / `matchTarget`
+  - `screen.ts` / `target.ts` / `text.ts` / `confidence.ts` — 页面筛选、模板搜索、可选 OCR、分项硬判定
 - `index.ts` — 公共导出
 
-字段说明见 [docs/experience-assets.md](../../docs/experience-assets.md)；Promotion 支持矩阵与取数契约见 [docs/experience-promotion.md](../../docs/experience-promotion.md)。
+字段说明见 [docs/experience-assets.md](../../docs/experience-assets.md)；Promotion 支持矩阵与取数契约见 [docs/experience-promotion.md](../../docs/experience-promotion.md)；Matcher 调用契约见 [docs/experience-matcher.md](../../docs/experience-matcher.md)。
 
-Schema/Store 不访问设备或模型。Promotion 只在公开 Agent dump 边界取数。Matcher / Replay / Runtime 尚未实现。
+Schema/Store 不访问设备或模型。Promotion 只在公开 Agent dump 边界取数。Matcher 只使用调用方提供的截图字节。Replay / Runtime 尚未实现。

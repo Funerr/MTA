@@ -10,7 +10,7 @@
 | `@midscene/android` | `1.12.7` | `AndroidDevice` / `AndroidAgent` / `getConnectedDevices` / `agentFromAdbDevice` |
 | `zod` | `^3.25.76` | Node `inputSchema`（必须从 `zod/v4` 子路径导入，与 `@midscene/test` 内部一致） |
 | `@midscene/core` | `1.12.7` | Experience Promotion 直接消费 `Agent.dump`、`callActionInActionSpace`、`TaskExecutor.runPlans`、`createDefaultMobileActions` |
-| `sharp` | `0.34.5` | Experience Promotion 图像管线 `png-sharp@1`（解码/裁剪/重编码） |
+| `sharp` | `0.34.5` | Experience Promotion / Matcher 图像管线 `png-sharp@1`（解码/裁剪/重编码） |
 | `dotenv` | `^16.4.5` | 官方模板同款 `.env` 加载 |
 | `typescript` | `^5.8.3` | 类型检查（`tsc --noEmit`） |
 | `@types/node` | `^20.0.0` | 官方模板同款 |
@@ -38,3 +38,7 @@ Node engines 采用官方模板要求：`^20.19.0 || ^22.12.0 || >=24.0.0`。
 ## 与规格相关的重要发现
 
 官方模板的 `agentFromAdbDevice(deviceId?)` 在未指定 deviceId 且存在多台设备时**静默选择第一台**，不满足本工程规格“未指定时只在恰有一台授权在线设备时自动选择”的要求。因此 `src/setup/android.ts` 不使用该捷径，而是基于 `getConnectedDevices` 自行实现确定性设备选择，再以 `new AndroidDevice(udid) → connect() → new AndroidAgent(device)` 组装会话（与 `agentFromAdbDevice` 内部实现路径一致）。
+
+## Matcher 图像依赖（add-visual-matcher，2026-09-16）
+
+在 darwin arm64 / Node v24.20.0 上复核：`sharp@0.34.5` 可解码 Promotion 示例 PNG、裁剪非空、纯色 roundtrip MAE=0。Matcher 不新增图像 npm 包；pHash（`dct-32-8@1`）、ZNCC（`zncc-gray@1`）、SSIM（`ssim-global-gray@1`）为本地实现。OCR 默认关闭，不内置模型。

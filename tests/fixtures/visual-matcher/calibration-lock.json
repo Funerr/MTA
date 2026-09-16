@@ -1,0 +1,19 @@
+{
+  "configVersion": "visual-matcher@1",
+  "dataVersion": "visual-matcher-fixtures@1",
+  "frozen": {
+    "searchRadiusRatio": 0.03,
+    "screenPHashMaxHamming": 16,
+    "targetNccMin": 0.92,
+    "contextSsimMin": 0.8,
+    "stateSsimMin": 0.88,
+    "ambiguityGapMin": 0.05,
+    "nmsRadiusPx": 2,
+    "ocrEnabled": false
+  },
+  "calibrationAcceptMins": {
+    "targetNcc": 1,
+    "contextSsim": 1,
+    "screenSimilarity": 0.9375
+  }
+}

@@ -1,6 +1,6 @@
 # Experience Promotion（experience-promotion v1）
 
-本文件对应 Change `add-experience-promotion`：把单次成功 AI 调用的**实际执行证据**转为 candidate 资产。Replay / Runtime / Matcher 尚未实现。
+本文件对应 Change `add-experience-promotion`：把单次成功 AI 调用的**实际执行证据**转为 candidate 资产。Matcher 见 [experience-matcher.md](experience-matcher.md)。Replay / Runtime 尚未实现。
 
 锁定版本：`@midscene/core` / `@midscene/android` / `@midscene/test` **1.12.7**；适配层 `trace-adapter@1`；图像管线 `png-sharp@1`。
 

@@ -1,0 +1,1006 @@
+{
+  "dataVersion": "visual-matcher-fixtures@1",
+  "pipeline": "png-sharp@1",
+  "matcherConfigVersion": "visual-matcher@1",
+  "screen": {
+    "width": 360,
+    "height": 640
+  },
+  "statusBarMask": {
+    "x": 0,
+    "y": 0,
+    "width": 360,
+    "height": 40
+  },
+  "generation": {
+    "method": "synthetic-rgba-blit",
+    "shifts": "delta = round(ratio * dimension) on a single axis; historical bbox unchanged",
+    "note": "合成位移用于算法边界，不代表真实设备业务页面覆盖率"
+  },
+  "captures": [
+    {
+      "id": "cal-row",
+      "group": "calibration",
+      "kind": "row",
+      "historicalBbox": {
+        "x": 72,
+        "y": 240,
+        "width": 120,
+        "height": 56
+      },
+      "stateBox": {
+        "x": 248,
+        "y": 252,
+        "width": 52,
+        "height": 32
+      },
+      "cases": [
+        {
+          "id": "original",
+          "file": "png/cal-row/original.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 72,
+            "y": 240,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "shift-x-p1",
+          "file": "png/cal-row/shift-x-p1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 4,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 76,
+            "y": 240,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "shift-x-m1",
+          "file": "png/cal-row/shift-x-m1.png",
+          "expect": "accept",
+          "shift": {
+            "x": -4,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 68,
+            "y": 240,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "shift-y-p1",
+          "file": "png/cal-row/shift-y-p1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 6
+          },
+          "targetBbox": {
+            "x": 72,
+            "y": 246,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "shift-y-m1",
+          "file": "png/cal-row/shift-y-m1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": -6
+          },
+          "targetBbox": {
+            "x": 72,
+            "y": 234,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "shift-x-p3",
+          "file": "png/cal-row/shift-x-p3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 11,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 83,
+            "y": 240,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "shift-x-m3",
+          "file": "png/cal-row/shift-x-m3.png",
+          "expect": "accept",
+          "shift": {
+            "x": -11,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 61,
+            "y": 240,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "shift-y-p3",
+          "file": "png/cal-row/shift-y-p3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 19
+          },
+          "targetBbox": {
+            "x": 72,
+            "y": 259,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "shift-y-m3",
+          "file": "png/cal-row/shift-y-m3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": -19
+          },
+          "targetBbox": {
+            "x": 72,
+            "y": 221,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "status-bar-changed",
+          "file": "png/cal-row/status-bar-changed.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 72,
+            "y": 240,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "other-page-same-icon",
+          "file": "png/cal-row/other-page-same-icon.png",
+          "expect": "reject",
+          "rejectCode": "page-mismatch",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 72,
+            "y": 240,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "target-removed",
+          "file": "png/cal-row/target-removed.png",
+          "expect": "reject",
+          "rejectCode": "target-missing",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 72,
+            "y": 240,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "occluded",
+          "file": "png/cal-row/occluded.png",
+          "expect": "reject",
+          "rejectCode": "target-missing",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 72,
+            "y": 240,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "structural-change",
+          "file": "png/cal-row/structural-change.png",
+          "expect": "reject",
+          "rejectCode": "page-mismatch",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 72,
+            "y": 240,
+            "width": 120,
+            "height": 56
+          }
+        },
+        {
+          "id": "state-inverted",
+          "file": "png/cal-row/state-inverted.png",
+          "expect": "reject",
+          "rejectCode": "state-mismatch",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 72,
+            "y": 240,
+            "width": 120,
+            "height": 56
+          }
+        }
+      ]
+    },
+    {
+      "id": "cal-icon",
+      "group": "calibration",
+      "kind": "icon",
+      "historicalBbox": {
+        "x": 168,
+        "y": 300,
+        "width": 8,
+        "height": 8
+      },
+      "cases": [
+        {
+          "id": "original",
+          "file": "png/cal-icon/original.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 168,
+            "y": 300,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-x-p1",
+          "file": "png/cal-icon/shift-x-p1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 4,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 172,
+            "y": 300,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-x-m1",
+          "file": "png/cal-icon/shift-x-m1.png",
+          "expect": "accept",
+          "shift": {
+            "x": -4,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 164,
+            "y": 300,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-y-p1",
+          "file": "png/cal-icon/shift-y-p1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 6
+          },
+          "targetBbox": {
+            "x": 168,
+            "y": 306,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-y-m1",
+          "file": "png/cal-icon/shift-y-m1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": -6
+          },
+          "targetBbox": {
+            "x": 168,
+            "y": 294,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-x-p3",
+          "file": "png/cal-icon/shift-x-p3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 11,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 179,
+            "y": 300,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-x-m3",
+          "file": "png/cal-icon/shift-x-m3.png",
+          "expect": "accept",
+          "shift": {
+            "x": -11,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 157,
+            "y": 300,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-y-p3",
+          "file": "png/cal-icon/shift-y-p3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 19
+          },
+          "targetBbox": {
+            "x": 168,
+            "y": 319,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-y-m3",
+          "file": "png/cal-icon/shift-y-m3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": -19
+          },
+          "targetBbox": {
+            "x": 168,
+            "y": 281,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "status-bar-changed",
+          "file": "png/cal-icon/status-bar-changed.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 168,
+            "y": 300,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "other-page-same-icon",
+          "file": "png/cal-icon/other-page-same-icon.png",
+          "expect": "reject",
+          "rejectCode": "page-mismatch",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 168,
+            "y": 300,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "target-removed",
+          "file": "png/cal-icon/target-removed.png",
+          "expect": "reject",
+          "rejectCode": "target-missing",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 168,
+            "y": 300,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "occluded",
+          "file": "png/cal-icon/occluded.png",
+          "expect": "reject",
+          "rejectCode": "target-missing",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 168,
+            "y": 300,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "structural-change",
+          "file": "png/cal-icon/structural-change.png",
+          "expect": "reject",
+          "rejectCode": "page-mismatch",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 168,
+            "y": 300,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "ambiguous-duplicate",
+          "file": "png/cal-icon/ambiguous-duplicate.png",
+          "expect": "reject",
+          "rejectCode": "ambiguous",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 168,
+            "y": 300,
+            "width": 8,
+            "height": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "val-row",
+      "group": "validation",
+      "kind": "row",
+      "historicalBbox": {
+        "x": 80,
+        "y": 268,
+        "width": 112,
+        "height": 52
+      },
+      "stateBox": {
+        "x": 252,
+        "y": 278,
+        "width": 48,
+        "height": 32
+      },
+      "cases": [
+        {
+          "id": "original",
+          "file": "png/val-row/original.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 80,
+            "y": 268,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "shift-x-p1",
+          "file": "png/val-row/shift-x-p1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 4,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 84,
+            "y": 268,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "shift-x-m1",
+          "file": "png/val-row/shift-x-m1.png",
+          "expect": "accept",
+          "shift": {
+            "x": -4,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 76,
+            "y": 268,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "shift-y-p1",
+          "file": "png/val-row/shift-y-p1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 6
+          },
+          "targetBbox": {
+            "x": 80,
+            "y": 274,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "shift-y-m1",
+          "file": "png/val-row/shift-y-m1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": -6
+          },
+          "targetBbox": {
+            "x": 80,
+            "y": 262,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "shift-x-p3",
+          "file": "png/val-row/shift-x-p3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 11,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 91,
+            "y": 268,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "shift-x-m3",
+          "file": "png/val-row/shift-x-m3.png",
+          "expect": "accept",
+          "shift": {
+            "x": -11,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 69,
+            "y": 268,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "shift-y-p3",
+          "file": "png/val-row/shift-y-p3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 19
+          },
+          "targetBbox": {
+            "x": 80,
+            "y": 287,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "shift-y-m3",
+          "file": "png/val-row/shift-y-m3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": -19
+          },
+          "targetBbox": {
+            "x": 80,
+            "y": 249,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "status-bar-changed",
+          "file": "png/val-row/status-bar-changed.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 80,
+            "y": 268,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "other-page-same-icon",
+          "file": "png/val-row/other-page-same-icon.png",
+          "expect": "reject",
+          "rejectCode": "page-mismatch",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 80,
+            "y": 268,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "target-removed",
+          "file": "png/val-row/target-removed.png",
+          "expect": "reject",
+          "rejectCode": "target-missing",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 80,
+            "y": 268,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "occluded",
+          "file": "png/val-row/occluded.png",
+          "expect": "reject",
+          "rejectCode": "target-missing",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 80,
+            "y": 268,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "structural-change",
+          "file": "png/val-row/structural-change.png",
+          "expect": "reject",
+          "rejectCode": "page-mismatch",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 80,
+            "y": 268,
+            "width": 112,
+            "height": 52
+          }
+        },
+        {
+          "id": "state-inverted",
+          "file": "png/val-row/state-inverted.png",
+          "expect": "reject",
+          "rejectCode": "state-mismatch",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 80,
+            "y": 268,
+            "width": 112,
+            "height": 52
+          }
+        }
+      ]
+    },
+    {
+      "id": "val-icon",
+      "group": "validation",
+      "kind": "icon",
+      "historicalBbox": {
+        "x": 150,
+        "y": 310,
+        "width": 8,
+        "height": 8
+      },
+      "cases": [
+        {
+          "id": "original",
+          "file": "png/val-icon/original.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 150,
+            "y": 310,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-x-p1",
+          "file": "png/val-icon/shift-x-p1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 4,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 154,
+            "y": 310,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-x-m1",
+          "file": "png/val-icon/shift-x-m1.png",
+          "expect": "accept",
+          "shift": {
+            "x": -4,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 146,
+            "y": 310,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-y-p1",
+          "file": "png/val-icon/shift-y-p1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 6
+          },
+          "targetBbox": {
+            "x": 150,
+            "y": 316,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-y-m1",
+          "file": "png/val-icon/shift-y-m1.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": -6
+          },
+          "targetBbox": {
+            "x": 150,
+            "y": 304,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-x-p3",
+          "file": "png/val-icon/shift-x-p3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 11,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 161,
+            "y": 310,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-x-m3",
+          "file": "png/val-icon/shift-x-m3.png",
+          "expect": "accept",
+          "shift": {
+            "x": -11,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 139,
+            "y": 310,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-y-p3",
+          "file": "png/val-icon/shift-y-p3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 19
+          },
+          "targetBbox": {
+            "x": 150,
+            "y": 329,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "shift-y-m3",
+          "file": "png/val-icon/shift-y-m3.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": -19
+          },
+          "targetBbox": {
+            "x": 150,
+            "y": 291,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "status-bar-changed",
+          "file": "png/val-icon/status-bar-changed.png",
+          "expect": "accept",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 150,
+            "y": 310,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "other-page-same-icon",
+          "file": "png/val-icon/other-page-same-icon.png",
+          "expect": "reject",
+          "rejectCode": "page-mismatch",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 150,
+            "y": 310,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "target-removed",
+          "file": "png/val-icon/target-removed.png",
+          "expect": "reject",
+          "rejectCode": "target-missing",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 150,
+            "y": 310,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "occluded",
+          "file": "png/val-icon/occluded.png",
+          "expect": "reject",
+          "rejectCode": "target-missing",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 150,
+            "y": 310,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "structural-change",
+          "file": "png/val-icon/structural-change.png",
+          "expect": "reject",
+          "rejectCode": "page-mismatch",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 150,
+            "y": 310,
+            "width": 8,
+            "height": 8
+          }
+        },
+        {
+          "id": "ambiguous-duplicate",
+          "file": "png/val-icon/ambiguous-duplicate.png",
+          "expect": "reject",
+          "rejectCode": "ambiguous",
+          "shift": {
+            "x": 0,
+            "y": 0
+          },
+          "targetBbox": {
+            "x": 150,
+            "y": 310,
+            "width": 8,
+            "height": 8
+          }
+        }
+      ]
+    }
+  ]
+}

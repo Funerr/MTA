@@ -1,0 +1,166 @@
+{
+  "configVersion": "visual-matcher@1",
+  "dataVersion": "visual-matcher-fixtures@1",
+  "results": [
+    {
+      "key": "val-row/original",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-row/shift-x-p1",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-row/shift-x-m1",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-row/shift-y-p1",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-row/shift-y-m1",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-row/shift-x-p3",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-row/shift-x-m3",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-row/shift-y-p3",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-row/shift-y-m3",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-row/status-bar-changed",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-row/other-page-same-icon",
+      "expect": "reject",
+      "decision": "no-match",
+      "code": "page-mismatch"
+    },
+    {
+      "key": "val-row/target-removed",
+      "expect": "reject",
+      "decision": "no-match",
+      "code": "target-missing"
+    },
+    {
+      "key": "val-row/occluded",
+      "expect": "reject",
+      "decision": "no-match",
+      "code": "target-missing"
+    },
+    {
+      "key": "val-row/structural-change",
+      "expect": "reject",
+      "decision": "no-match",
+      "code": "page-mismatch"
+    },
+    {
+      "key": "val-row/state-inverted",
+      "expect": "reject",
+      "decision": "no-match",
+      "code": "state-mismatch"
+    },
+    {
+      "key": "val-icon/original",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-icon/shift-x-p1",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-icon/shift-x-m1",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-icon/shift-y-p1",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-icon/shift-y-m1",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-icon/shift-x-p3",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-icon/shift-x-m3",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-icon/shift-y-p3",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-icon/shift-y-m3",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-icon/status-bar-changed",
+      "expect": "accept",
+      "decision": "match"
+    },
+    {
+      "key": "val-icon/other-page-same-icon",
+      "expect": "reject",
+      "decision": "no-match",
+      "code": "page-mismatch"
+    },
+    {
+      "key": "val-icon/target-removed",
+      "expect": "reject",
+      "decision": "no-match",
+      "code": "target-missing"
+    },
+    {
+      "key": "val-icon/occluded",
+      "expect": "reject",
+      "decision": "no-match",
+      "code": "target-missing"
+    },
+    {
+      "key": "val-icon/structural-change",
+      "expect": "reject",
+      "decision": "no-match",
+      "code": "page-mismatch"
+    },
+    {
+      "key": "val-icon/ambiguous-duplicate",
+      "expect": "reject",
+      "decision": "no-match",
+      "code": "ambiguous"
+    }
+  ]
+}
