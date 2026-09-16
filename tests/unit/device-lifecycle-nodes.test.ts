@@ -89,10 +89,10 @@ describe('device.prepare / device.recover 执行行为', () => {
 
   it('context 缺少 Agent 时给出可定位错误', async () => {
     await expect(runNode(devicePrepareNode, {})).rejects.toThrow(
-      /device\.prepare.*AndroidAgent/s,
+      /device\.prepare.*android\/harmony/s,
     );
     await expect(runNode(deviceRecoverNode, {})).rejects.toThrow(
-      /device\.recover.*AndroidAgent/s,
+      /device\.recover.*android\/harmony/s,
     );
   });
 });

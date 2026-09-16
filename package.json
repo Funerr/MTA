@@ -5,9 +5,9 @@
   "scripts": {
     "test": "vitest run",
     "test:cases": "midscene-test",
-    "nodes": "midscene-test nodes",
+    "nodes": "node scripts/generate-node-references.mjs",
     "typecheck": "tsc --noEmit",
-    "postinstall": "midscene-test nodes"
+    "postinstall": "node scripts/generate-node-references.mjs"
   },
   "engines": {
     "node": "^20.19.0 || ^22.12.0 || >=24.0.0"

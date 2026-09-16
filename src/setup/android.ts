@@ -4,6 +4,11 @@ import {
   getConnectedDevices,
 } from '@midscene/android';
 import { defineProjectSetup } from '@midscene/test/config';
+import { bindAgentToDevice, SessionHandle } from './session';
+
+// 兼容既有公开 API：会话公共层原属 android.ts，迁移后继续从这里导出。
+export { bindAgentToDevice } from './session';
+export type { DeviceLike } from './session';
 
 /** `adb devices` 输出中表示设备已授权在线的状态值。 */
 export const AUTHORIZED_DEVICE_STATE = 'device';
@@ -85,26 +90,6 @@ export function selectAndroidDevice(
 /** Agent 创建边界；生产按官方路径 AndroidDevice → connect → AndroidAgent 组装。 */
 export type AndroidAgentFactory = (udid: string) => Promise<AndroidAgent>;
 
-/** 接管失败时清理已取得的设备资源；清理失败只记录，不覆盖原始错误。 */
-export async function bindAgentToDevice<D extends DeviceLike>(
-  udid: string,
-  createDevice: () => D,
-  wrapAgent: (device: D) => AndroidAgent,
-): Promise<AndroidAgent> {
-  const device = createDevice();
-  try {
-    await device.connect();
-    return wrapAgent(device);
-  } catch (error) {
-    try {
-      await device.destroy();
-    } catch (cleanupError) {
-      console.error(`[mta] 释放部分初始化的设备 ${udid} 失败：`, cleanupError);
-    }
-    throw error;
-  }
-}
-
 export const createAdbAndroidAgent: AndroidAgentFactory = (udid) =>
   bindAgentToDevice(
     udid,
@@ -155,36 +140,24 @@ export async function createAndroidSession(
 }
 
 /**
- * 会话句柄：保证底层 Agent 至多释放一次。
- * Agent 接管设备后由原生 `destroy` 统一释放（幂等），此处再包一层
- * 显式标记，使重复 teardown 不会重复触发清理路径。
+ * 会话句柄：保证底层 Agent 至多释放一次（公共层 `SessionHandle` 的薄子类，
+ * 保留 `udid` 命名以维持既有公开 API）。
  */
-export class AndroidSessionHandle implements AndroidSession {
+export class AndroidSessionHandle
+  extends SessionHandle<AndroidAgent>
+  implements AndroidSession
+{
   readonly udid: string;
-  readonly agent: AndroidAgent;
-  private released = false;
 
   constructor(session: AndroidSession) {
+    super({ id: session.udid, agent: session.agent });
     this.udid = session.udid;
-    this.agent = session.agent;
-  }
-
-  async release(): Promise<void> {
-    if (this.released) return;
-    this.released = true;
-    await this.agent.destroy();
   }
 }
 
 /** 执行项目共享的上下文：当前绑定的原生 AndroidAgent。 */
 export interface AndroidProjectContext {
   agent: AndroidAgent;
-}
-
-/** 设备资源的生命周期子集，bindAgentToDevice 只依赖这两个能力。 */
-export interface DeviceLike {
-  connect(): Promise<unknown>;
-  destroy(): Promise<void>;
 }
 
 /** android 执行项目的 setup：执行期建立设备会话，teardown 统一释放。 */

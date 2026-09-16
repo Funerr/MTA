@@ -1,12 +1,17 @@
 import type { NodeDefinition } from '@midscene/test';
-import type { AndroidProjectContext } from '../setup/android';
+import type { DeviceLifecycleProjectContext } from './device-lifecycle';
 import { devicePrepareNode, deviceRecoverNode } from './device-lifecycle';
 
-/** 框架提供的全部自定义 Nodes；原生 AI/设备 Nodes 由 midscene.config.ts 注册。 */
+/** 框架提供的全局 Nodes（两平台结构兼容的生命周期节点）；平台原生 Nodes 由 midscene.config.ts 按项目本地注册。 */
 export const frameworkNodes: readonly NodeDefinition<
   any,
   any,
-  AndroidProjectContext
+  DeviceLifecycleProjectContext
 >[] = [devicePrepareNode, deviceRecoverNode];
 
-export { devicePrepareNode, deviceRecoverNode } from './device-lifecycle';
+export {
+  devicePrepareNode,
+  deviceRecoverNode,
+  type DeviceLifecycleProjectContext,
+  type LifecycleAgent,
+} from './device-lifecycle';

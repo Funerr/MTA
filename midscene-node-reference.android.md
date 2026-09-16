@@ -18,8 +18,8 @@ This table lists all available Nodes. See [Node Details](#node-details) below fo
 | aiString | Run aiString with a Midscene UI Agent and store its value. |
 | aiTap | Locate and tap an element with a Midscene UI Agent. |
 | back | Trigger the Android system back operation. |
-| device.prepare | 准备当前绑定设备：返回 Android 主屏（Home）。仅是原生导航基线，不解锁设备、不重置网络、不准备业务初始状态。 |
-| device.recover | 恢复当前绑定设备：返回 Android 主屏（Home）。保留系统设置与业务状态；可在准备或用例步骤部分完成后调用。 |
+| device.prepare | 准备当前绑定设备：返回当前平台主屏（Home）。仅是原生导航基线，不解锁设备、不重置网络、不准备业务初始状态。 |
+| device.recover | 恢复当前绑定设备：返回当前平台主屏（Home）。保留系统设置与业务状态；可在准备或用例步骤部分完成后调用。 |
 | home | Trigger the Android system home operation. |
 | launch | Launch an application through the current Android Agent. |
 | recentApps | Trigger the Android system recent apps operation. |
@@ -36,7 +36,7 @@ Projects created by `midscene-test create` select `cases/**/*.{yaml,yml}` by def
 
 **Config file:** `midscene.config.ts`
 
-**Case files:** `cases/**/*.{yaml,yml}` (Execution Project: android); excludes: `tests/**/*.{yaml,yml}`
+**Case files:** `cases/android/**/*.{yaml,yml}` (Execution Project: android); excludes: `tests/**/*.{yaml,yml}`
 
 Files matching `files.exclude` are not selected. Midscene Test always ignores `.git/`, `.midscene/`, `midscene_run/`, and `node_modules/` directories, including nested ones.
 
@@ -746,7 +746,7 @@ Trigger the Android system back operation.
 
 ### `device.prepare`
 
-准备当前绑定设备：返回 Android 主屏（Home）。仅是原生导航基线，不解锁设备、不重置网络、不准备业务初始状态。
+准备当前绑定设备：返回当前平台主屏（Home）。仅是原生导航基线，不解锁设备、不重置网络、不准备业务初始状态。
 
 **String shorthand:** Not supported by this Node.
 
@@ -771,7 +771,7 @@ Trigger the Android system back operation.
 
 ### `device.recover`
 
-恢复当前绑定设备：返回 Android 主屏（Home）。保留系统设置与业务状态；可在准备或用例步骤部分完成后调用。
+恢复当前绑定设备：返回当前平台主屏（Home）。保留系统设置与业务状态；可在准备或用例步骤部分完成后调用。
 
 **String shorthand:** Not supported by this Node.
 
