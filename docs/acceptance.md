@@ -1,5 +1,7 @@
 # 框架验收记录 — 双平台接入（android / harmony）
 
+> 阶段证据：本文的能力状态、测试数量和环境仅对应下述验收时点，不代表当前工作区；当前能力见 [README](../README.md)，记录导航见 [验收索引](acceptance-index.md)。
+
 验收日期：2026-09-16（`add-harmony-platform`，在 bootstrap（2026-09-15）单 Android 项目基础上升级为双平台）。验收环境：macOS（darwin 25.6.0, arm64）、Node v24.20.0、pnpm 10.33.2、**无已连接 Android/HarmonyOS 设备（`adb devices` 为空、无 hdc）、无模型密钥（环境无 `MIDSCENE_*` 变量、无 `.env` 文件）**。
 
 依赖版本核对依据见 [dependency-versions.md](dependency-versions.md)（含 2026-09-16 增补的 `@midscene/harmony@1.12.7` 实测条目）。

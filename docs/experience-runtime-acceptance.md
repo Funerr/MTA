@@ -1,10 +1,12 @@
 # 验收与核对记录 — add-experience-fallback
 
+> 阶段证据：本文的能力状态、测试数量和环境仅对应下述验收时点，不代表当前工作区；当前能力见 [README](../README.md)，记录导航见 [验收索引](acceptance-index.md)。
+
 核对日期：2026-09-16。环境：macOS（darwin 25.6.0, arm64）、Node v24.20.0。无真实设备、无模型密钥、无网络。
 
 ## 1. 前置契约核对（任务 1.1）
 
-前序 [add-experience-model](../openspec/changes/archive/2026-09-16-add-experience-model/tasks.md)、[add-experience-promotion](../openspec/changes/archive/2026-09-16-add-experience-promotion/tasks.md)、[add-visual-matcher](../openspec/changes/archive/2026-09-16-add-visual-matcher/tasks.md)、[add-experience-replay](../openspec/changes/add-experience-replay/tasks.md) 均已完成。对照核对：Store `findCandidates` / `applyVariantEvent`、Promotion `promoteExperience`（`callId` 幂等、dump 隔离）、Matcher `matchScreen`/`matchTarget`、Replay `ReplayResult.effect` 与原生 `Agent.callActionInActionSpace` + `locatedPixelResult`。
+前序 [add-experience-model](../openspec/changes/archive/2026-09-16-add-experience-model/tasks.md)、[add-experience-promotion](../openspec/changes/archive/2026-09-16-add-experience-promotion/tasks.md)、[add-visual-matcher](../openspec/changes/archive/2026-09-16-add-visual-matcher/tasks.md)、[add-experience-replay](../openspec/changes/archive/2026-09-16-add-experience-replay/tasks.md) 均已完成。对照核对：Store `findCandidates` / `applyVariantEvent`、Promotion `promoteExperience`（`callId` 幂等、dump 隔离）、Matcher `matchScreen`/`matchTarget`、Replay `ReplayResult.effect` 与原生 `Agent.callActionInActionSpace` + `locatedPixelResult`。
 
 资格策略默认空表；测试注入无业务含义的 `generic-replay-target`。未登记或含判断/富媒体请求走原生，不以自然语言猜测幂等性。
 

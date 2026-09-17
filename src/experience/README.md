@@ -2,6 +2,8 @@
 
 Experience 能力：视觉经验资产契约、本地文件 Store、Promotion（把单次原生执行轨迹转为 candidate）、Matcher（本地验证历史画面/目标）与 Replay（按当前画面逐步重放动作链）。
 
+范围冻结：已有 Schema/Store/Promotion/Matcher/Replay/Runtime/Integration 共同参与 Runtime capabilities。本阶段只修复、收口契约并验证现有闭环；Memory/Skill/通用 Recovery 等扩展暂停。约束见 [AGENTS.md](../../AGENTS.md)，适配入口见 [ARCHITECTURE.md](../../ARCHITECTURE.md)。
+
 ## 目录
 
 - `schema/` — 资产格式定义与运行期校验

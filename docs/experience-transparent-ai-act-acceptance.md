@@ -1,5 +1,7 @@
 # 验收与核对记录 — integrate-experience-with-ai-act
 
+> 阶段证据：本文的能力状态、测试数量和环境仅对应下述验收时点，不代表当前工作区；当前能力见 [README](../README.md)，记录导航见 [验收索引](acceptance-index.md)。
+
 核对日期：2026-09-16。环境：macOS（darwin 25.6.0, arm64）、Node v24.20.0。无真实设备、无模型密钥、无网络。
 
 ## 1. 前置与官方契约（任务 1.1）

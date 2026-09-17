@@ -1,6 +1,10 @@
-# MTA — Midscene 双平台（Android / HarmonyOS）测试框架接入层
+# MTA — 移动终端 AI 自动化测试框架
 
-基于 [Midscene Test](https://www.midscenejs.com/midscene-test/use)、[Midscene Android](https://www.midscenejs.com/platforms/android.html) 与 [Midscene HarmonyOS](https://www.midscenejs.com/platforms/harmony.html) 的移动设备测试框架工程。本仓库只交付**框架接入能力**：设备会话、原生 Nodes、通用设备生命周期节点和工程检查。**具体业务用例（YAML）、测试意图和业务结果判断由使用方提供**，框架不内置任何业务流程示例。
+MTA 面向 Android / HarmonyOS，提供设备会话、多设备协作、通用 Runtime 节点与实验性 Experience 学习和重放能力。Midscene 是底层执行引擎，负责 Runner、Agent、Planner、原生动作与报告；MTA 负责这些能力的接入、组合和运行边界。
+
+当前 YAML 定位为 **Expert Mode / Execution Workflow**，用于表达可执行工作流。测试意图、业务数据和结果判断由使用方定义。仓库内的综合、相机和经验学习 YAML 是示例/验收用例，不是框架承诺交付的业务用例库。
+
+本文说明当前可用能力与使用方法；架构边界见 [ARCHITECTURE.md](ARCHITECTURE.md)，后续方向见 [Roadmap](openspec/roadmap.md)，阶段证据见 [验收索引](docs/acceptance-index.md)。
 
 ## 环境要求
 
@@ -21,7 +25,7 @@ pnpm run nodes                   # 重新生成两平台 Node 参考
 ## 运行业务用例（使用方）
 
 1. 复制 `.env.example` 为 `.env`，填写模型四项配置（[模型配置说明](https://midscenejs.com/model-common-config.html)）；单设备多目标时按平台设置 `ANDROID_DEVICE_ID` / `HARMONY_DEVICE_ID`；协作项目设置 `MULTI_DEVICE_BINDINGS` 与各别名的设备 ID 变量。hdc 不在默认路径时设置 `HDC_HOME`。
-2. 将合法的 Midscene YAML 用例放入对应目录：`cases/android/`、`cases/harmony/` 或 `cases/multi-device/`（目录说明见 [cases/README.md](cases/README.md)；协作 YAML 见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)）。
+2. 将 Expert Mode 的合法 Midscene YAML 工作流放入对应目录：`cases/android/`、`cases/harmony/` 或 `cases/multi-device/`（目录说明见 [cases/README.md](cases/README.md)；协作 YAML 见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)）。
 3. 执行：
 
 ```bash
@@ -31,7 +35,7 @@ pnpm run test:cases --project harmony        # 仅运行 harmony 项目
 pnpm run test:cases --project multi-device   # 仅运行多设备协作项目
 ```
 
-运行报告写入 `midscene_run/report/`（不入库）。`cases/android/` 与 `cases/harmony/` 为空时 CLI 会报“未找到 YAML 用例”的收集错误，这是预期行为——业务内容由使用方提供。
+运行报告写入 `midscene_run/report/`（不入库）。某项目发现范围内没有 YAML 时，CLI 会报“未找到 YAML 用例”的收集错误。当前单设备目录含示例/验收 YAML，执行前须核对步骤与目标设备。
 
 ## 设备会话与选择规则
 
@@ -59,14 +63,16 @@ pnpm run test:cases --project multi-device   # 仅运行多设备协作项目
 
 - [midscene-node-reference.android.md](midscene-node-reference.android.md) —— android 项目：原生 AI Nodes（`aiAct`、`aiAssert`、`aiTap`、`aiAsk` 等）、原生设备 Nodes（`launch`、`terminate`、`runAdbShell`、`back`、`home`、`recentApps`）与通用生命周期节点。
 - [midscene-node-reference.harmony.md](midscene-node-reference.harmony.md) —— harmony 项目：同名原生 AI/设备 Nodes（鸿蒙侧 shell 节点为 `runHdcShell`）与通用生命周期节点。
-- [midscene-node-reference.multi-device.md](midscene-node-reference.multi-device.md) —— 协作项目：`<alias>.<native-node>`（如 `phone1.aiAct`）、`<alias>.device.prepare` / `recover`、`device.parallel` 与全局 `wait`。说明见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)。
+- [midscene-node-reference.multi-device.md](midscene-node-reference.multi-device.md) —— 协作项目：`<alias>.<native-node>`（如配置后的 `DUT1.aiAct`）、`<alias>.device.prepare` / `recover`、`device.parallel` 与全局 `wait`。说明见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)。
 - **框架通用节点**（`src/nodes/`，两平台共享）：
   - `device.prepare: { target: home }` —— 严格只接受该输入；返回当前平台主屏。仅是原生导航基线，不解锁设备、不重置网络、不准备业务初始状态。
   - `device.recover: {}` —— 严格只接受空对象；返回当前平台主屏，保留系统设置与业务状态。可在准备或用例步骤部分完成后调用。
   - `experienceAct: { prompt }` —— 实验性经验动作。仅对使用方登记的可重复纯动作目标尝试视觉重放；默认资格表为空，未登记或含判断时回退一次原生 `aiAct`。不覆盖原生 `aiAssert`。
 - **可选透明接入**：默认关闭。设置 `EXPERIENCE_ENABLED=true` 后，本仓库 YAML 的 `aiAct` 对合格纯动作复用 Experience Runtime；图片、未知 options、未登记目标仍原样走原生。不拦截脚本直接调用 `agent.aiAct`。说明见 [docs/experience-transparent-ai-act.md](docs/experience-transparent-ai-act.md)。
 
-两个节点均直接传播设备操作失败，超时与重试交给原生运行器，不吞异常、不私自重试。
+两个设备生命周期节点均直接传播设备操作失败，超时与重试交给原生运行器，不吞异常、不私自重试。
+
+`src/setup/ + src/nodes/ + src/experience/` 共同承担 Runtime capabilities；当前按职责解释边界，不迁移源码目录。Node 扩展与 Experience 范围约束见 [AGENTS.md](AGENTS.md)。
 
 ## 目录结构
 
@@ -79,13 +85,13 @@ pnpm run test:cases --project multi-device   # 仅运行多设备协作项目
 | `src/nodes/` | 框架通用 Nodes；协作项目别名 Node 与 `device.parallel` |
 | `scripts/generate-node-references.mjs` | 按项目生成 Node 参考（官方 CLI 多项目时需 `--project` 选择） |
 | `src/experience/`、`experiences/` | Experience 资产、Promotion、Matcher、Replay、Runtime；实验入口 `experienceAct`；可选 YAML `aiAct` 透明接入（默认关闭） |
-| `cases/android/`、`cases/harmony/` | 使用方业务用例目录（按平台，仅使用方写入） |
+| `cases/android/`、`cases/harmony/` | 使用方业务用例目录；现有示例/验收 YAML 已单独标识 |
 | `experiments/visual-assert/` | 视觉断言离线评估实验（不接入生产 `aiAssert`） |
 | `tests/` | 框架自身测试与夹具，不进入任何平台的业务发现范围 |
 | `docs/` | 依赖版本核对、框架验收与 Experience 能力说明（含 YAML `aiAct` 透明接入） |
 
 ## 框架验证
 
-- `pnpm test`：254 项框架测试（单元 + 原生边界集成，含双平台生命周期、鸿蒙选择/会话与视觉断言离线评估），证据与覆盖分层见 [docs/acceptance.md](docs/acceptance.md)；YAML `aiAct` 透明接入见 [docs/experience-transparent-ai-act-acceptance.md](docs/experience-transparent-ai-act-acceptance.md)。
+- `pnpm test`：运行框架单元与原生边界集成测试。测试数量、环境和结果只在对应日期的[阶段验收记录](docs/acceptance-index.md)中保存，不作为本文的实时统计。
 - 边界集成测试加载**实际锁定的** `@midscene/test`/`@midscene/android`/`@midscene/harmony` 包与真实 `midscene.config.ts`，仅将设备/Agent 边界替换为受控替身；真实硬件与模型调用未在框架验收中覆盖。
-- 有真实设备时，可选执行连接/截图/释放单能力检查（见验收记录的“可选设备检查”一节，Android 与 HarmonyOS 分列），该检查不是框架验收的必要条件。
+- 有真实设备时，可选执行连接/截图/释放单能力检查（见[双平台阶段记录](docs/acceptance.md)的“可选设备检查”一节），该检查不是框架验收的必要条件。

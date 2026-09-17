@@ -1,5 +1,7 @@
 # 验收与核对记录 — add-experience-model（experience-assets）
 
+> 阶段证据：本文的能力状态、测试数量和环境仅对应下述验收时点，不代表当前工作区；当前能力见 [README](../README.md)，记录导航见 [验收索引](acceptance-index.md)。
+
 本文件记录 `add-experience-model` 实施过程中的核对与验证证据，按任务组补充。语言为 zh-CN。
 
 ## 1. 前置核对（任务 1.1）
@@ -8,9 +10,9 @@
 
 ### 前置证据
 
-前置 Change [bootstrap-midscene-mobile-test](../openspec/changes/bootstrap-midscene-mobile-test/proposal.md) 已完成实施与验收：
+前置 Change [bootstrap-midscene-mobile-test](../openspec/changes/archive/2026-09-16-bootstrap-midscene-mobile-test/proposal.md) 已完成实施与验收：
 
-- 任务清单 12/12 全部勾选（`openspec list --json` 状态 `complete`），见 [tasks.md](../openspec/changes/bootstrap-midscene-mobile-test/tasks.md)。
+- 任务清单 12/12 全部勾选（`openspec list --json` 状态 `complete`），见 [tasks.md](../openspec/changes/archive/2026-09-16-bootstrap-midscene-mobile-test/tasks.md)。
 - 框架验收记录：[acceptance.md](acceptance.md)（无设备/无密钥条件下安装、类型检查、Node 参考生成、44 项框架测试全部通过）。
 - 依赖版本核对：[dependency-versions.md](dependency-versions.md)。
 - 工程提交：`be5c68f Bootstrap Midscene Android test framework (bootstrap-midscene-mobile-test)`。
@@ -28,8 +30,8 @@
 ### 归档状态说明
 
 bootstrap 尚未执行 OpenSpec archive 流程：`openspec/specs/` 主规格目录与 `openspec/changes/archive/` 当前为空，其两份规格以 Change 内 delta 形式存在于
-[specs/midscene-android-project/spec.md](../openspec/changes/bootstrap-midscene-mobile-test/specs/midscene-android-project/spec.md) 与
-[specs/device-lifecycle-nodes/spec.md](../openspec/changes/bootstrap-midscene-mobile-test/specs/device-lifecycle-nodes/spec.md)。
+[specs/midscene-android-project/spec.md](../openspec/changes/archive/2026-09-16-bootstrap-midscene-mobile-test/specs/midscene-android-project/spec.md) 与
+[specs/device-lifecycle-nodes/spec.md](../openspec/changes/archive/2026-09-16-bootstrap-midscene-mobile-test/specs/device-lifecycle-nodes/spec.md)。
 本次核对以上述 delta 规格为准；archive 只是收敛位置操作，不改变契约内容，不阻塞本 Change 实施。
 
 ### 契约差异清单

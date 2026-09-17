@@ -1,4 +1,6 @@
-# Midscene YAML 工作流编写规范
+# Expert Mode / Execution Workflow：Midscene YAML 编写规范
+
+当前 YAML 是 Expert Mode / Execution Workflow，不是最终用户模型。未来更高层 Case Authoring 的方向见 [Roadmap](../openspec/roadmap.md)，架构边界见 [ARCHITECTURE](../ARCHITECTURE.md)。
 
 本文档描述 Midscene Test 的 YAML 工作流格式，适用于本仓库的 android / harmony 单设备项目，以及 `multi-device` 协作项目中带设备前缀的步骤。
 

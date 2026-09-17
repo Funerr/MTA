@@ -1,6 +1,6 @@
 # 多设备 YAML 协作工作流
 
-本能力让使用方继续只编写 Midscene YAML，在同一个执行项目里绑定多台 Android / HarmonyOS 设备，并交错或同时操作它们。设备连接、Agent 生命周期和清理由项目 setup 管理。
+当前 Expert Mode / Execution Workflow 使用 Midscene YAML，在同一个执行项目里绑定多台 Android / HarmonyOS 设备，并交错或同时操作它们。设备连接、Agent 生命周期和清理由项目 setup 管理。
 
 ## 与官方多项目并发的区别
 
@@ -18,15 +18,15 @@
 在 `.env` 中声明别名、平台和设备 ID 所在的环境变量：
 
 ```bash
-MULTI_DEVICE_BINDINGS=phone1:android:MULTI_DEVICE_PHONE1_ID,phone2:harmony:MULTI_DEVICE_PHONE2_ID
-MULTI_DEVICE_PHONE1_ID=<adb udid>
-MULTI_DEVICE_PHONE2_ID=<hdc deviceId>
+MULTI_DEVICE_BINDINGS=DUT1:android:MULTI_DEVICE_DUT1_ID,DUT2:harmony:MULTI_DEVICE_DUT2_ID
+MULTI_DEVICE_DUT1_ID=<adb udid>
+MULTI_DEVICE_DUT2_ID=<hdc deviceId>
 ```
 
 - 至少两台；别名以字母开头，仅含字母、数字、下划线；不能使用 `device` / `wait`。
 - 设备 ID 必须显式给出，setup 时精确匹配，不静默改选。
 - 同一平台的同一物理 ID 不能绑定两个别名。
-- 模块导入和 `pnpm run nodes` **不连接设备**。未设置 `MULTI_DEVICE_BINDINGS` 时默认 `phone1`（android）+ `phone2`（harmony），便于生成 Node 参考。
+- 模块导入和 `pnpm run nodes` **不连接设备**。未设置 `MULTI_DEVICE_BINDINGS` 时兼容默认值仍为 `phone1`（android）+ `phone2`（harmony），便于生成 Node 参考。文档推荐 `DUT1/DUT2/DUT3`，底层允许任意合法 alias；下方 DUT 示例须先设置上方显式绑定。
 
 独立 `android` / `harmony` 项目仍然各绑一台设备。默认 `test.maxConcurrency: 1`，三项目串行。不要靠提高项目并发来代替协作用例内的步骤同步。
 
@@ -38,19 +38,19 @@ MULTI_DEVICE_PHONE2_ID=<hdc deviceId>
 cases:
   - name: 多设备协作
     steps:
-      - phone1.device.prepare: { target: home }
-      - phone2.device.prepare: { target: home }
-      - phone1.aiAct: 执行第一步
-      - phone2.aiAssert: 已观察到第一步的结果
+      - DUT1.device.prepare: { target: home }
+      - DUT2.device.prepare: { target: home }
+      - DUT1.aiAct: 执行第一步
+      - DUT2.aiAssert: 已观察到第一步的结果
       - device.parallel:
           steps:
-            - phone1.aiAssert: 设备一处于预期状态
-            - phone2.aiAssert: 设备二处于预期状态
+            - DUT1.aiAssert: 设备一处于预期状态
+            - DUT2.aiAssert: 设备二处于预期状态
           $:
             timeout: 30000
       - wait: { duration: 500 }
-      - phone1.device.recover: {}
-      - phone2.device.recover: {}
+      - DUT1.device.recover: {}
+      - DUT2.device.recover: {}
 ```
 
 规则：
@@ -74,10 +74,6 @@ pnpm run nodes
 
 会生成 `midscene-node-reference.multi-device.md`，其中包含每个已配置别名的可用操作（含平台特有的 `runAdbShell` / `runHdcShell`）以及 `device.parallel`。
 
-## 验收状态
+## 验证范围
 
-已通过的是**受控边界验证**：使用锁定的 `@midscene/test@1.12.7` 公开扩展点（`defineNode`、`createMidsceneNodes`、`NodeDefinition.execute`、`CaseRunner`、`collectWorkflowDocument` / `runWorkflowDocument`、`createProjectRuntime`）配合桩 Agent，覆盖别名化 Node 契约、配置与会话生命周期、交错步骤、输入校验、并行并发与取消、在途防重叠和逐设备报告关联。
-
-验证命令：`pnpm run typecheck`、`pnpm test`、`pnpm run nodes`。当前工作区已通过类型检查、31 个测试文件共 292 项测试及三项目 Node 参考生成；`tests/integration/experience-ai-act-native.test.ts` 在用例内显式关闭 `EXPERIENCE_ENABLED`，因此不会受本机 `.env` 影响。
-
-**尚未执行真实设备验证**：所有多设备测试都用桩 Agent，没有连接过真实 Android / HarmonyOS 设备，因此以下内容仍待现场确认——`adb` / `hdc` 精确选择与连接失败的实际错误文本、原生 AI 操作在取消信号后是否真正停止设备 I/O、两台真机并行时的模型调用与报告落盘、以及 `agent.destroy()` 的真实释放时序。首次真机运行请按单台 → 交错 → 并行的顺序逐步放开。
+受控边界与真实设备验证范围见[多设备阶段验收记录](multi-device-yaml-workflows-acceptance.md)。
