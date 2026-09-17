@@ -24,7 +24,7 @@
       "falseRejectRate": 0,
       "unknownRate": 0.24528301886792453,
       "coverage": 0.7547169811320755,
-      "totalLatencyMs": 1652.134206000006
+      "totalLatencyMs": 2152.4456260000006
     },
     "byType": [
       {
@@ -43,7 +43,7 @@
         "falseRejectRate": 0,
         "unknownRate": 0.16666666666666666,
         "coverage": 0.8333333333333334,
-        "totalLatencyMs": 775.1849550000043
+        "totalLatencyMs": 961.3269600000021
       },
       {
         "semanticType": "explicit-text",
@@ -61,7 +61,7 @@
         "falseRejectRate": 0,
         "unknownRate": 0.16666666666666666,
         "coverage": 0.8333333333333334,
-        "totalLatencyMs": 876.943709000001
+        "totalLatencyMs": 1191.1116239999974
       },
       {
         "semanticType": "open-semantic",
@@ -79,7 +79,7 @@
         "falseRejectRate": null,
         "unknownRate": 1,
         "coverage": null,
-        "totalLatencyMs": 0.005542000000787084
+        "totalLatencyMs": 0.007042000001092674
       }
     ],
     "verdict": {
@@ -108,7 +108,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 33.28491700000086,
+      "latencyMs": 37.24012500000026,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -152,7 +152,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.770415999999386
+          "timingMs": 18.885292000000845
         },
         "negative": {
           "decision": "no-match",
@@ -197,7 +197,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.466167000000496
+          "timingMs": 18.297624999999243
         }
       },
       "scores": {
@@ -253,7 +253,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 32.50445800000125,
+      "latencyMs": 39.796667000000525,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -298,7 +298,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.206167000000278
+          "timingMs": 19.40875000000051
         },
         "negative": {
           "decision": "match",
@@ -342,7 +342,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.270332999998573
+          "timingMs": 20.351833000000624
         }
       },
       "scores": {
@@ -398,7 +398,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 41.99474999999984,
+      "latencyMs": 40.47845799999959,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -442,7 +442,7 @@
               "passed": true
             }
           },
-          "timingMs": 22.26458300000013
+          "timingMs": 20.849749999999403
         },
         "negative": {
           "decision": "no-match",
@@ -487,7 +487,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.668750000000728
+          "timingMs": 19.60570800000096
         }
       },
       "scores": {
@@ -543,7 +543,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 34.953332999999475,
+      "latencyMs": 44.061125000000175,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -588,7 +588,7 @@
               "passed": true
             }
           },
-          "timingMs": 17.894625000000815
+          "timingMs": 23.10070799999994
         },
         "negative": {
           "decision": "match",
@@ -632,7 +632,7 @@
               "passed": true
             }
           },
-          "timingMs": 17.025792000000365
+          "timingMs": 20.93262499999946
         }
       },
       "scores": {
@@ -688,7 +688,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 35.710541999998895,
+      "latencyMs": 50.08899999999994,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -732,7 +732,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.803624999998647
+          "timingMs": 29.30975000000035
         },
         "negative": {
           "decision": "no-match",
@@ -777,7 +777,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.85674999999901
+          "timingMs": 20.68604199999936
         }
       },
       "scores": {
@@ -833,7 +833,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 33.91337500000009,
+      "latencyMs": 88.58829100000003,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -878,7 +878,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.880334000001312
+          "timingMs": 44.06841600000007
         },
         "negative": {
           "decision": "match",
@@ -922,7 +922,7 @@
               "passed": true
             }
           },
-          "timingMs": 17.00799999999981
+          "timingMs": 44.46916699999929
         }
       },
       "scores": {
@@ -978,7 +978,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 35.83729099999982,
+      "latencyMs": 91.72404199999983,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -1022,7 +1022,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.84662500000013
+          "timingMs": 50.06462500000089
         },
         "negative": {
           "decision": "no-match",
@@ -1067,7 +1067,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.940042000000176
+          "timingMs": 41.58675000000039
         }
       },
       "scores": {
@@ -1123,7 +1123,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 33.39429100000052,
+      "latencyMs": 50.58129200000076,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -1168,7 +1168,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.548542000000452
+          "timingMs": 26.831624999998894
         },
         "negative": {
           "decision": "match",
@@ -1212,7 +1212,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.79633300000023
+          "timingMs": 23.719333000000915
         }
       },
       "scores": {
@@ -1268,7 +1268,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 33.46137500000077,
+      "latencyMs": 35.33695799999987,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -1312,7 +1312,7 @@
               "passed": true
             }
           },
-          "timingMs": 17.137791999999536
+          "timingMs": 17.99183400000038
         },
         "negative": {
           "decision": "no-match",
@@ -1357,7 +1357,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.306749999999738
+          "timingMs": 17.3207910000001
         }
       },
       "scores": {
@@ -1413,7 +1413,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 32.68333299999904,
+      "latencyMs": 34.62933400000111,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -1458,7 +1458,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.32341699999961
+          "timingMs": 17.4118750000016
         },
         "negative": {
           "decision": "match",
@@ -1502,7 +1502,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.341291999999157
+          "timingMs": 17.187707999999475
         }
       },
       "scores": {
@@ -1558,7 +1558,7 @@
       "decision": "unknown",
       "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
       "code": "insufficient-evidence",
-      "latencyMs": 34.5993750000016,
+      "latencyMs": 34.48579200000131,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -1604,7 +1604,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.216583000001265
+          "timingMs": 17.501166000000012
         },
         "negative": {
           "decision": "no-match",
@@ -1650,7 +1650,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.36908299999959
+          "timingMs": 16.9515420000007
         }
       },
       "group": "validation",
@@ -1664,7 +1664,7 @@
       "decision": "unknown",
       "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
       "code": "insufficient-evidence",
-      "latencyMs": 14.234707999999955,
+      "latencyMs": 14.49487500000032,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -1710,7 +1710,7 @@
               "passed": true
             }
           },
-          "timingMs": 7.267499999999927
+          "timingMs": 7.345541999999114
         },
         "negative": {
           "decision": "no-match",
@@ -1756,7 +1756,7 @@
               "passed": true
             }
           },
-          "timingMs": 6.95379099999991
+          "timingMs": 7.1339589999988675
         }
       },
       "group": "validation",
@@ -1770,7 +1770,7 @@
       "decision": "unknown",
       "reason": "开放语义或未支持断言类型：不使用图像相似度代替语义正确性",
       "code": "unsupported-semantic",
-      "latencyMs": 0.0012079999996785773,
+      "latencyMs": 0.0012499999993451638,
       "matcher": {},
       "group": "validation",
       "humanLabel": "unknown",
@@ -1783,7 +1783,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 32.96470899999986,
+      "latencyMs": 34.95491700000093,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -1827,7 +1827,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.46049999999923
+          "timingMs": 17.298541999998633
         },
         "negative": {
           "decision": "no-match",
@@ -1872,7 +1872,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.473291999998764
+          "timingMs": 17.63891700000022
         }
       },
       "scores": {
@@ -1928,7 +1928,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 33.45087500000045,
+      "latencyMs": 34.39216699999997,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -1973,7 +1973,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.74749999999949
+          "timingMs": 17.21441600000071
         },
         "negative": {
           "decision": "match",
@@ -2017,7 +2017,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.68487499999901
+          "timingMs": 17.15583300000071
         }
       },
       "scores": {
@@ -2073,7 +2073,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 32.92262499999924,
+      "latencyMs": 33.9903749999994,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -2117,7 +2117,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.50866599999972
+          "timingMs": 17.023666999999477
         },
         "negative": {
           "decision": "no-match",
@@ -2162,7 +2162,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.397666999999274
+          "timingMs": 16.945583000000624
         }
       },
       "scores": {
@@ -2218,7 +2218,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 33.10262500000135,
+      "latencyMs": 34.04658299999937,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -2263,7 +2263,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.643957999998747
+          "timingMs": 17.079375000001164
         },
         "negative": {
           "decision": "match",
@@ -2307,7 +2307,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.44404200000099
+          "timingMs": 16.947540999999546
         }
       },
       "scores": {
@@ -2363,7 +2363,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 32.79541600000084,
+      "latencyMs": 39.555624999999054,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -2407,7 +2407,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.370249999999942
+          "timingMs": 17.234875000000102
         },
         "negative": {
           "decision": "no-match",
@@ -2452,7 +2452,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.412791000000652
+          "timingMs": 22.28862499999923
         }
       },
       "scores": {
@@ -2508,7 +2508,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 32.94050000000061,
+      "latencyMs": 35.19629200000054,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -2553,7 +2553,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.444875000001048
+          "timingMs": 17.567917000000307
         },
         "negative": {
           "decision": "match",
@@ -2597,7 +2597,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.481416999999055
+          "timingMs": 17.606040999999095
         }
       },
       "scores": {
@@ -2653,7 +2653,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 34.242207999999664,
+      "latencyMs": 34.491250000000946,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -2697,7 +2697,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.902750000001106
+          "timingMs": 17.33154099999956
         },
         "negative": {
           "decision": "no-match",
@@ -2742,7 +2742,7 @@
               "passed": true
             }
           },
-          "timingMs": 17.31170899999961
+          "timingMs": 17.14166699999987
         }
       },
       "scores": {
@@ -2798,7 +2798,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 33.03575000000092,
+      "latencyMs": 34.61745900000096,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -2843,7 +2843,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.580832999999984
+          "timingMs": 17.21545800000058
         },
         "negative": {
           "decision": "match",
@@ -2887,7 +2887,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.43316599999889
+          "timingMs": 17.38574999999946
         }
       },
       "scores": {
@@ -2943,7 +2943,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 33.69445799999994,
+      "latencyMs": 34.70299999999952,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -2987,7 +2987,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.97033300000112
+          "timingMs": 17.436999999999898
         },
         "negative": {
           "decision": "no-match",
@@ -3032,7 +3032,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.7062909999986
+          "timingMs": 17.247582999998485
         }
       },
       "scores": {
@@ -3088,7 +3088,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 32.822000000000116,
+      "latencyMs": 34.430749999999534,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -3133,7 +3133,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.50562499999978
+          "timingMs": 17.220750000000407
         },
         "negative": {
           "decision": "match",
@@ -3177,7 +3177,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.3020000000015
+          "timingMs": 17.191999999999098
         }
       },
       "scores": {
@@ -3233,7 +3233,7 @@
       "decision": "unknown",
       "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
       "code": "insufficient-evidence",
-      "latencyMs": 32.567707999998674,
+      "latencyMs": 34.79120799999873,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -3279,7 +3279,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.357082999998966
+          "timingMs": 17.4760839999999
         },
         "negative": {
           "decision": "no-match",
@@ -3325,7 +3325,7 @@
               "passed": true
             }
           },
-          "timingMs": 16.199666000000434
+          "timingMs": 17.2481659999994
         }
       },
       "group": "validation",
@@ -3339,7 +3339,7 @@
       "decision": "unknown",
       "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
       "code": "insufficient-evidence",
-      "latencyMs": 14.074333000000479,
+      "latencyMs": 14.651374999999462,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -3385,7 +3385,7 @@
               "passed": true
             }
           },
-          "timingMs": 6.90179100000023
+          "timingMs": 7.3208749999994325
         },
         "negative": {
           "decision": "no-match",
@@ -3431,7 +3431,7 @@
               "passed": true
             }
           },
-          "timingMs": 7.163125000000946
+          "timingMs": 7.313666000000012
         }
       },
       "group": "validation",
@@ -3445,7 +3445,7 @@
       "decision": "unknown",
       "reason": "开放语义或未支持断言类型：不使用图像相似度代替语义正确性",
       "code": "unsupported-semantic",
-      "latencyMs": 0.0007079999995767139,
+      "latencyMs": 0.0018749999999272404,
       "matcher": {},
       "group": "validation",
       "humanLabel": "unknown",
@@ -3458,7 +3458,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 39.184667000001355,
+      "latencyMs": 43.05333400000018,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -3503,7 +3503,7 @@
               "passed": true
             }
           },
-          "timingMs": 20.14716700000099
+          "timingMs": 23.503292000001238
         },
         "negative": {
           "decision": "no-match",
@@ -3549,7 +3549,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.99762499999997
+          "timingMs": 19.49250000000029
         }
       },
       "scores": {
@@ -3606,7 +3606,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 38.166041000000405,
+      "latencyMs": 41.21716699999888,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -3652,7 +3652,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.119666000000507
+          "timingMs": 20.028707999999824
         },
         "negative": {
           "decision": "match",
@@ -3697,7 +3697,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.02562500000022
+          "timingMs": 21.138624999999593
         }
       },
       "scores": {
@@ -3754,7 +3754,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 39.82816699999967,
+      "latencyMs": 41.54079199999978,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -3799,7 +3799,7 @@
               "passed": true
             }
           },
-          "timingMs": 21.00495899999987
+          "timingMs": 20.267249999998967
         },
         "negative": {
           "decision": "no-match",
@@ -3845,7 +3845,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.79479199999878
+          "timingMs": 21.24670800000058
         }
       },
       "scores": {
@@ -3902,7 +3902,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 37.76262499999939,
+      "latencyMs": 42.81004199999916,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -3948,7 +3948,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.779207999999926
+          "timingMs": 21.13337500000125
         },
         "negative": {
           "decision": "match",
@@ -3993,7 +3993,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.965374999999767
+          "timingMs": 21.649874999999156
         }
       },
       "scores": {
@@ -4050,7 +4050,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 41.36812500000087,
+      "latencyMs": 40.967749999999796,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -4095,7 +4095,7 @@
               "passed": true
             }
           },
-          "timingMs": 21.995624999999563
+          "timingMs": 20.56879200000003
         },
         "negative": {
           "decision": "no-match",
@@ -4141,7 +4141,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.325291999999536
+          "timingMs": 20.37354100000084
         }
       },
       "scores": {
@@ -4198,7 +4198,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 38.22895900000003,
+      "latencyMs": 43.59950000000026,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -4244,7 +4244,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.1942080000008
+          "timingMs": 21.459625000001324
         },
         "negative": {
           "decision": "match",
@@ -4289,7 +4289,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.01379200000156
+          "timingMs": 22.1117090000007
         }
       },
       "scores": {
@@ -4346,7 +4346,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 38.149749999998676,
+      "latencyMs": 41.93279199999961,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -4391,7 +4391,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.003709000000526
+          "timingMs": 20.30199999999968
         },
         "negative": {
           "decision": "no-match",
@@ -4437,7 +4437,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.132000000001426
+          "timingMs": 21.605416000000332
         }
       },
       "scores": {
@@ -4494,7 +4494,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 40.36633299999994,
+      "latencyMs": 147.08145800000057,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -4540,7 +4540,7 @@
               "passed": true
             }
           },
-          "timingMs": 21.30620799999997
+          "timingMs": 107.71650000000045
         },
         "negative": {
           "decision": "match",
@@ -4585,7 +4585,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.023167000001195
+          "timingMs": 39.32420900000034
         }
       },
       "scores": {
@@ -4642,7 +4642,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 38.09808399999929,
+      "latencyMs": 42.41187499999978,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -4687,7 +4687,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.00683299999946
+          "timingMs": 21.044416999999157
         },
         "negative": {
           "decision": "no-match",
@@ -4733,7 +4733,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.070584000000963
+          "timingMs": 21.3382500000007
         }
       },
       "scores": {
@@ -4790,7 +4790,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 38.42645799999991,
+      "latencyMs": 41.878749999999854,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -4836,7 +4836,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.12695800000074
+          "timingMs": 21.584333999999217
         },
         "negative": {
           "decision": "match",
@@ -4881,7 +4881,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.281166000000667
+          "timingMs": 20.270415999999386
         }
       },
       "scores": {
@@ -4938,7 +4938,7 @@
       "decision": "unknown",
       "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
       "code": "insufficient-evidence",
-      "latencyMs": 43.78325000000041,
+      "latencyMs": 44.26479199999994,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -4984,7 +4984,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.50199999999859
+          "timingMs": 19.723500000000058
         },
         "negative": {
           "decision": "no-match",
@@ -5030,7 +5030,7 @@
               "passed": true
             }
           },
-          "timingMs": 24.254791999999725
+          "timingMs": 24.516750000000684
         }
       },
       "group": "validation",
@@ -5044,7 +5044,7 @@
       "decision": "unknown",
       "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
       "code": "insufficient-evidence",
-      "latencyMs": 15.24487500000032,
+      "latencyMs": 17.48187499999949,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -5090,7 +5090,7 @@
               "passed": true
             }
           },
-          "timingMs": 7.933542000000671
+          "timingMs": 7.946541999999681
         },
         "negative": {
           "decision": "no-match",
@@ -5136,7 +5136,7 @@
               "passed": true
             }
           },
-          "timingMs": 7.292209000001094
+          "timingMs": 9.51470800000061
         }
       },
       "group": "validation",
@@ -5150,7 +5150,7 @@
       "decision": "unknown",
       "reason": "开放语义或未支持断言类型：不使用图像相似度代替语义正确性",
       "code": "unsupported-semantic",
-      "latencyMs": 0.00204200000007404,
+      "latencyMs": 0.00166700000045239,
       "matcher": {},
       "group": "validation",
       "humanLabel": "unknown",
@@ -5163,7 +5163,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 38.94954200000029,
+      "latencyMs": 42.77516600000126,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -5208,7 +5208,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.24395800000093
+          "timingMs": 22.609167000000525
         },
         "negative": {
           "decision": "no-match",
@@ -5254,7 +5254,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.664833999999246
+          "timingMs": 20.13929199999984
         }
       },
       "scores": {
@@ -5311,7 +5311,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 37.93108300000131,
+      "latencyMs": 40.74554100000023,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -5357,7 +5357,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.807666999999128
+          "timingMs": 21.362708000000566
         },
         "negative": {
           "decision": "match",
@@ -5402,7 +5402,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.090416999999434
+          "timingMs": 19.354875000000902
         }
       },
       "scores": {
@@ -5459,7 +5459,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 38.31812499999978,
+      "latencyMs": 77.58795800000007,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -5504,7 +5504,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.142291000000114
+          "timingMs": 52.79887500000041
         },
         "negative": {
           "decision": "no-match",
@@ -5550,7 +5550,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.15333400000054
+          "timingMs": 24.72362500000054
         }
       },
       "scores": {
@@ -5607,7 +5607,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 37.757917000000816,
+      "latencyMs": 45.12554199999977,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -5653,7 +5653,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.094250000000102
+          "timingMs": 23.168791999998575
         },
         "negative": {
           "decision": "match",
@@ -5698,7 +5698,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.643999999998414
+          "timingMs": 21.917124999999942
         }
       },
       "scores": {
@@ -5755,7 +5755,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 36.98925000000054,
+      "latencyMs": 44.312582999998995,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -5800,7 +5800,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.411334000000352
+          "timingMs": 22.334209000000556
         },
         "negative": {
           "decision": "no-match",
@@ -5846,7 +5846,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.554000000000087
+          "timingMs": 21.950541999998677
         }
       },
       "scores": {
@@ -5903,7 +5903,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 37.42766699999993,
+      "latencyMs": 44.291417000000365,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -5949,7 +5949,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.780749999999898
+          "timingMs": 21.349582999999257
         },
         "negative": {
           "decision": "match",
@@ -5994,7 +5994,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.617958999999246
+          "timingMs": 22.912207999999737
         }
       },
       "scores": {
@@ -6051,7 +6051,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 37.135457999998835,
+      "latencyMs": 42.334749999999985,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -6096,7 +6096,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.694707999999082
+          "timingMs": 21.57629199999974
         },
         "negative": {
           "decision": "no-match",
@@ -6142,7 +6142,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.42500000000109
+          "timingMs": 20.728791999999885
         }
       },
       "scores": {
@@ -6199,7 +6199,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 37.03633300000001,
+      "latencyMs": 59.550083000000086,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -6245,7 +6245,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.475500000000466
+          "timingMs": 30.473500000000058
         },
         "negative": {
           "decision": "match",
@@ -6290,7 +6290,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.543417000000773
+          "timingMs": 29.038791999999376
         }
       },
       "scores": {
@@ -6347,7 +6347,7 @@
       "decision": "supported",
       "reason": "当前画面与声称状态的完整参考一致",
       "code": "observed-positive",
-      "latencyMs": 36.97566700000061,
+      "latencyMs": 43.78600000000006,
       "matcher": {
         "positive": {
           "decision": "match",
@@ -6392,7 +6392,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.371707999998762
+          "timingMs": 22.673165999998673
         },
         "negative": {
           "decision": "no-match",
@@ -6438,7 +6438,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.58729200000016
+          "timingMs": 21.081207999999606
         }
       },
       "scores": {
@@ -6495,7 +6495,7 @@
       "decision": "contradicted",
       "reason": "当前画面与相反状态的完整参考一致，断言被反对",
       "code": "observed-negative",
-      "latencyMs": 37.22254199999952,
+      "latencyMs": 69.60933300000033,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -6541,7 +6541,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.536791999998968
+          "timingMs": 22.490208000001076
         },
         "negative": {
           "decision": "match",
@@ -6586,7 +6586,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.660665999999765
+          "timingMs": 47.05558299999939
         }
       },
       "scores": {
@@ -6643,7 +6643,7 @@
       "decision": "unknown",
       "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
       "code": "insufficient-evidence",
-      "latencyMs": 38.11474999999882,
+      "latencyMs": 54.18991599999936,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -6689,7 +6689,7 @@
               "passed": true
             }
           },
-          "timingMs": 18.65483299999869
+          "timingMs": 26.157874999998967
         },
         "negative": {
           "decision": "no-match",
@@ -6735,7 +6735,7 @@
               "passed": true
             }
           },
-          "timingMs": 19.44091599999956
+          "timingMs": 27.992583999999624
         }
       },
       "group": "validation",
@@ -6749,7 +6749,7 @@
       "decision": "unknown",
       "reason": "未找到完整正或反状态证据，缺证据不得默认 true/false",
       "code": "insufficient-evidence",
-      "latencyMs": 14.478041000000303,
+      "latencyMs": 38.56320799999958,
       "matcher": {
         "positive": {
           "decision": "no-match",
@@ -6795,7 +6795,7 @@
               "passed": true
             }
           },
-          "timingMs": 7.711166999999477
+          "timingMs": 17.838332999999693
         },
         "negative": {
           "decision": "no-match",
@@ -6841,7 +6841,7 @@
               "passed": true
             }
           },
-          "timingMs": 6.75012500000048
+          "timingMs": 20.664875000000393
         }
       },
       "group": "validation",
@@ -6855,7 +6855,7 @@
       "decision": "unknown",
       "reason": "开放语义或未支持断言类型：不使用图像相似度代替语义正确性",
       "code": "unsupported-semantic",
-      "latencyMs": 0.0012920000008307397,
+      "latencyMs": 0.001958000000740867,
       "matcher": {},
       "group": "validation",
       "humanLabel": "unknown",
