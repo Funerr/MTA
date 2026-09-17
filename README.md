@@ -24,7 +24,7 @@ pnpm run nodes                   # 重新生成两平台 Node 参考
 
 ## 运行业务用例（使用方）
 
-1. 复制 `.env.example` 为 `.env`，填写模型四项配置（[模型配置说明](https://midscenejs.com/model-common-config.html)）；单设备多目标时按平台设置 `ANDROID_DEVICE_ID` / `HARMONY_DEVICE_ID`；协作项目设置 `MULTI_DEVICE_BINDINGS` 与各别名的设备 ID 变量。hdc 不在默认路径时设置 `HDC_HOME`。
+1. 复制 `.env.example` 为 `.env`，填写模型四项配置（[模型配置说明](https://midscenejs.com/model-common-config.html)）；单设备多目标时按平台设置 `ANDROID_DEVICE_ID` / `HARMONY_DEVICE_ID`；协作项目设置 `MULTI_DEVICE_BINDINGS` 与各别名的设备 ID 变量。hdc 不在默认路径时设置 `HDC_HOME`。高分辨率设备可设置 `SCREENSHOT_SHRINK_FACTOR`（须为 ≥1 的数字，缺省 `1` 不缩放）：截图按该因子缩小后传给模型以降低 token 消耗，坐标由 Midscene 换算回逻辑分辨率；非法值在会话建立时报错。
 2. 将 Expert Mode 的合法 Midscene YAML 工作流放入对应目录：`cases/android/`、`cases/harmony/` 或 `cases/multi-device/`（目录说明见 [cases/README.md](cases/README.md)；协作 YAML 见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)）。
 3. 执行：
 

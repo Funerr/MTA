@@ -5,6 +5,7 @@ import {
 } from '@midscene/harmony';
 import { defineProjectSetup } from '@midscene/test/config';
 import { bindAgentToDevice, SessionHandle } from './session';
+import { screenshotShrinkAgentOptions } from './agent-options';
 import type { ExperienceEnvironment } from '../experience/schema/environment';
 import type { ExperienceActionPolicy } from '../experience/runtime/types';
 import type { HarmonyDeviceEntry, HarmonyDeviceLister, HarmonyAgentFactory } from './harmony';
@@ -44,7 +45,7 @@ export function createHarmonyExperienceProjectSetup(
           bindAgentToDevice(
             deviceId,
             () => new HarmonyDevice(deviceId),
-            (device) => new HarmonyAgent(device),
+            (device) => new HarmonyAgent(device, screenshotShrinkAgentOptions()),
           ));
 
       let devices: readonly HarmonyDeviceEntry[];

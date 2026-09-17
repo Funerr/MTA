@@ -5,6 +5,7 @@ import {
 } from '@midscene/harmony';
 import { defineProjectSetup } from '@midscene/test/config';
 import { bindAgentToDevice, SessionHandle } from './session';
+import { screenshotShrinkAgentOptions } from './agent-options';
 
 /** 已连接 HarmonyOS 设备的最小描述，与官方 `getConnectedDevices` 返回一致（无授权状态字段）。 */
 export interface HarmonyDeviceEntry {
@@ -77,7 +78,7 @@ export const createHdcHarmonyAgent: HarmonyAgentFactory = (deviceId) =>
   bindAgentToDevice(
     deviceId,
     () => new HarmonyDevice(deviceId),
-    (device) => new HarmonyAgent(device),
+    (device) => new HarmonyAgent(device, screenshotShrinkAgentOptions()),
   );
 
 /** 一次执行项目绑定的设备会话。 */

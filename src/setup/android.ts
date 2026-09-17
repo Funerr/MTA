@@ -5,6 +5,7 @@ import {
 } from '@midscene/android';
 import { defineProjectSetup } from '@midscene/test/config';
 import { bindAgentToDevice, SessionHandle } from './session';
+import { screenshotShrinkAgentOptions } from './agent-options';
 
 // 兼容既有公开 API：会话公共层原属 android.ts，迁移后继续从这里导出。
 export { bindAgentToDevice } from './session';
@@ -94,7 +95,7 @@ export const createAdbAndroidAgent: AndroidAgentFactory = (udid) =>
   bindAgentToDevice(
     udid,
     () => new AndroidDevice(udid),
-    (device) => new AndroidAgent(device),
+    (device) => new AndroidAgent(device, screenshotShrinkAgentOptions()),
   );
 
 /** 一次执行项目绑定的设备会话。 */

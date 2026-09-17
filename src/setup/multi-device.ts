@@ -10,6 +10,7 @@ import {
 } from '@midscene/harmony';
 import { defineProjectSetup } from '@midscene/test/config';
 import { bindAgentToDevice, SessionHandle } from './session';
+import { screenshotShrinkAgentOptions } from './agent-options';
 import {
   listAdbDevices,
   selectAndroidDevice,
@@ -61,6 +62,7 @@ export type AliasedHarmonyAgentFactory = (
 function agentOptions(alias: string, deviceId: string): AndroidAgentOpt & HarmonyAgentOpt {
   const stamp = Date.now();
   return {
+    ...screenshotShrinkAgentOptions(),
     groupName: `multi-device:${alias}`,
     reportFileName: `multi-device-${alias}-${deviceId}-${stamp}`,
   };
