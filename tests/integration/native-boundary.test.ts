@@ -60,11 +60,12 @@ async function loadProject(projectId: ProjectId): Promise<{
 }
 
 describe('真实配置加载与双项目 Node 注册', () => {
-  it('加载 midscene.config.ts：android/harmony 双项目、串行并发、各自发现范围不含 tests/', async () => {
+  it('加载 midscene.config.ts：android/harmony/multi-device 三项目、串行并发、各自发现范围不含 tests/', async () => {
     const loaded = await loadTestProject(configPath);
     expect(loaded.projects.map((project) => project.name)).toEqual([
       'android',
       'harmony',
+      'multi-device',
     ]);
     expect(loaded.test.maxConcurrency).toBe(1);
 
@@ -74,6 +75,18 @@ describe('真实配置加载与双项目 Node 注册', () => {
     expect(android.files?.exclude).toContain('tests/**/*.{yaml,yml}');
     expect(harmony.files?.include).toContain('cases/harmony/**/*.{yaml,yml}');
     expect(harmony.files?.exclude).toContain('tests/**/*.{yaml,yml}');
+
+    const multiDevice = loaded.projects[2]!;
+    expect(multiDevice.files?.include).toContain(
+      'cases/multi-device/**/*.{yaml,yml}',
+    );
+    expect(multiDevice.files?.exclude).toContain('tests/**/*.{yaml,yml}');
+    expect(multiDevice.files?.include).not.toContain(
+      'cases/android/**/*.{yaml,yml}',
+    );
+    expect(multiDevice.files?.include).not.toContain(
+      'cases/harmony/**/*.{yaml,yml}',
+    );
   });
 
   it('两平台原生 Nodes 按项目本地注册：android 含 runAdbShell、harmony 含 runHdcShell，同名节点各自解析', async () => {

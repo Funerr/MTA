@@ -1,0 +1,5 @@
+# 框架边界夹具：未知别名应在收集阶段失败。
+cases:
+  - name: 未知别名
+    steps:
+      - phone9.home: {}

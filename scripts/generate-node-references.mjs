@@ -1,6 +1,6 @@
 /**
- * Node 参考生成入口（android/harmony 双执行项目）。
- * 官方 `midscene-test nodes` 在两项目 Nodes 不同时要求 `--project <name>` 选择，
+ * Node 参考生成入口（android / harmony / multi-device 执行项目）。
+ * 官方 `midscene-test nodes` 在多项目 Nodes 不同时要求 `--project <name>` 选择，
  * 且输出路径固定为 midscene-node-reference.md；这里按项目分别生成并落为
  * midscene-node-reference.<project>.md，避免相互覆盖。
  */
@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 
 const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 const defaultReference = join(projectRoot, 'midscene-node-reference.md');
-const projects = ['android', 'harmony'];
+const projects = ['android', 'harmony', 'multi-device'];
 
 for (const project of projects) {
   const result = spawnSync('midscene-test', ['nodes', '--project', project], {

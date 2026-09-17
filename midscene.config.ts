@@ -14,6 +14,12 @@ import {
   type HarmonyProjectContext,
 } from './src/setup/harmony';
 import {
+  createMultiDeviceProjectSetup,
+  type MultiDeviceProjectContext,
+} from './src/setup/multi-device';
+import { loadMultiDeviceBindings } from './src/setup/multi-device-config';
+import {
+  createMultiDeviceNodes,
   frameworkNodes,
   type DeviceLifecycleProjectContext,
 } from './src/nodes';
@@ -56,8 +62,20 @@ const harmonyNodes = wrapMidsceneNodesWithExperience(
   experienceIntegration,
 );
 
-export default defineTestProject<DeviceLifecycleProjectContext>({
-  // 双执行项目串行执行：一个项目一个设备会话，并发为 1。
+const multiDeviceBindings = loadMultiDeviceBindings();
+const multiDeviceNodes = createMultiDeviceNodes(multiDeviceBindings);
+const multiDeviceProjectSetup = createMultiDeviceProjectSetup({
+  bindings: multiDeviceBindings,
+});
+
+type MtaProjectContext =
+  | DeviceLifecycleProjectContext
+  | AndroidProjectContext
+  | HarmonyProjectContext
+  | MultiDeviceProjectContext;
+
+export default defineTestProject<MtaProjectContext>({
+  // 双执行项目与协作项目默认串行：独立项目只有在绑定互异设备时才应提高并发。
   test: { maxConcurrency: 1 },
   projects: [
     {
@@ -79,6 +97,15 @@ export default defineTestProject<DeviceLifecycleProjectContext>({
         exclude: ['tests/**/*.{yaml,yml}'],
       },
       nodes: harmonyNodes,
+    },
+    {
+      name: 'multi-device',
+      setup: multiDeviceProjectSetup,
+      files: {
+        include: ['cases/multi-device/**/*.{yaml,yml}'],
+        exclude: ['tests/**/*.{yaml,yml}'],
+      },
+      nodes: multiDeviceNodes,
     },
   ],
   // 全局保留两平台结构兼容的框架节点：生命周期 + 实验 experienceAct。

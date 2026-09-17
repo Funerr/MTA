@@ -30,6 +30,12 @@ const VISUAL_FAILURE_KINDS: ReadonlySet<ReplayFailureKind> = new Set([
   'matcher-error',
 ]);
 
+function withoutUndefined<T extends object>(value: T): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(value).filter(([, item]) => item !== undefined),
+  ) as Partial<T>;
+}
+
 export class ExperienceRunError extends Error {
   readonly kind: ExperienceRunErrorKind;
   readonly result: ExperienceRuntimeResult;
@@ -83,15 +89,18 @@ export class ExperienceRuntime {
       event: Omit<RuntimeEvent, 'at' | 'callId' | 'caseName' | 'stepPath' | 'runId' | 'caseId' | 'attempt'> &
         Partial<Pick<RuntimeEvent, 'runId' | 'caseId' | 'attempt'>>,
     ): RuntimeEvent => {
+      const { type, reason, ...optionalEvent } = event;
       const full: RuntimeEvent = {
         at: new Date(now()).toISOString(),
         callId,
-        runId: input.identity.runId,
-        caseId: input.identity.caseId,
         caseName: input.identity.caseName,
         stepPath: input.identity.stepPath,
-        attempt: input.identity.attempt,
-        ...event,
+        type,
+        reason,
+        ...(input.identity.runId === undefined ? {} : { runId: input.identity.runId }),
+        ...(input.identity.caseId === undefined ? {} : { caseId: input.identity.caseId }),
+        ...(input.identity.attempt === undefined ? {} : { attempt: input.identity.attempt }),
+        ...withoutUndefined(optionalEvent),
       };
       events.push(full);
       return full;
@@ -105,11 +114,15 @@ export class ExperienceRuntime {
         readonly modelCalls?: ModelCallCounts;
       },
     ): Promise<ExperienceRuntimeResult> => {
+      const { outcome, nativeCalled, reason, modelCalls, ...optionalResult } = partial;
       const result: ExperienceRuntimeResult = {
-        ...partial,
+        outcome,
+        nativeCalled,
         callId,
         events,
-        modelCalls: partial.modelCalls ?? finishCounts(),
+        modelCalls: modelCalls ?? finishCounts(),
+        reason,
+        ...withoutUndefined(optionalResult),
       };
       if (this.deps.reporter) {
         try {

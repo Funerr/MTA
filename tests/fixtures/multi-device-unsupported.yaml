@@ -1,0 +1,5 @@
+# 框架边界夹具：平台不具备的 Node 应在收集阶段失败。
+cases:
+  - name: 不支持的节点
+    steps:
+      - phone2.runAdbShell: "echo skip"

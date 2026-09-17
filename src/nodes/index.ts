@@ -22,3 +22,12 @@ export {
   type ExperienceActInput,
   type ExperienceActProjectContext,
 } from './experience-act';
+export {
+  createMultiDeviceNodes,
+  createAliasedLifecycleNodes,
+  DeviceInFlightGuard,
+  DeviceInFlightError,
+  DeviceParallelStepError,
+  DEVICE_PARALLEL_NODE_NAME,
+} from './multi-device';
+export { aliasNativeNodes, renameNodeDefinition } from './alias-nodes';

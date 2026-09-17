@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'node:url';
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { CaseRunner, collectWorkflowDocument } from '@midscene/test';
 import { loadTestProject } from '@midscene/test/config';
 import {
@@ -19,6 +19,15 @@ const fixturePath = fileURLToPath(new URL('../fixtures/experience-ai-act.yaml', 
 const bypassFixturePath = fileURLToPath(
   new URL('../fixtures/experience-ai-act-bypass.yaml', import.meta.url),
 );
+
+beforeEach(() => {
+  // 真实配置“默认关闭”测试不能受开发者本地 .env 干扰。
+  vi.stubEnv('EXPERIENCE_ENABLED', 'false');
+});
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
 
 describe('真实配置关闭模式（任务 2.1 / 2.4 / 3.1）', () => {
   it('加载 midscene.config.ts 时默认不包装 aiAct，并保留 experienceAct / aiAssert', async () => {

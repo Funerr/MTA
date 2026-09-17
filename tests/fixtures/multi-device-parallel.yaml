@@ -1,0 +1,10 @@
+# 框架边界夹具：并行步骤。不表达业务流程。
+cases:
+  - name: 并行步骤
+    steps:
+      - device.parallel:
+          steps:
+            - phone1.home: {}
+            - phone2.home: {}
+          $:
+            timeout: 5000

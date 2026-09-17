@@ -1,0 +1,7 @@
+# 框架边界夹具：交错操作两台设备。不表达业务流程。
+cases:
+  - name: 交错步骤
+    steps:
+      - phone1.home: {}
+      - phone2.home: {}
+      - phone1.device.prepare: { target: home }

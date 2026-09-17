@@ -20,14 +20,15 @@ pnpm run nodes                   # 重新生成两平台 Node 参考
 
 ## 运行业务用例（使用方）
 
-1. 复制 `.env.example` 为 `.env`，填写模型四项配置（[模型配置说明](https://midscenejs.com/model-common-config.html)）；多设备时按平台设置 `ANDROID_DEVICE_ID` / `HARMONY_DEVICE_ID`，hdc 不在默认路径时设置 `HDC_HOME`。
-2. 将合法的 Midscene YAML 用例放入对应平台目录：`cases/android/` 或 `cases/harmony/`（目录说明见 [cases/README.md](cases/README.md)）。
+1. 复制 `.env.example` 为 `.env`，填写模型四项配置（[模型配置说明](https://midscenejs.com/model-common-config.html)）；单设备多目标时按平台设置 `ANDROID_DEVICE_ID` / `HARMONY_DEVICE_ID`；协作项目设置 `MULTI_DEVICE_BINDINGS` 与各别名的设备 ID 变量。hdc 不在默认路径时设置 `HDC_HOME`。
+2. 将合法的 Midscene YAML 用例放入对应目录：`cases/android/`、`cases/harmony/` 或 `cases/multi-device/`（目录说明见 [cases/README.md](cases/README.md)；协作 YAML 见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)）。
 3. 执行：
 
 ```bash
-pnpm run test:cases                          # 官方 midscene-test CLI，两项目串行执行
+pnpm run test:cases                          # 官方 midscene-test CLI，项目默认串行
 pnpm run test:cases --project android        # 仅运行 android 项目
 pnpm run test:cases --project harmony        # 仅运行 harmony 项目
+pnpm run test:cases --project multi-device   # 仅运行多设备协作项目
 ```
 
 运行报告写入 `midscene_run/report/`（不入库）。`cases/android/` 与 `cases/harmony/` 为空时 CLI 会报“未找到 YAML 用例”的收集错误，这是预期行为——业务内容由使用方提供。
@@ -50,7 +51,7 @@ pnpm run test:cases --project harmony        # 仅运行 harmony 项目
 
 两平台会话建立成功时都会输出所选设备标识（如 `[mta] android 会话已绑定设备：<udid>` / `[mta] harmony 会话已绑定设备：<deviceId>`），便于确认当前绑定目标。会话由原生 Agent（`AndroidAgent` / `HarmonyAgent`）接管，teardown 时经 `agent.destroy()` 统一释放且只释放一次；接管前的部分初始化失败会清理已取得资源并保留原始错误。
 
-双执行项目（`android`、`harmony`）串行执行（`maxConcurrency: 1`），一个项目绑定一台设备。
+双执行项目（`android`、`harmony`）与协作项目（`multi-device`）默认串行执行（`maxConcurrency: 1`）。前两者各绑定一台设备；同一 YAML 内操作多台设备请使用协作项目，而不是把 `maxConcurrency` 调高。
 
 ## 可注册能力
 
@@ -58,6 +59,7 @@ pnpm run test:cases --project harmony        # 仅运行 harmony 项目
 
 - [midscene-node-reference.android.md](midscene-node-reference.android.md) —— android 项目：原生 AI Nodes（`aiAct`、`aiAssert`、`aiTap`、`aiAsk` 等）、原生设备 Nodes（`launch`、`terminate`、`runAdbShell`、`back`、`home`、`recentApps`）与通用生命周期节点。
 - [midscene-node-reference.harmony.md](midscene-node-reference.harmony.md) —— harmony 项目：同名原生 AI/设备 Nodes（鸿蒙侧 shell 节点为 `runHdcShell`）与通用生命周期节点。
+- [midscene-node-reference.multi-device.md](midscene-node-reference.multi-device.md) —— 协作项目：`<alias>.<native-node>`（如 `phone1.aiAct`）、`<alias>.device.prepare` / `recover`、`device.parallel` 与全局 `wait`。说明见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)。
 - **框架通用节点**（`src/nodes/`，两平台共享）：
   - `device.prepare: { target: home }` —— 严格只接受该输入；返回当前平台主屏。仅是原生导航基线，不解锁设备、不重置网络、不准备业务初始状态。
   - `device.recover: {}` —— 严格只接受空对象；返回当前平台主屏，保留系统设置与业务状态。可在准备或用例步骤部分完成后调用。
@@ -70,11 +72,12 @@ pnpm run test:cases --project harmony        # 仅运行 harmony 项目
 
 | 路径 | 说明 |
 | --- | --- |
-| `midscene.config.ts` | 生产配置：android/harmony 双项目、Node 注册（全局生命周期 + 项目本地平台原生）、用例发现范围 |
+| `midscene.config.ts` | 生产配置：android / harmony / multi-device 项目、Node 注册与用例发现范围 |
 | `src/setup/session.ts` | 会话公共层：接管前清理（`bindAgentToDevice`）与单次释放句柄（`SessionHandle`） |
 | `src/setup/android.ts` / `src/setup/harmony.ts` | 平台各自的设备选择、会话生命周期与项目 setup |
-| `src/nodes/` | 框架通用 Nodes（两平台结构兼容） |
-| `scripts/generate-node-references.mjs` | 按项目生成两份 Node 参考（官方 CLI 双项目时需 `--project` 选择） |
+| `src/setup/multi-device.ts` | 协作项目：多别名绑定、精确选择与分别清理 |
+| `src/nodes/` | 框架通用 Nodes；协作项目别名 Node 与 `device.parallel` |
+| `scripts/generate-node-references.mjs` | 按项目生成 Node 参考（官方 CLI 多项目时需 `--project` 选择） |
 | `src/experience/`、`experiences/` | Experience 资产、Promotion、Matcher、Replay、Runtime；实验入口 `experienceAct`；可选 YAML `aiAct` 透明接入（默认关闭） |
 | `cases/android/`、`cases/harmony/` | 使用方业务用例目录（按平台，仅使用方写入） |
 | `experiments/visual-assert/` | 视觉断言离线评估实验（不接入生产 `aiAssert`） |
