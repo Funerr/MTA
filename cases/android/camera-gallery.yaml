@@ -1,0 +1,47 @@
+# 相机拍照并验证图库生成
+cases:
+  - name: 相机拍照并验证图库生成
+    steps:
+      - device.prepare:
+          target: home
+      # 启动相机
+      - launch:
+          uri: com.huawei.camera
+      - wait:
+          duration: 3000
+      - aiAssert:
+          prompt: 当前打开了相机应用，可以看到取景画面
+      # 拍照
+      - aiTap:
+          prompt: 快门按钮或拍照按钮（通常是屏幕底部中央的圆形按钮）
+      - wait:
+          duration: 2000
+      # 回到主屏幕
+      - home: {}
+      - wait:
+          duration: 500
+      # 打开图库
+      - launch:
+          uri: com.huawei.photos
+      - wait:
+          duration: 3000
+      - aiAssert:
+          prompt: 当前打开了图库或相册应用，可以看到相册分类
+      # 进入"相机"相册查看照片列表
+      - aiTap:
+          prompt: 相机 相册或包含相机拍摄照片的相册
+      - wait:
+          duration: 2000
+      - aiAssert:
+          prompt: 当前进入了照片列表，可以看到多张照片缩略图
+      - aiAssert:
+          prompt: 最上方或最前面的照片是最近刚拍的，和其他照片相比非常新
+      # 清理
+      - back: {}
+      - wait:
+          duration: 500
+      - terminate:
+          uri: com.huawei.photos
+      - terminate:
+          uri: com.huawei.camera
+      - device.recover: {}

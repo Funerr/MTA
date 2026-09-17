@@ -1,0 +1,277 @@
+# yaml-language-server: $schema=../../schemas/midscene-workflow.schema.json
+cases:
+  # ═══════════════════════════════════════════════════════════════
+  # 1. 设备生命周期与系统导航
+  # ═══════════════════════════════════════════════════════════════
+  - name: 设备生命周期与系统导航
+    steps:
+      - device.prepare:
+          target: home
+      - home: {}
+      - wait:
+          duration: 500
+      - aiAssert:
+          prompt: 当前在主屏幕或桌面
+      - back: {}
+      - wait:
+          duration: 500
+      - home: {}
+      - wait:
+          duration: 500
+      - recentApps: {}
+      - wait:
+          duration: 1000
+      - aiAssert:
+          prompt: 当前显示的是最近任务或多任务界面
+      - home: {}
+      - wait:
+          duration: 500
+      - device.recover: {}
+
+  # ═══════════════════════════════════════════════════════════════
+  # 2. 应用启动与终止（launch / terminate）
+  # ═══════════════════════════════════════════════════════════════
+  - name: 应用启动与终止 - 设置
+    steps:
+      - device.prepare:
+          target: home
+      - launch:
+          uri: com.android.settings
+      - wait:
+          duration: 2000
+      - aiAssert:
+          prompt: 当前打开了设置应用，可以看到设置选项列表
+      - terminate:
+          uri: com.android.settings
+      - wait:
+          duration: 1000
+      - aiAssert:
+          prompt: 当前不在设置应用内
+      - device.recover: {}
+
+  - name: 应用启动与终止 - 计算器
+    steps:
+      - device.prepare:
+          target: home
+      - launch:
+          uri: com.huawei.calculator
+      - wait:
+          duration: 2000
+      - aiAssert:
+          prompt: 当前打开了计算器应用，可以看到数字按钮
+      - terminate:
+          uri: com.huawei.calculator
+      - wait:
+          duration: 1000
+      - device.recover: {}
+
+  # ═══════════════════════════════════════════════════════════════
+  # 3. ADB Shell 命令执行
+  # ═══════════════════════════════════════════════════════════════
+  - name: ADB Shell 系统信息查询
+    steps:
+      - device.prepare:
+          target: home
+      - runAdbShell:
+          command: "uname -a"
+      - runAdbShell:
+          command: "cat /proc/version"
+      - runAdbShell:
+          command: "df -h /data"
+      - runAdbShell:
+          command: "cat /proc/meminfo | head -5"
+      - device.recover: {}
+
+  - name: ADB Shell 应用管理
+    steps:
+      - device.prepare:
+          target: home
+      - runAdbShell:
+          command: "pm list packages | wc -l"
+      - runAdbShell:
+          command: "dumpsys activity top | grep ACTIVITY | head -5"
+      - device.recover: {}
+
+  # ═══════════════════════════════════════════════════════════════
+  # 4. AI 视觉理解能力（aiAssert）
+  # ═══════════════════════════════════════════════════════════════
+  - name: AI 视觉断言 - 主屏幕元素识别
+    steps:
+      - device.prepare:
+          target: home
+      - home: {}
+      - wait:
+          duration: 1000
+      - aiAssert:
+          prompt: 屏幕上有时钟或时间显示
+      - aiAssert:
+          prompt: 屏幕上有应用图标或快捷方式
+      - aiAssert:
+          prompt: 屏幕底部有导航栏或Dock栏
+      - device.recover: {}
+
+  # ═══════════════════════════════════════════════════════════════
+  # 5. AI 视觉操作（aiTap）- 计算器交互
+  # ═══════════════════════════════════════════════════════════════
+  - name: AI 视觉操作 - 计算器交互（含清空）
+    steps:
+      - device.prepare:
+          target: home
+      - launch:
+          uri: com.huawei.calculator
+      - wait:
+          duration: 2000
+      # 先清空计算器历史
+      - aiTap:
+          prompt: AC 或 C 或 清除按钮
+      - wait:
+          duration: 500
+      - aiTap:
+          prompt: 数字 1 按钮
+      - wait:
+          duration: 300
+      - aiTap:
+          prompt: 加号按钮
+      - wait:
+          duration: 300
+      - aiTap:
+          prompt: 数字 2 按钮
+      - wait:
+          duration: 300
+      - aiTap:
+          prompt: 等号按钮
+      - wait:
+          duration: 500
+      - aiAssert:
+          prompt: 计算结果显示为 3
+      - terminate:
+          uri: com.huawei.calculator
+      - device.recover: {}
+
+  # ═══════════════════════════════════════════════════════════════
+  # 6. AI 自然语言操作（aiAct）
+  # ═══════════════════════════════════════════════════════════════
+  - name: AI 自然语言操作 - 简单滑动
+    steps:
+      - device.prepare:
+          target: home
+      - launch:
+          uri: com.android.settings
+      - wait:
+          duration: 2000
+      - aiAct:
+          prompt: 向下滑动一点
+          $:
+            timeout: 30000
+      - wait:
+          duration: 1000
+      - terminate:
+          uri: com.android.settings
+      - device.recover: {}
+
+  # ═══════════════════════════════════════════════════════════════
+  # 7. 记录到报告（recordToReport）
+  # ═══════════════════════════════════════════════════════════════
+  - name: 报告记录功能
+    steps:
+      - device.prepare:
+          target: home
+      - home: {}
+      - wait:
+          duration: 1000
+      - recordToReport:
+          title: 测试开始截图
+          options:
+            content: 这是端到端测试的起始状态截图
+      - launch:
+          uri: com.huawei.deskclock
+      - wait:
+          duration: 2000
+      - recordToReport:
+          title: 时钟应用截图
+          options:
+            content: 成功打开时钟应用
+      - terminate:
+          uri: com.huawei.deskclock
+      - device.recover: {}
+
+  # ═══════════════════════════════════════════════════════════════
+  # 8. 经验动作（experienceAct）- 回退到 aiAct
+  # ═══════════════════════════════════════════════════════════════
+  - name: 经验动作回退测试
+    steps:
+      - device.prepare:
+          target: home
+      - home: {}
+      - wait:
+          duration: 1000
+      # experienceAct 未登记目标会回退到原生 aiAct
+      - experienceAct:
+          prompt: 点击屏幕上的时钟或时间显示区域
+          $:
+            timeout: 30000
+      - wait:
+          duration: 1000
+      - aiAssert:
+          prompt: 当前不在主屏幕，或者已经进入了某个应用或页面
+      - device.recover: {}
+
+  # ═══════════════════════════════════════════════════════════════
+  # 9. 复杂场景 - 多应用切换
+  # ═══════════════════════════════════════════════════════════════
+  - name: 多应用切换与状态验证
+    steps:
+      - device.prepare:
+          target: home
+      # 打开设置
+      - launch:
+          uri: com.android.settings
+      - wait:
+          duration: 2000
+      - aiAssert:
+          prompt: 当前在设置应用中
+      # 回到主屏幕
+      - home: {}
+      - wait:
+          duration: 500
+      # 打开日历
+      - launch:
+          uri: com.huawei.calendar
+      - wait:
+          duration: 2000
+      - aiAssert:
+          prompt: 当前在日历应用中
+      # 使用最近任务切换
+      - recentApps: {}
+      - wait:
+          duration: 2000
+      - aiAssert:
+          prompt: 当前界面显示了最近打开的应用卡片，或者是多任务/分屏视图，或者是当前应用的缩略图
+      # 回到主屏幕并清理
+      - home: {}
+      - wait:
+          duration: 500
+      - terminate:
+          uri: com.android.settings
+      - terminate:
+          uri: com.huawei.calendar
+      - device.recover: {}
+
+  # ═══════════════════════════════════════════════════════════════
+  # 10. 相机应用基础验证
+  # ═══════════════════════════════════════════════════════════════
+  - name: 相机应用启动与退出
+    steps:
+      - device.prepare:
+          target: home
+      - launch:
+          uri: com.huawei.camera
+      - wait:
+          duration: 3000
+      - aiAssert:
+          prompt: 当前打开了相机应用，可以看到取景框或拍照按钮
+      - terminate:
+          uri: com.huawei.camera
+      - wait:
+          duration: 1000
+      - device.recover: {}
