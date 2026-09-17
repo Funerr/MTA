@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=../../schemas/midscene-workflow.schema.json
+cases:
+  # ═══════════════════════════════════════════════════════════════
+  # 经验学习验证测试
+  # 运行两次：第一次学习经验，第二次命中并重放
+  # ═══════════════════════════════════════════════════════════════
+  - name: 经验学习测试（第一次 - 学习）
+    steps:
+      - device.prepare:
+          target: home
+      - home: {}
+      - wait:
+          duration: 1000
+      # 纯动作：点击时钟（应返回 undefined 类型，触发经验学习）
+      - experienceAct:
+          prompt: 点击主屏幕上的时钟或时间显示区域
+      - wait:
+          duration: 1000
+      - home: {}
+      - device.recover: {}
+
+  - name: 经验重放测试（第二次 - 重放）
+    steps:
+      - device.prepare:
+          target: home
+      - home: {}
+      - wait:
+          duration: 1000
+      # 相同动作：应命中经验并重放
+      - experienceAct:
+          prompt: 点击主屏幕上的时钟或时间显示区域
+      - wait:
+          duration: 1000
+      - home: {}
+      - device.recover: {}
