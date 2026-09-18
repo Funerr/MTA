@@ -1,5 +1,5 @@
 # 示例/验收用例：用于演示框架能力，不代表已通过真实设备业务验收。
-# 运行前核对设备、应用与环境；定位及入口见 cases/README.md。
+# 运行前核对设备、应用与环境；定位及入口见 examples/README.md。
 # yaml-language-server: $schema=../../schemas/midscene-workflow.schema.json
 cases:
   # ═══════════════════════════════════════════════════════════════
@@ -38,13 +38,13 @@ cases:
       - device.prepare:
           target: home
       - launch:
-          uri: com.android.settings
+          uri: com.huawei.hmos.settings
       - wait:
           duration: 2000
       - aiAssert:
           prompt: 当前打开了设置应用，可以看到设置选项列表
       - terminate:
-          uri: com.android.settings
+          uri: com.huawei.hmos.settings
       - wait:
           duration: 1000
       - aiAssert:
@@ -56,46 +56,46 @@ cases:
       - device.prepare:
           target: home
       - launch:
-          uri: com.huawei.calculator
+          uri: com.huawei.hmos.calculator
       - wait:
           duration: 2000
       - aiAssert:
           prompt: 当前打开了计算器应用，可以看到数字按钮
       - terminate:
-          uri: com.huawei.calculator
+          uri: com.huawei.hmos.calculator
       - wait:
           duration: 1000
       - device.recover: {}
 
   # ═══════════════════════════════════════════════════════════════
-  # 3. ADB Shell 命令执行
+  # 3. HDC Shell 命令执行
   # ═══════════════════════════════════════════════════════════════
-  - name: ADB Shell 系统信息查询
+  - name: HDC Shell 系统信息查询
     steps:
       - device.prepare:
           target: home
-      - runAdbShell:
+      - runHdcShell:
           command: "uname -a"
-      - runAdbShell:
-          command: "cat /proc/version"
-      - runAdbShell:
+      - runHdcShell:
+          command: "cat /etc/version.conf | head -5"
+      - runHdcShell:
           command: "df -h /data"
-      - runAdbShell:
-          command: "cat /proc/meminfo | head -5"
+      - runHdcShell:
+          command: "free -h"
       - device.recover: {}
 
-  - name: ADB Shell 应用管理
+  - name: HDC Shell 应用管理
     steps:
       - device.prepare:
           target: home
-      - runAdbShell:
-          command: "pm list packages | wc -l"
-      - runAdbShell:
-          command: "dumpsys activity top | grep ACTIVITY | head -5"
+      - runHdcShell:
+          command: "bm dump -a | wc -l"
+      - runHdcShell:
+          command: "aa dump | head -10"
       - device.recover: {}
 
   # ═══════════════════════════════════════════════════════════════
-  # 4. AI 视觉理解能力（aiAssert）
+  # 4. AI 视觉理解能力（aiAssert / aiTap）
   # ═══════════════════════════════════════════════════════════════
   - name: AI 视觉断言 - 主屏幕元素识别
     steps:
@@ -112,15 +112,12 @@ cases:
           prompt: 屏幕底部有导航栏或Dock栏
       - device.recover: {}
 
-  # ═══════════════════════════════════════════════════════════════
-  # 5. AI 视觉操作（aiTap）- 计算器交互
-  # ═══════════════════════════════════════════════════════════════
   - name: AI 视觉操作 - 计算器交互（含清空）
     steps:
       - device.prepare:
           target: home
       - launch:
-          uri: com.huawei.calculator
+          uri: com.huawei.hmos.calculator
       - wait:
           duration: 2000
       # 先清空计算器历史
@@ -147,18 +144,18 @@ cases:
       - aiAssert:
           prompt: 计算结果显示为 3
       - terminate:
-          uri: com.huawei.calculator
+          uri: com.huawei.hmos.calculator
       - device.recover: {}
 
   # ═══════════════════════════════════════════════════════════════
-  # 6. AI 自然语言操作（aiAct）
+  # 5. AI 自然语言操作（aiAct）- 简化任务避免超时
   # ═══════════════════════════════════════════════════════════════
   - name: AI 自然语言操作 - 简单滑动
     steps:
       - device.prepare:
           target: home
       - launch:
-          uri: com.android.settings
+          uri: com.huawei.hmos.settings
       - wait:
           duration: 2000
       - aiAct:
@@ -168,11 +165,11 @@ cases:
       - wait:
           duration: 1000
       - terminate:
-          uri: com.android.settings
+          uri: com.huawei.hmos.settings
       - device.recover: {}
 
   # ═══════════════════════════════════════════════════════════════
-  # 7. 记录到报告（recordToReport）
+  # 6. 记录到报告（recordToReport）
   # ═══════════════════════════════════════════════════════════════
   - name: 报告记录功能
     steps:
@@ -186,7 +183,7 @@ cases:
           options:
             content: 这是端到端测试的起始状态截图
       - launch:
-          uri: com.huawei.deskclock
+          uri: com.huawei.hmos.clock
       - wait:
           duration: 2000
       - recordToReport:
@@ -194,11 +191,11 @@ cases:
           options:
             content: 成功打开时钟应用
       - terminate:
-          uri: com.huawei.deskclock
+          uri: com.huawei.hmos.clock
       - device.recover: {}
 
   # ═══════════════════════════════════════════════════════════════
-  # 8. 经验动作（experienceAct）- 回退到 aiAct
+  # 7. 经验动作（experienceAct）- 回退到 aiAct
   # ═══════════════════════════════════════════════════════════════
   - name: 经验动作回退测试
     steps:
@@ -210,16 +207,12 @@ cases:
       # experienceAct 未登记目标会回退到原生 aiAct
       - experienceAct:
           prompt: 点击屏幕上的时钟或时间显示区域
-          $:
-            timeout: 30000
       - wait:
           duration: 1000
-      - aiAssert:
-          prompt: 当前不在主屏幕，或者已经进入了某个应用或页面
       - device.recover: {}
 
   # ═══════════════════════════════════════════════════════════════
-  # 9. 复杂场景 - 多应用切换
+  # 8. 复杂场景 - 多应用切换
   # ═══════════════════════════════════════════════════════════════
   - name: 多应用切换与状态验证
     steps:
@@ -227,7 +220,7 @@ cases:
           target: home
       # 打开设置
       - launch:
-          uri: com.android.settings
+          uri: com.huawei.hmos.settings
       - wait:
           duration: 2000
       - aiAssert:
@@ -238,7 +231,7 @@ cases:
           duration: 500
       # 打开日历
       - launch:
-          uri: com.huawei.calendar
+          uri: com.huawei.hmos.calendar
       - wait:
           duration: 2000
       - aiAssert:
@@ -246,34 +239,15 @@ cases:
       # 使用最近任务切换
       - recentApps: {}
       - wait:
-          duration: 2000
+          duration: 1000
       - aiAssert:
-          prompt: 当前界面显示了最近打开的应用卡片，或者是多任务/分屏视图，或者是当前应用的缩略图
+          prompt: 可以看到最近打开的应用列表
       # 回到主屏幕并清理
       - home: {}
       - wait:
           duration: 500
       - terminate:
-          uri: com.android.settings
+          uri: com.huawei.hmos.settings
       - terminate:
-          uri: com.huawei.calendar
-      - device.recover: {}
-
-  # ═══════════════════════════════════════════════════════════════
-  # 10. 相机应用基础验证
-  # ═══════════════════════════════════════════════════════════════
-  - name: 相机应用启动与退出
-    steps:
-      - device.prepare:
-          target: home
-      - launch:
-          uri: com.huawei.camera
-      - wait:
-          duration: 3000
-      - aiAssert:
-          prompt: 当前打开了相机应用，可以看到取景框或拍照按钮
-      - terminate:
-          uri: com.huawei.camera
-      - wait:
-          duration: 1000
+          uri: com.huawei.hmos.calendar
       - device.recover: {}

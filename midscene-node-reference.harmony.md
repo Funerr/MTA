@@ -37,7 +37,7 @@ Projects created by `midscene-test create` select `cases/**/*.{yaml,yml}` by def
 
 **Config file:** `midscene.config.ts`
 
-**Case files:** `cases/harmony/**/*.{yaml,yml}` (Execution Project: harmony); excludes: `tests/**/*.{yaml,yml}`
+**Case files:** `cases/level{1,2,3}/**/*.harmony.{yaml,yml}` (Execution Project: harmony); excludes: `tests/**/*.{yaml,yml}`, `examples/**/*.{yaml,yml}`
 
 Files matching `files.exclude` are not selected. Midscene Test always ignores `.git/`, `.midscene/`, `midscene_run/`, and `node_modules/` directories, including nested ones.
 

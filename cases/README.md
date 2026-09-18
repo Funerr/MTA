@@ -1,28 +1,35 @@
-# cases/
+# 业务测试集
 
-使用方业务用例目录，按平台拆分：
+用例按 level 分级，再按业务模块组织；Android、HarmonyOS 和多设备协作是执行环境，不作为一级目录。
 
-- `cases/android/` —— `android` 执行项目的用例发现范围
-- `cases/harmony/` —— `harmony` 执行项目的用例发现范围
-- `cases/multi-device/` —— `multi-device` 协作项目的用例发现范围（同一 YAML 内操作多台设备）
+```text
+cases/
+  level1/                 # 冒烟：核心链路
+    settings/
+      open.android.yaml
+      open.harmony.yaml
+  level2/                 # 常规回归
+  level3/                 # 扩展、边界场景
+```
 
-此目录接收使用方的 Expert Mode / Execution Workflow。仓库保留的示例/验收用例见下表，不构成业务用例库或业务效果承诺；使用方将自己的合法 Midscene YAML 放入对应目录后，通过 `pnpm run test:cases`（官方 `midscene-test` CLI）执行。单设备能力参考 `midscene-node-reference.android.md` / `midscene-node-reference.harmony.md`；协作项目参考 `midscene-node-reference.multi-device.md` 与 [docs/multi-device-yaml-workflows.md](../docs/multi-device-yaml-workflows.md)。
+上面的 YAML 路径仅为命名示意；当前业务目录为空，业务验收要求由使用方提供。
 
-默认三项目串行执行（`maxConcurrency: 1`）。`android` / `harmony` 各绑定一台设备；协作用例在 `multi-device` 项目内声明多台设备，不要把官方多项目并发当成同一用例内的步骤同步。
+- `smoke` = `level1`，`full` = `level1 + level2 + level3`，不复制文件到 smoke/full 目录。
+- `level1`、`level2`、`level3` 各自只运行该级，不是累计级别。一个工作流归属一个 level；不同等级的 case 应拆分到不同文件。
+- 文件后缀 `.android.yaml`、`.harmony.yaml`、`.multi-device.yaml` 选择执行项目，也支持 `.yml`。文件名其余部分和业务模块目录由使用方决定。
+- 平台版本的 YAML 仍须遵守各自 Node 契约；相同业务目标可分别维护平台版本。协作用例使用 `.multi-device.yaml`，并显式绑定 DUT1/DUT2/DUT3 等设备别名。
+- 普通 `.yaml` 文件不会被自动收集，避免把平台专用步骤交给错误的 Agent。
 
-框架自身的测试与夹具位于 `tests/`，不会进入任何平台的业务发现范围。
+```bash
+pnpm run test:cases:smoke --project android
+pnpm run test:cases:full --project harmony
+pnpm run test:cases:level2 --project multi-device
+pnpm run test:cases                           # 默认 full，三个执行项目串行
+MTA_SUITE=level3 pnpm run test:cases --project android
+```
 
-## 既有示例/验收用例
+`MTA_SUITE` 支持 `smoke/full/level1/level2/level3`；非法值在配置加载时失败。全量表示所选执行项目的全部 level，用 `--project` 独立选择平台。命令继续使用官方 Midscene CLI，不新增 Runner。选择范围为空时 CLI 会报告未找到用例；请先加入业务工作流。
 
-为保留现有路径和发现配置，以下文件暂留原位，并在文件头明确标识。运行默认单设备项目会收集对应示例，执行前须核对应用包名、设备环境和步骤。
+当前 YAML 是 Expert Mode / Execution Workflow。语法见 [YAML 指南](../docs/midscene-yaml-guide.md)，协作配置见 [多设备指南](../docs/multi-device-yaml-workflows.md)。项目默认 `maxConcurrency: 1`；项目并发不表示同一用例内的设备同步。
 
-| 文件 | 身份与运行入口 |
-| --- | --- |
-| [android/e2e-comprehensive.yaml](android/e2e-comprehensive.yaml) | Android 综合能力示例/验收工作流；默认 `android` 项目 |
-| [android/camera-gallery.yaml](android/camera-gallery.yaml) | 相机/图库示例；包名与界面需按设备调整；默认 `android` 项目 |
-| [harmony/e2e-comprehensive.yaml](harmony/e2e-comprehensive.yaml) | HarmonyOS 综合能力示例/验收工作流；默认 `harmony` 项目 |
-| [harmony-experience/experience-learn.yaml](harmony-experience/experience-learn.yaml) | 经验学习/重放示例；由独立的 `midscene.experience.config.ts` 收集，默认三项目不收集 |
-
-经验示例配置含设备环境和纯动作资格策略，运行前必须按实际环境核对；仅连续执行两次并不能证明命中重放，应检查 Runtime 事件和模型请求记录。
-
-新增演示统一放 `examples/`，默认生产发现范围不包含该目录；需要执行时显式配置示例入口。业务用例由使用方维护，框架夹具放 `tests/fixtures/`。
+原有综合、相机与经验演示已迁入 [examples/](../examples/README.md)，不会被业务测试集收集；框架夹具放在 `tests/fixtures/`。这些演示不代表真实设备业务验收通过。

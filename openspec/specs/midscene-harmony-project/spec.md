@@ -48,11 +48,11 @@ harmony 执行项目 SHALL 通过项目本地注册提供 `HarmonyAgent` 的原�
 - **WHEN** 原生边界集成夹具在 harmony 项目中注入节点失败
 - **THEN** 原生结果可追踪相关错误和步骤关联，框架不将失败改为成功
 
-### Requirement: 平台用例目录隔离
+### Requirement: 分级用例的执行环境隔离
 
-harmony 执行项目 SHALL 仅从使用方的 HarmonyOS 用例目录（`cases/harmony/`）发现用例；框架测试与夹具 MUST 不进入任何平台的业务发现范围。
+harmony 执行项目 SHALL 仅从按 level 与业务模块组织且后缀匹配 HarmonyOS 的用例（`cases/level{1,2,3}/**/*.harmony.{yaml,yml}`）发现用例；框架测试与夹具 MUST 不进入任何平台的业务发现范围。
 
 #### Scenario: 目录发现范围
 
-- **WHEN** 使用方在 `cases/harmony/` 放入合法 YAML
-- **THEN** harmony 项目发现并运行这些用例；`cases/android/` 与 `tests/` 下的内容不被 harmony 项目收集
+- **WHEN** 使用方在 `cases/level{1,2,3}/**/*.harmony.{yaml,yml}` 放入合法 YAML
+- **THEN** harmony 项目发现并运行这些用例；Android 后缀工作流与 `tests/` 下的内容不被 harmony 项目收集

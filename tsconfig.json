@@ -12,6 +12,7 @@
   },
   "include": [
     "midscene.config.ts",
+    "midscene.examples.config.ts",
     "vitest.config.ts",
     "src/**/*.ts",
     "tests/**/*.ts",

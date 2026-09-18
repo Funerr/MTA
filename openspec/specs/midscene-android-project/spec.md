@@ -8,7 +8,7 @@
 
 ### Requirement: 工程与能力发现
 
-项目 SHALL 提供可复现依赖安装、框架测试、类型检查和 Node 参考生成入口，覆盖 android 与 harmony 两个执行项目。安装、配置加载及这些检查 MUST 不要求已连接设备或实际模型密钥；业务执行入口使用原生 CLI 并接受使用方提供的内容，android 项目 SHALL 仅从 `cases/android/` 发现用例。
+项目 SHALL 提供可复现依赖安装、框架测试、类型检查和 Node 参考生成入口，覆盖 android 与 harmony 两个执行项目。安装、配置加载及这些检查 MUST 不要求已连接设备或实际模型密钥；业务执行入口使用原生 CLI 并接受使用方提供的内容，android 项目 SHALL 仅从 `cases/level{1,2,3}/**/*.android.{yaml,yml}` 发现用例。
 
 #### Scenario: 无外部环境的工程检查
 
@@ -17,7 +17,7 @@
 
 #### Scenario: 业务内容由使用方提供
 
-- **WHEN** 使用方将自己的合法 YAML 放入 `cases/android/`
+- **WHEN** 使用方将自己的合法 YAML 放入 `cases/level{1,2,3}/**/*.android.{yaml,yml}`
 - **THEN** android 项目提供原生注册和运行入口，不要求先具备框架内置业务示例或专用用例格式
 
 ### Requirement: 确定性的设备选择

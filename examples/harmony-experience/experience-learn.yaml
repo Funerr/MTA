@@ -1,5 +1,5 @@
 # 示例/验收用例：用于演示框架能力，不代表已通过真实设备业务验收。
-# 运行前核对设备、应用与环境；定位及入口见 cases/README.md。
+# 运行前核对设备、应用与环境；定位及入口见 examples/README.md。
 # yaml-language-server: $schema=../../schemas/midscene-workflow.schema.json
 cases:
   # ═══════════════════════════════════════════════════════════════

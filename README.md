@@ -25,17 +25,19 @@ pnpm run nodes                   # 重新生成两平台 Node 参考
 ## 运行业务用例（使用方）
 
 1. 复制 `.env.example` 为 `.env`，填写模型四项配置（[模型配置说明](https://midscenejs.com/model-common-config.html)）；单设备多目标时按平台设置 `ANDROID_DEVICE_ID` / `HARMONY_DEVICE_ID`；协作项目设置 `MULTI_DEVICE_BINDINGS` 与各别名的设备 ID 变量。hdc 不在默认路径时设置 `HDC_HOME`。高分辨率设备可设置 `SCREENSHOT_SHRINK_FACTOR`（须为 ≥1 的数字，缺省 `1` 不缩放）：截图按该因子缩小后传给模型以降低 token 消耗，坐标由 Midscene 换算回逻辑分辨率；非法值在会话建立时报错。
-2. 将 Expert Mode 的合法 Midscene YAML 工作流放入对应目录：`cases/android/`、`cases/harmony/` 或 `cases/multi-device/`（目录说明见 [cases/README.md](cases/README.md)；协作 YAML 见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)）。
+2. 将 Expert Mode 的合法 Midscene YAML 工作流按等级与业务模块放入 `cases/level1/`、`cases/level2/` 或 `cases/level3/`，并使用 `.android.yaml`、`.harmony.yaml` 或 `.multi-device.yaml` 后缀选择执行项目（目录说明见 [cases/README.md](cases/README.md)；协作 YAML 见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)）。
 3. 执行：
 
 ```bash
-pnpm run test:cases                          # 官方 midscene-test CLI，项目默认串行
+pnpm run test:cases:smoke --project android  # 冒烟集（level1），安卓环境
+pnpm run test:cases:level2 --project harmony # 仅 level2，鸿蒙环境
+pnpm run test:cases:full                     # 全量（level1/2/3），项目默认串行
 pnpm run test:cases --project android        # 仅运行 android 项目
 pnpm run test:cases --project harmony        # 仅运行 harmony 项目
 pnpm run test:cases --project multi-device   # 仅运行多设备协作项目
 ```
 
-运行报告写入 `midscene_run/report/`（不入库）。某项目发现范围内没有 YAML 时，CLI 会报“未找到 YAML 用例”的收集错误。当前单设备目录含示例/验收 YAML，执行前须核对步骤与目标设备。
+运行报告写入 `midscene_run/report/`（不入库）。某项目发现范围内没有 YAML 时，CLI 会报“未找到 YAML 用例”的收集错误。当前业务目录为空；原有演示已迁入 [examples/](examples/README.md)，通过独立配置显式执行。冒烟是 level1，全量包含所有 level，不复制用例。
 
 ## 设备会话与选择规则
 
@@ -85,7 +87,9 @@ pnpm run test:cases --project multi-device   # 仅运行多设备协作项目
 | `src/nodes/` | 框架通用 Nodes；协作项目别名 Node 与 `device.parallel` |
 | `scripts/generate-node-references.mjs` | 按项目生成 Node 参考（官方 CLI 多项目时需 `--project` 选择） |
 | `src/experience/`、`experiences/` | Experience 资产、Promotion、Matcher、Replay、Runtime；实验入口 `experienceAct`；可选 YAML `aiAct` 透明接入（默认关闭） |
-| `cases/android/`、`cases/harmony/` | 使用方业务用例目录；现有示例/验收 YAML 已单独标识 |
+| `cases/level1/`、`cases/level2/`、`cases/level3/` | 按等级与业务模块组织的业务用例；文件后缀选择执行项目 |
+| `cases.config.ts` | 冒烟、全量和单级测试集的发现规则 |
+| `examples/`、`midscene.examples.config.ts` | 演示工作流及显式运行入口 |
 | `experiments/visual-assert/` | 视觉断言离线评估实验（不接入生产 `aiAssert`） |
 | `tests/` | 框架自身测试与夹具，不进入任何平台的业务发现范围 |
 | `docs/` | 依赖版本核对、框架验收与 Experience 能力说明（含 YAML `aiAct` 透明接入） |

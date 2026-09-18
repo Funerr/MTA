@@ -71,21 +71,21 @@ describe('真实配置加载与双项目 Node 注册', () => {
 
     const android = loaded.projects[0]!;
     const harmony = loaded.projects[1]!;
-    expect(android.files?.include).toContain('cases/android/**/*.{yaml,yml}');
+    expect(android.files?.include).toContain('cases/level{1,2,3}/**/*.android.{yaml,yml}');
     expect(android.files?.exclude).toContain('tests/**/*.{yaml,yml}');
-    expect(harmony.files?.include).toContain('cases/harmony/**/*.{yaml,yml}');
+    expect(harmony.files?.include).toContain('cases/level{1,2,3}/**/*.harmony.{yaml,yml}');
     expect(harmony.files?.exclude).toContain('tests/**/*.{yaml,yml}');
 
     const multiDevice = loaded.projects[2]!;
     expect(multiDevice.files?.include).toContain(
-      'cases/multi-device/**/*.{yaml,yml}',
+      'cases/level{1,2,3}/**/*.multi-device.{yaml,yml}',
     );
     expect(multiDevice.files?.exclude).toContain('tests/**/*.{yaml,yml}');
     expect(multiDevice.files?.include).not.toContain(
-      'cases/android/**/*.{yaml,yml}',
+      'cases/level{1,2,3}/**/*.android.{yaml,yml}',
     );
     expect(multiDevice.files?.include).not.toContain(
-      'cases/harmony/**/*.{yaml,yml}',
+      'cases/level{1,2,3}/**/*.harmony.{yaml,yml}',
     );
   });
 

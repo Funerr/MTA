@@ -1,3 +1,4 @@
+import { caseFiles } from './cases.config';
 import { fileURLToPath } from 'node:url';
 import { config as loadEnv } from 'dotenv';
 import type { NodeExecutionContext } from '@midscene/test';
@@ -81,30 +82,19 @@ export default defineTestProject<MtaProjectContext>({
     {
       name: 'android',
       setup: androidProjectSetup,
-      // 业务用例仅从使用方目录 cases/android/ 发现；框架测试与夹具不进入业务发现范围。
-      files: {
-        include: ['cases/android/**/*.{yaml,yml}'],
-        exclude: ['tests/**/*.{yaml,yml}'],
-      },
+      files: caseFiles('android'),
       nodes: androidNodes,
     },
     {
       name: 'harmony',
       setup: harmonyProjectSetup,
-      // 业务用例仅从使用方目录 cases/harmony/ 发现；框架测试与夹具不进入业务发现范围。
-      files: {
-        include: ['cases/harmony/**/*.{yaml,yml}'],
-        exclude: ['tests/**/*.{yaml,yml}'],
-      },
+      files: caseFiles('harmony'),
       nodes: harmonyNodes,
     },
     {
       name: 'multi-device',
       setup: multiDeviceProjectSetup,
-      files: {
-        include: ['cases/multi-device/**/*.{yaml,yml}'],
-        exclude: ['tests/**/*.{yaml,yml}'],
-      },
+      files: caseFiles('multi-device'),
       nodes: multiDeviceNodes,
     },
   ],

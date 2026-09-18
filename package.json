@@ -8,7 +8,12 @@
     "experiment:visual-assert": "vitest run tests/unit/experience-visual-assert.test.ts",
     "nodes": "node scripts/generate-node-references.mjs",
     "typecheck": "tsc --noEmit",
-    "postinstall": "node scripts/generate-node-references.mjs"
+    "postinstall": "node scripts/generate-node-references.mjs",
+    "test:cases:smoke": "MTA_SUITE=smoke midscene-test",
+    "test:cases:full": "MTA_SUITE=full midscene-test",
+    "test:cases:level1": "MTA_SUITE=level1 midscene-test",
+    "test:cases:level2": "MTA_SUITE=level2 midscene-test",
+    "test:cases:level3": "MTA_SUITE=level3 midscene-test"
   },
   "engines": {
     "node": "^20.19.0 || ^22.12.0 || >=24.0.0"

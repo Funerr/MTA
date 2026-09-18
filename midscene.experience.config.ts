@@ -67,7 +67,7 @@ export default defineTestProject<DeviceLifecycleProjectContext>({
         experienceStoreRoot: '.midscene/experience-store',
       }),
       files: {
-        include: ['cases/harmony-experience/**/*.{yaml,yml}'],
+        include: ['examples/harmony-experience/**/*.{yaml,yml}'],
         exclude: ['tests/**/*.{yaml,yml}'],
       },
       nodes: harmonyNodes,

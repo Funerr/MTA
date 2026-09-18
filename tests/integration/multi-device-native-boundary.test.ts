@@ -128,22 +128,22 @@ describe('2.3 协作项目发现范围与配置加载', () => {
     const android = loaded.projects.find((project) => project.name === 'android')!;
     const harmony = loaded.projects.find((project) => project.name === 'harmony')!;
     expect(multi).toBeDefined();
-    expect(multi!.files?.include).toEqual(['cases/multi-device/**/*.{yaml,yml}']);
-    expect(android.files?.include).toEqual(['cases/android/**/*.{yaml,yml}']);
-    expect(harmony.files?.include).toEqual(['cases/harmony/**/*.{yaml,yml}']);
+    expect(multi!.files?.include).toEqual(['cases/level{1,2,3}/**/*.multi-device.{yaml,yml}']);
+    expect(android.files?.include).toEqual(['cases/level{1,2,3}/**/*.android.{yaml,yml}']);
+    expect(harmony.files?.include).toEqual(['cases/level{1,2,3}/**/*.harmony.{yaml,yml}']);
 
     const multiFiles = discoverTestFiles(projectRoot, multi!.files);
     const androidFiles = discoverTestFiles(projectRoot, android.files);
-    expect(multiFiles.every((file) => file.includes('cases/multi-device/'))).toBe(
+    expect(multiFiles.every((file) => file.includes('.multi-device.'))).toBe(
       true,
     );
-    expect(androidFiles.some((file) => file.includes('cases/multi-device/'))).toBe(
+    expect(androidFiles.some((file) => file.includes('.multi-device.'))).toBe(
       false,
     );
     expect(
       multiFiles.some(
         (file) =>
-          file.includes('cases/android/') || file.includes('cases/harmony/'),
+          file.includes('.android.') || file.includes('.harmony.'),
       ),
     ).toBe(false);
   });

@@ -48,7 +48,7 @@ flowchart LR
 
 ## 示例、证据与扩展约束
 
-`cases/` 是使用方工作流接入位置；其中既有演示文件已标为“示例/验收用例”，清单见 [cases/README.md](cases/README.md)。新增示例统一放 `examples/`，框架夹具放 `tests/fixtures/`。示例存在不代表真实设备业务验收通过。
+`cases/` 按 level 与业务模块组织使用方工作流，冒烟为 level1，全量包含 level1/2/3；平台由文件后缀匹配执行项目，规则见 [cases/README.md](cases/README.md)。既有演示已迁入 `examples/`，清单和显式执行入口见 [examples/README.md](examples/README.md)。新增示例统一放 `examples/`，框架夹具放 `tests/fixtures/`。示例存在不代表真实设备业务验收通过。
 
 文档推荐 `DUT1/DUT2/DUT3`；底层 alias 仍接受任意合法名称。未配置时的兼容默认值仍是 `phone1/phone2`，使用 DUT 工作流前必须显式设置绑定。
 

@@ -11,7 +11,7 @@
 | 设备 | 每项目一台；只有显式绑定互异设备时才应把 `maxConcurrency` 调到大于 1 | 协作项目在配置里声明至少两台别名 |
 | 语法 | 官方能力 | 自定义 Node，不是 Midscene 原生 YAML 语法 |
 
-回滚：从 `midscene.config.ts` 的 `projects` 中移除 `multi-device`，并删除 `cases/multi-device/` 即可；`cases/android/` 与 `cases/harmony/` 不受影响。
+协作用例按等级与业务模块放入 `cases/level1|level2|level3/`，使用 `.multi-device.yaml` 后缀；冒烟、全量与单级运行见 [测试集说明](../cases/README.md)。
 
 ## 配置
 
