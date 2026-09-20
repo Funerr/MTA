@@ -15,7 +15,9 @@
     "test:cases:level2": "MTA_SUITE=level2 midscene-test",
     "test:cases:level3": "MTA_SUITE=level3 midscene-test",
     "workbench:build": "node scripts/build-workbench-web.mjs && tsc --noEmit -p src/workbench/web/tsconfig.json",
-    "workbench": "pnpm workbench:build && tsx src/workbench/cli.ts"
+    "workbench": "pnpm workbench:build && tsx src/workbench/cli.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed"
   },
   "engines": {
     "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
@@ -25,6 +27,7 @@
     "@midscene/core": "1.12.7",
     "@midscene/harmony": "1.12.7",
     "@midscene/test": "1.12.7",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^20.0.0",
     "dotenv": "^16.4.5",
     "esbuild": "^0.28.2",

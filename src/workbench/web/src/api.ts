@@ -14,7 +14,7 @@ export interface DocumentSummary {
 export type ImportKindInput = 'paste' | 'text' | 'markdown' | 'excel';
 
 export interface MaskedModelConfig {
-  authoring: { baseUrl: string; model: string; apiKeyMasked: string } | null;
+  authoring: { baseUrl: string; model: string; apiKeyMasked: string; family?: string } | null;
   deviceVision: { configured: boolean; model: string | null };
   effective: { source: 'custom' | 'midscene-env'; model: string } | null;
 }
@@ -146,7 +146,7 @@ export const api = {
   getModelConfig: () =>
     request<MaskedModelConfig>('./api/model-config'),
 
-  putModelConfig: (authoring: { baseUrl: string; apiKey: string; model: string } | null) =>
+  putModelConfig: (authoring: { baseUrl: string; apiKey: string; model: string; family?: string } | null) =>
     request<MaskedModelConfig>('./api/model-config', {
       method: 'PUT',
       body: JSON.stringify({ authoring }),

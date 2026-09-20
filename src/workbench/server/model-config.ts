@@ -19,6 +19,8 @@ export interface AuthoringModelConfig {
   readonly baseUrl: string;
   readonly apiKey: string;
   readonly model: string;
+  /** 模型厂商/系列，用于调整请求参数（如 GLM 不支持 response_format）。 */
+  readonly family?: string;
 }
 
 export interface StoredModelConfig {
@@ -31,6 +33,7 @@ export interface MaskedModelConfig {
     readonly baseUrl: string;
     readonly model: string;
     readonly apiKeyMasked: string;
+    readonly family?: string;
   } | null;
   readonly deviceVision: {
     readonly configured: boolean;
@@ -60,7 +63,8 @@ export function effectiveAuthoring(
   const apiKey = env.MIDSCENE_MODEL_API_KEY?.trim();
   const model = env.MIDSCENE_MODEL_NAME?.trim();
   if (!baseUrl || !model) return null;
-  return { baseUrl, apiKey: apiKey ?? '', model };
+  const family = env.MIDSCENE_MODEL_FAMILY?.trim() || undefined;
+  return { baseUrl, apiKey: apiKey ?? '', model, family };
 }
 
 export function maskApiKey(key: string): string {
@@ -108,6 +112,7 @@ export class ModelConfigStore {
             baseUrl: stored.authoring.baseUrl,
             model: stored.authoring.model,
             apiKeyMasked: maskApiKey(stored.authoring.apiKey),
+            family: stored.authoring.family,
           }
         : null,
       deviceVision: {
@@ -128,8 +133,8 @@ function normalizeStored(raw: Partial<StoredModelConfig>): StoredModelConfig {
   if (raw.authoring === null || raw.authoring === undefined) {
     return { authoring: null };
   }
-  const { baseUrl, apiKey, model } = raw.authoring as AuthoringModelConfig;
-  return { authoring: validateAuthoring({ baseUrl, apiKey, model }) };
+  const { baseUrl, apiKey, model, family } = raw.authoring as AuthoringModelConfig;
+  return { authoring: { ...validateAuthoring({ baseUrl, apiKey, model }), family } };
 }
 
 /** 校验外部提交的编写模型配置；非法输入返回 400。 */

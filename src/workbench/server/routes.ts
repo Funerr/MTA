@@ -871,14 +871,12 @@ function validateAuthoringInput(input: unknown): {
   baseUrl: string;
   apiKey: string;
   model: string;
+  family?: string;
 } {
   if (!input || typeof input !== 'object') {
     throw new HttpError(400, 'authoring 配置结构非法');
   }
   const record = input as Record<string, unknown>;
-  return validateAuthoring({
-    baseUrl: record.baseUrl,
-    apiKey: record.apiKey,
-    model: record.model,
-  });
+  const family = typeof record.family === 'string' ? record.family.trim() : undefined;
+  return { ...validateAuthoring({ baseUrl: record.baseUrl, apiKey: record.apiKey, model: record.model }), family };
 }

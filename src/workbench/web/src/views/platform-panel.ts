@@ -7,13 +7,29 @@ import {
   type AuthoringPlatform,
   type PlatformWorkflowVariant,
 } from '../../../core/document';
-import { Badge, Field, TextInput } from '../ui';
+import { Badge, Field, Select, TextInput } from '../ui';
 
 /**
  * 平台面板：应用上下文、生成/静态检查入口、工作流与覆盖映射展示。
  * 耗时生成走任务轮询。单页工作台直接使用 PlatformSection（单平台）
  * 与 ModelConfigCard（侧边栏浮层）。
  */
+
+const MODEL_FAMILY_OPTIONS = [
+  { value: '', label: '自动检测' },
+  { value: 'openai', label: 'OpenAI / 兼容接口' },
+  { value: 'zhipu', label: '智谱 GLM' },
+  { value: 'deepseek', label: 'DeepSeek' },
+  { value: 'qwen', label: '通义千问 Qwen' },
+  { value: 'minimax', label: 'MiniMax' },
+  { value: 'baichuan', label: '百川 Baichuan' },
+  { value: 'moonshot', label: 'Moonshot / Kimi' },
+  { value: 'spark', label: '讯飞星火 Spark' },
+  { value: 'hunyuan', label: '腾讯混元 Hunyuan' },
+  { value: 'yi', label: '零一万物 Yi' },
+  { value: 'stepfun', label: '阶跃星辰 StepFun' },
+  { value: 'anthropic', label: 'Anthropic Claude' },
+] as const;
 
 interface GenerateResultDoc {
   document: import('../../../core/document').AuthoringDocument;
@@ -61,6 +77,7 @@ export function ModelConfigCard(props: { onConfigured?: () => void } = {}) {
   const [baseUrl, setBaseUrl] = useState('');
   const [model, setModel] = useState('');
   const [apiKey, setApiKey] = useState('');
+  const [family, setFamily] = useState('');
   const [message, setMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -71,6 +88,7 @@ export function ModelConfigCard(props: { onConfigured?: () => void } = {}) {
         setConfig(result);
         setBaseUrl(result.authoring?.baseUrl ?? '');
         setModel(result.authoring?.model ?? '');
+        setFamily(result.authoring?.family ?? '');
       })
       .catch((reason: unknown) =>
         setMessage(reason instanceof Error ? reason.message : String(reason)),
@@ -81,7 +99,7 @@ export function ModelConfigCard(props: { onConfigured?: () => void } = {}) {
     setBusy(true);
     setMessage(null);
     api
-      .putModelConfig({ baseUrl, model, apiKey })
+      .putModelConfig({ baseUrl, model, apiKey, family: family || undefined })
       .then((result) => {
         setConfig(result);
         setApiKey('');
@@ -114,6 +132,11 @@ export function ModelConfigCard(props: { onConfigured?: () => void } = {}) {
         <//>
         <${Field} label=${config?.authoring ? `API Key（已保存 ${config.authoring.apiKeyMasked}，留空不修改）` : 'API Key'}>
           <${TextInput} value=${apiKey} placeholder=${config?.authoring ? '留空保持不变' : 'sk-…'} onInput=${setApiKey} />
+        <//>
+      </div>
+      <div class="grid-3">
+        <${Field} label="模型系列" hint="影响请求参数适配；选"自动检测"会按模型名推断">
+          <${Select} value=${family} options=${MODEL_FAMILY_OPTIONS as unknown as { value: string; label: string }[]} onChange=${setFamily} />
         <//>
       </div>
       <div class="row">
