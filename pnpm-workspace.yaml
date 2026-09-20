@@ -1,0 +1,2 @@
+patchedDependencies:
+  '@midscene/core@1.12.7': patches/@midscene__core@1.12.7.patch

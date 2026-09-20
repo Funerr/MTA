@@ -1,0 +1,114 @@
+diff --git a/dist/es/ai-model/shared/model-locate-result/factory.mjs b/dist/es/ai-model/shared/model-locate-result/factory.mjs
+index ed9e1d92cd12ba2d7ca48d8e090042b6c9b76d09..a60b3e2848622b2a78804492cfe725d962893521 100644
+--- a/dist/es/ai-model/shared/model-locate-result/factory.mjs
++++ b/dist/es/ai-model/shared/model-locate-result/factory.mjs
+@@ -12,6 +12,44 @@ function resolveLocateResultCoordinates(coordinates) {
+         rounding: coordinates.rounding ?? 'round'
+     };
+ }
++// [MTA patch: coordinate normalization compatibility — @midscene/core@1.12.7]
++// Upstream source: packages/core/src/ai-model/shared/model-locate-result/factory.ts
++// Some grounding models return screenshot-pixel coordinates while the declared
++// locate protocol is normalized (normalizedBy set). Coordinates impossible
++// under the declared protocol (some value beyond normalizedBy plus a 2%
++// tolerance band) and fully plausible as image pixels (all values within the
++// per-axis pixel bounds plus 1%) are clamped per axis and rescaled to the
++// normalized range before validation, preserving the model's geometry. Small
++// overflows inside the tolerance band stay on the validation/semantic-retry
++// path: explicit failure over silent misclick. Values within
++// [0, normalizedBy] cannot be classified and are intentionally left untouched.
++// See MTA openspec change: fix-midscene-pixel-coordinate-overflow.
++// Re-evaluate this patch when upgrading @midscene/core.
++const MTA_PIXEL_OVERFLOW_TRIGGER_TOLERANCE = 0.02;
++const MTA_PIXEL_RANGE_TOLERANCE_RATIO = 0.01;
++function mtaPixelLimitsForCoordinates(coordinatesMeta, width, height) {
++    if ('bbox' === coordinatesMeta.shape) return 'yx' === coordinatesMeta.order ? [height, width, height, width] : [width, height, width, height];
++    return 'yx' === coordinatesMeta.order ? [height, width] : [width, height];
++}
++function mtaNormalizeUnexpectedPixelCoordinates(result, width, height) {
++    if (!result || 'object' != typeof result || !Array.isArray(result.coordinates)) return result;
++    const coordinatesMeta = result.coordinatesMeta;
++    if (!coordinatesMeta || 'point' !== coordinatesMeta.shape && 'bbox' !== coordinatesMeta.shape) return result;
++    const { normalizedBy } = coordinatesMeta;
++    if (void 0 === normalizedBy) return result;
++    const limits = mtaPixelLimitsForCoordinates(coordinatesMeta, width, height);
++    const pixelTolerance = Math.max(width, height) * MTA_PIXEL_RANGE_TOLERANCE_RATIO;
++    const exceedsNormalizedRange = result.coordinates.some((value)=>value > normalizedBy * (1 + MTA_PIXEL_OVERFLOW_TRIGGER_TOLERANCE));
++    if (!exceedsNormalizedRange) return result;
++    const looksLikePixelCoordinates = result.coordinates.every((value, index)=>value >= -pixelTolerance && value <= limits[index] + pixelTolerance);
++    if (!looksLikePixelCoordinates) return result;
++    result.coordinates = result.coordinates.map((value, index)=>{
++        const size = limits[index];
++        const pixel = Math.max(0, Math.min(value, size));
++        return pixel / size * normalizedBy;
++    });
++    return result;
++}
+ function createLocateResultCodec(config) {
+     const resolvedCoordinates = resolveLocateResultCoordinates(config.coordinates);
+     const parseRawLocateValue = config.parseRawLocateValue ?? ((input)=>parseNumericLocateResult(resolvedCoordinates, input));
+@@ -20,6 +58,7 @@ function createLocateResultCodec(config) {
+         toPixelResult: (rawResult, context)=>{
+             const result = parseRawLocateValue(rawResult);
+             const { preparedSize, contentSize = preparedSize } = context;
++            mtaNormalizeUnexpectedPixelCoordinates(result, preparedSize.width, preparedSize.height);
+             assertLocateResultStructure(result);
+             assertLocateResultCoordinateRangeAndOrder(result, preparedSize.width - 1, preparedSize.height - 1);
+             const center = clampPixelPointToSize(mapLocateResultToPixelPoint(result, preparedSize), contentSize);
+diff --git a/dist/lib/ai-model/shared/model-locate-result/factory.js b/dist/lib/ai-model/shared/model-locate-result/factory.js
+index 0c1ab77d11c0b7782d13a1788bff8d5d0c08eb9c..4674bd8c86fe035d8ce8ff867ea1ae4da0b30fda 100644
+--- a/dist/lib/ai-model/shared/model-locate-result/factory.js
++++ b/dist/lib/ai-model/shared/model-locate-result/factory.js
+@@ -41,6 +41,44 @@ function resolveLocateResultCoordinates(coordinates) {
+         rounding: coordinates.rounding ?? 'round'
+     };
+ }
++// [MTA patch: coordinate normalization compatibility — @midscene/core@1.12.7]
++// Upstream source: packages/core/src/ai-model/shared/model-locate-result/factory.ts
++// Some grounding models return screenshot-pixel coordinates while the declared
++// locate protocol is normalized (normalizedBy set). Coordinates impossible
++// under the declared protocol (some value beyond normalizedBy plus a 2%
++// tolerance band) and fully plausible as image pixels (all values within the
++// per-axis pixel bounds plus 1%) are clamped per axis and rescaled to the
++// normalized range before validation, preserving the model's geometry. Small
++// overflows inside the tolerance band stay on the validation/semantic-retry
++// path: explicit failure over silent misclick. Values within
++// [0, normalizedBy] cannot be classified and are intentionally left untouched.
++// See MTA openspec change: fix-midscene-pixel-coordinate-overflow.
++// Re-evaluate this patch when upgrading @midscene/core.
++const MTA_PIXEL_OVERFLOW_TRIGGER_TOLERANCE = 0.02;
++const MTA_PIXEL_RANGE_TOLERANCE_RATIO = 0.01;
++function mtaPixelLimitsForCoordinates(coordinatesMeta, width, height) {
++    if ('bbox' === coordinatesMeta.shape) return 'yx' === coordinatesMeta.order ? [height, width, height, width] : [width, height, width, height];
++    return 'yx' === coordinatesMeta.order ? [height, width] : [width, height];
++}
++function mtaNormalizeUnexpectedPixelCoordinates(result, width, height) {
++    if (!result || 'object' != typeof result || !Array.isArray(result.coordinates)) return result;
++    const coordinatesMeta = result.coordinatesMeta;
++    if (!coordinatesMeta || 'point' !== coordinatesMeta.shape && 'bbox' !== coordinatesMeta.shape) return result;
++    const { normalizedBy } = coordinatesMeta;
++    if (void 0 === normalizedBy) return result;
++    const limits = mtaPixelLimitsForCoordinates(coordinatesMeta, width, height);
++    const pixelTolerance = Math.max(width, height) * MTA_PIXEL_RANGE_TOLERANCE_RATIO;
++    const exceedsNormalizedRange = result.coordinates.some((value)=>value > normalizedBy * (1 + MTA_PIXEL_OVERFLOW_TRIGGER_TOLERANCE));
++    if (!exceedsNormalizedRange) return result;
++    const looksLikePixelCoordinates = result.coordinates.every((value, index)=>value >= -pixelTolerance && value <= limits[index] + pixelTolerance);
++    if (!looksLikePixelCoordinates) return result;
++    result.coordinates = result.coordinates.map((value, index)=>{
++        const size = limits[index];
++        const pixel = Math.max(0, Math.min(value, size));
++        return pixel / size * normalizedBy;
++    });
++    return result;
++}
+ function createLocateResultCodec(config) {
+     const resolvedCoordinates = resolveLocateResultCoordinates(config.coordinates);
+     const parseRawLocateValue = config.parseRawLocateValue ?? ((input)=>(0, external_parse_js_namespaceObject.parseNumericLocateResult)(resolvedCoordinates, input));
+@@ -49,6 +87,7 @@ function createLocateResultCodec(config) {
+         toPixelResult: (rawResult, context)=>{
+             const result = parseRawLocateValue(rawResult);
+             const { preparedSize, contentSize = preparedSize } = context;
++            mtaNormalizeUnexpectedPixelCoordinates(result, preparedSize.width, preparedSize.height);
+             (0, external_validation_js_namespaceObject.assertLocateResultStructure)(result);
+             (0, external_validation_js_namespaceObject.assertLocateResultCoordinateRangeAndOrder)(result, preparedSize.width - 1, preparedSize.height - 1);
+             const center = (0, external_pixel_mapper_js_namespaceObject.clampPixelPointToSize)((0, external_pixel_mapper_js_namespaceObject.mapLocateResultToPixelPoint)(result, preparedSize), contentSize);

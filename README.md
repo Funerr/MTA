@@ -109,11 +109,13 @@ Skill 保留业务要求，允许非关键控件形态与位置变化，交付�
 | `cases.config.ts` | 冒烟、全量和单级测试集的发现规则 |
 | `examples/`、`midscene.examples.config.ts` | 演示工作流及显式运行入口 |
 | `experiments/visual-assert/` | 视觉断言离线评估实验（不接入生产 `aiAssert`） |
+| `patches/`、`pnpm-workspace.yaml` | 锁定依赖补丁及登记；当前仅 `@midscene/core` 的 locate 坐标归一化兼容（见下"框架验证"） |
 | `tests/` | 框架自身测试与夹具，不进入任何平台的业务发现范围 |
 | `docs/` | 依赖版本核对、框架验收与 Experience 能力说明（含 YAML `aiAct` 透明接入） |
 
 ## 框架验证
 
 - `pnpm test`：运行框架单元与原生边界集成测试。测试数量、环境和结果只在对应日期的[阶段验收记录](docs/acceptance-index.md)中保存，不作为本文的实时统计。
+- 锁定依赖补丁：`patches/@midscene__core@1.12.7.patch` 在 locate codec 解析后、校验前兼容"模型返回截图像素坐标而协议声明归一化"的越界结果（不触碰校验与其他模块）。升级 `@midscene/core` 前必须重跑 `tests/unit/midscene-locate-coordinate-contract.test.ts`：补丁失效或上游已原生兼容时按该契约测试与 `patches/` 内说明重新评估，不得静默移除或保留失配补丁。
 - 边界集成测试加载**实际锁定的** `@midscene/test`/`@midscene/android`/`@midscene/harmony` 包与真实 `midscene.config.ts`，仅将设备/Agent 边界替换为受控替身；真实硬件与模型调用未在框架验收中覆盖。
 - 有真实设备时，可选执行连接/截图/释放单能力检查（见[双平台阶段记录](docs/acceptance.md)的“可选设备检查”一节），该检查不是框架验收的必要条件。
