@@ -203,7 +203,7 @@ export function parseTextCases(
     result.unconverted = [
       {
         excerpt: text.trim().slice(0, 500),
-        reason: '未识别出任何用例结构；可改用模型转换或调整格式',
+        reason: '未识别出任何用例结构',
       },
     ];
   }

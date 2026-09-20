@@ -23,6 +23,7 @@ import { ModelCaseOutputSchema } from '../core/generate/schema';
 import { mergeGeneratedCases, type MergeCaseInput } from '../core/generate/merge';
 import type { AuthoringPlatform } from '../core/document';
 import { applyImport } from '../core/import/apply';
+import { assistImportResult } from '../core/import/assist';
 import { parseExcelCases } from '../core/import/excel';
 import { parseMarkdownCases } from '../core/import/markdown';
 import { parseTextCases } from '../core/import/text';
@@ -708,7 +709,7 @@ export function createRouteTable(
         contentBase64?: unknown;
       };
       const kind = validateImportKind(payload.kind);
-      const { result } = await parseImportInput(kind, payload);
+      const { result } = await parseImportInput(kind, payload, context.modelConfig);
       return { result };
     },
 
@@ -733,7 +734,7 @@ export function createRouteTable(
       }
 
       const document = await context.documents.load(params.id!);
-      const { result, raw } = await parseImportInput(kind, payload);
+      const { result, raw } = await parseImportInput(kind, payload, context.modelConfig);
 
       const sourceId = `src-${randomBytes(4).toString('hex')}`;
       const safeName = name.replace(/[^\p{L}\p{N}._-]+/gu, '_').slice(0, 80);
@@ -762,12 +763,14 @@ export function createRouteTable(
 }
 
 /**
- * 统一解析入口：文本类直接解析；Excel 以 base64 提供，返回原始字节
- * 供上传留档。
+ * 统一解析入口：文本类先走确定性规则解析；识别不出结构时用编写
+ * 模型识别兜底（assist.ts，结果标记 viaModel）；Excel 以 base64
+ * 提供，返回原始字节供上传留档。
  */
 async function parseImportInput(
   kind: ImportKind,
   payload: { content?: unknown; contentBase64?: unknown },
+  modelConfig: ModelConfigStore,
 ): Promise<{ result: ImportParseResult; raw: string | Uint8Array }> {
   if (kind === 'excel') {
     if (typeof payload.contentBase64 !== 'string' || !payload.contentBase64) {
@@ -777,10 +780,11 @@ async function parseImportInput(
     return { result: await parseExcelCases(buffer), raw: buffer };
   }
   const content = requireContent(payload.content);
-  return {
-    result: kind === 'markdown' ? parseMarkdownCases(content) : parseTextCases(content, kind),
-    raw: content,
-  };
+  const deterministic =
+    kind === 'markdown' ? parseMarkdownCases(content) : parseTextCases(content, kind);
+  const endpoint = effectiveAuthoring(await modelConfig.load());
+  const result = await assistImportResult(kind, content, deterministic, endpoint);
+  return { result, raw: content };
 }
 
 function validatePlatform(platform: unknown): AuthoringPlatform {

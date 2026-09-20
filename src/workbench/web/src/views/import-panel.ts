@@ -129,13 +129,16 @@ export function ImportPanel(props: {
             value=${content}
             placeholder=${kind === 'markdown'
               ? '粘贴 Markdown（支持表格、标题分节）'
-              : '粘贴用例文本，如：编号：TC-001 / 名称：… / 步骤：… / 预期：…'}
+              : '直接粘贴用例文本即可：编号步骤、标签段落或自然语言描述都能识别'}
             onInput=${(event: Event) =>
               setContent((event.target as HTMLTextAreaElement).value)}
-          ></textarea>`
+          ></textarea>
+          <p class="muted" style="font-size:12px;margin:2px 0 0">
+            无法按固定结构识别时会自动改用编写模型整理（在“模型配置”中设置），识别结果导入后请人工核对。
+          </p>`
         : null}
 
-      ${busy ? Badge({ tone: 'muted', text: '解析中…' }) : null}
+      ${busy ? Badge({ tone: 'muted', text: '解析中…（模型识别可能需要数十秒）' }) : null}
       ${error ? html`<p class="err">${error}</p>` : null}
       ${report ? html`<p class="ok">${report}</p>` : null}
 
@@ -147,6 +150,7 @@ export function ImportPanel(props: {
                   tone: preview.cases.length ? 'ok' : 'warn',
                   text: `${preview.cases.length} 条用例`,
                 })}
+                ${preview.viaModel ? Badge({ tone: 'ok', text: '模型识别' }) : null}
                 ${preview.issues.length
                   ? Badge({ tone: 'warn', text: `${preview.issues.length} 个问题` })
                   : null}
@@ -165,6 +169,11 @@ export function ImportPanel(props: {
                   </div>
                 `,
               )}
+              ${preview.modelNotes?.length
+                ? html`<p class="muted" style="font-size:12.5px;margin:4px 0">
+                    识别说明：${preview.modelNotes.join('；')}
+                  </p>`
+                : null}
               ${preview.issues.length || preview.unconverted.length
                 ? html`
                     <details>

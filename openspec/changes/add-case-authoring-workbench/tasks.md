@@ -10,6 +10,7 @@
 - [x] 2.2 实现编号、名称、前置条件、步骤关联预期、等级和平台应用上下文表单；在浏览器验证无文件录入、增删步骤及缺失提示。（src/workbench/web/src/views/editor.ts + ui.ts；浏览器已验证：手工录入、步骤增删/排序、逐字段缺失提示、声明无前置条件、保存恢复往返）
 - [x] 2.3 实现整段粘贴和 Markdown/文本导入；以跨段用例夹具验证来源对应、原文保留和未转换清单。（src/workbench/core/import/{text,markdown,apply}.ts + 导入 API/UI；夹具 tests/fixtures/workbench/{text-cross-segment.txt,markdown-cross-segment.md}；tests/unit/workbench-import.test.ts）
 - [x] 2.4 实现 Excel 导入；以合并单元格、跨行、空白预期、重号和公式缓存缺失夹具验证无静默填充或用例丢失。（src/workbench/core/import/excel.ts；夹具由 tests/unit/workbench-excel-import.test.ts 用 ExcelJS 生成；跨行按编号列合并块组装，公式缓存缺失标记待澄清）
+- [x] 2.5 实现导入的模型识别兜底：规则解析无用例或识别结果没有任何步骤时，自动把原文交给编写模型整理为结构化草稿，整体标注 viaModel 并生成待人工核对问题；模型未配置或失败时保留规则结果并追加可操作提示。（src/workbench/core/import/assist.ts + server/routes.ts parseImportInput + 导入面板文案/徽标；tests/unit/workbench-import-model.test.ts；真实模型端到端：自然语言段落与裸编号步骤均识别为结构化用例并导入成功，标准标签格式仍走确定性快速路径）
 
 ## 3. 模型生成与静态检查
 

@@ -47,7 +47,7 @@ Skill 保留业务要求，允许非关键控件形态与位置变化，交付�
 
 ## 用例编写工作台
 
-`pnpm workbench` 启动本地单用户 Web 工作台（默认 `http://127.0.0.1:7788`，`MTA_WORKBENCH_PORT`/`MTA_WORKBENCH_DATA_DIR` 可覆盖；构建入口 `pnpm workbench:build`）。工作台覆盖：结构化表单与整段粘贴/Markdown/文本/Excel 导入、可配置模型生成双平台工作流（复用当前项目的 Skill 规则与 Node 契约）、分层静态检查（YAML 解析 / Node 输入 / 预期覆盖 / 证据路径）、步骤卡片与保留注释的 YAML 编辑、显式设备绑定后经现有 MTA 执行链路（Midscene Runner）做关键点核查、人工确认与按平台导出。
+`pnpm workbench` 启动本地单用户 Web 工作台（默认 `http://127.0.0.1:7788`，`MTA_WORKBENCH_PORT`/`MTA_WORKBENCH_DATA_DIR` 可覆盖；构建入口 `pnpm workbench:build`）。工作台覆盖：结构化表单与整段粘贴/Markdown/文本/Excel 导入（规则识别不出结构时自动改用编写模型整理，结果标注模型识别并要求人工核对）、可配置模型生成双平台工作流（复用当前项目的 Skill 规则与 Node 契约）、分层静态检查（YAML 解析 / Node 输入 / 预期覆盖 / 证据路径）、步骤卡片与保留注释的 YAML 编辑、显式设备绑定后经现有 MTA 执行链路（Midscene Runner）做关键点核查、人工确认与按平台导出。
 
 约束与边界：
 

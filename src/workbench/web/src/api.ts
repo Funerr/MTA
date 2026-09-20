@@ -64,6 +64,8 @@ export interface ImportParseResultView {
   }[];
   issues: { message: string; range?: string }[];
   unconverted: { excerpt: string; reason: string; range?: string }[];
+  viaModel?: boolean;
+  modelNotes?: string[];
 }
 
 export class ApiError extends Error {
