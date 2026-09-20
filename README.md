@@ -16,10 +16,10 @@ MTA 面向 Android / HarmonyOS，提供设备会话、多设备协作、通用 R
 ## 快速开始
 
 ```bash
-pnpm install --frozen-lockfile   # 安装锁定依赖（postinstall 自动生成两平台 Node 参考）
+pnpm install --frozen-lockfile   # 安装锁定依赖（postinstall 自动生成各项目 Node 参考并刷新 YAML 指南清单）
 pnpm run typecheck               # 类型检查
 pnpm test                        # 框架自身测试（无需设备/密钥）
-pnpm run nodes                   # 重新生成两平台 Node 参考
+pnpm run nodes                   # 重新生成各项目 Node 参考，并刷新 YAML 指南的 Node 清单生成区块
 ```
 
 ## 运行业务用例（使用方）
@@ -79,7 +79,7 @@ Skill 保留业务要求，允许非关键控件形态与位置变化，交付�
 
 ## 可注册能力
 
-两平台原生 Nodes 存在大量同名节点（`aiAct`、`launch`、`home`…），因此**按项目本地注册**，互不覆盖；全局注册两平台结构兼容的框架生命周期节点与实验 `experienceAct`。可用 Nodes 见按平台生成的参考：
+两平台原生 Nodes 存在大量同名节点（`aiAct`、`launch`、`home`…），因此**按项目本地注册**，互不覆盖；全局注册两平台结构兼容的框架生命周期节点、显式等待 `device.waitUntil` 与实验 `experienceAct`。YAML 参数语法糖、自定义 Node 能力与按执行项目的 Node 清单统一整理在 [docs/midscene-yaml-guide.md](docs/midscene-yaml-guide.md)（Node 清单区块由 `pnpm run nodes` 生成并随 Node 变更刷新，是 case-to-yaml Skill 与工作台生成 YAML 的能力输入）。逐 Node 完整 JSON Schema 见按平台生成的参考：
 
 - [midscene-node-reference.android.md](midscene-node-reference.android.md) —— android 项目：原生 AI Nodes（`aiAct`、`aiAssert`、`aiTap`、`aiAsk` 等）、原生设备 Nodes（`launch`、`terminate`、`runAdbShell`、`back`、`home`、`recentApps`）与通用生命周期节点。
 - [midscene-node-reference.harmony.md](midscene-node-reference.harmony.md) —— harmony 项目：同名原生 AI/设备 Nodes（鸿蒙侧 shell 节点为 `runHdcShell`）与通用生命周期节点。
@@ -87,6 +87,7 @@ Skill 保留业务要求，允许非关键控件形态与位置变化，交付�
 - **框架通用节点**（`src/nodes/`，两平台共享）：
   - `device.prepare: { target: home }` —— 严格只接受该输入；返回当前平台主屏。仅是原生导航基线，不解锁设备、不重置网络、不准备业务初始状态。
   - `device.recover: {}` —— 严格只接受空对象；返回当前平台主屏，保留系统设置与业务状态。可在准备或用例步骤部分完成后调用。
+  - `device.waitUntil: { prompt, timeoutMs?, intervalMs? }` —— 显式等待。轮询判定当前绑定设备界面上的自然语言条件，满足即继续、超时即失败；替代按最坏情况预估的固定 `wait`，缩短用例耗时。协作项目写 `<alias>.device.waitUntil`（顺序步骤，不能进入 `device.parallel`）。
   - `experienceAct: { prompt }` —— 实验性经验动作。仅对使用方登记的可重复纯动作目标尝试视觉重放；默认资格表为空，未登记或含判断时回退一次原生 `aiAct`。不覆盖原生 `aiAssert`。
 - **可选透明接入**：默认关闭。设置 `EXPERIENCE_ENABLED=true` 后，本仓库 YAML 的 `aiAct` 对合格纯动作复用 Experience Runtime；图片、未知 options、未登记目标仍原样走原生。不拦截脚本直接调用 `agent.aiAct`。说明见 [docs/experience-transparent-ai-act.md](docs/experience-transparent-ai-act.md)。
 
@@ -103,7 +104,7 @@ Skill 保留业务要求，允许非关键控件形态与位置变化，交付�
 | `src/setup/android.ts` / `src/setup/harmony.ts` | 平台各自的设备选择、会话生命周期与项目 setup |
 | `src/setup/multi-device.ts` | 协作项目：多别名绑定、精确选择与分别清理 |
 | `src/nodes/` | 框架通用 Nodes；协作项目别名 Node 与 `device.parallel` |
-| `scripts/generate-node-references.mjs` | 按项目生成 Node 参考（官方 CLI 多项目时需 `--project` 选择） |
+| `scripts/generate-node-references.mjs` | 按项目生成 Node 参考（官方 CLI 多项目时需 `--project` 选择），并刷新 YAML 指南的 Node 清单生成区块（区块构建在 `scripts/lib/yaml-guide-regions.mjs`） |
 | `src/experience/`、`experiences/` | Experience 资产、Promotion、Matcher、Replay、Runtime；实验入口 `experienceAct`；可选 YAML `aiAct` 透明接入（默认关闭） |
 | `cases/level1/`、`cases/level2/`、`cases/level3/` | 按等级与业务模块组织的业务用例；文件后缀选择执行项目 |
 | `cases.config.ts` | 冒烟、全量和单级测试集的发现规则 |

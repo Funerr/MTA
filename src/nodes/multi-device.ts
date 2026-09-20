@@ -4,6 +4,7 @@ import { createMidsceneNodes } from '@midscene/test/midscene';
 import { AndroidAgent } from '@midscene/android';
 import { HarmonyAgent } from '@midscene/harmony';
 import type { MultiDeviceBinding } from '../setup/multi-device-config';
+import { createSharedAgentReportProvider } from '../setup/agent-report-provider';
 import {
   requireAliasedAgent,
   type MultiDeviceProjectContext,
@@ -13,6 +14,12 @@ import {
   deviceRecoverInputSchema,
 } from './device-lifecycle';
 import { experienceActInputSchema } from './experience-act';
+import {
+  asWaitUntilAgent,
+  deviceWaitUntilInputSchema,
+  runDeviceWaitUntil,
+} from './device-wait-until';
+import { attachAgentExecutionTraces } from './agent-traces';
 import {
   aliasNativeNodes,
   takeUnaliasedWaitNode,
@@ -45,6 +52,43 @@ export function createAliasedLifecycleNodes(
   ];
 }
 
+/** 协作项目的别名化显式等待：轮询目标设备界面条件，与框架 device.waitUntil 同一执行体。 */
+function createAliasedWaitUntilNode(
+  alias: string,
+): NodeDefinition<any, any, MultiDeviceProjectContext> {
+  return defineNode({
+    name: `${alias}.device.waitUntil`,
+    description: `显式等待设备 ${alias}：轮询判定界面上的自然语言条件，满足即继续，超时失败。`,
+    stringInputKey: 'prompt',
+    inputSchema: deviceWaitUntilInputSchema,
+    async execute(execution) {
+      const agent = asWaitUntilAgent(
+        requireAliasedAgent(execution.context, alias, `${alias}.device.waitUntil`),
+        `${alias}.device.waitUntil`,
+      );
+      const now = Date.now();
+      const stopTraces = attachAgentExecutionTraces(execution, agent);
+      try {
+        const outcome = await runDeviceWaitUntil(agent, execution.input, {
+          signal: execution.signal,
+          deadlineAtMs: Math.min(
+            now + execution.input.timeoutMs,
+            execution.$.timeoutMs === undefined
+              ? Number.POSITIVE_INFINITY
+              : now + execution.$.timeoutMs,
+          ),
+        });
+        return {
+          summary: `${alias}.device.waitUntil 条件满足（第 ${outcome.attempts} 次判定，耗时 ${outcome.elapsedMs}ms）`,
+          data: outcome,
+        };
+      } finally {
+        stopTraces();
+      }
+    },
+  });
+}
+
 function createUnprefixedOverrides(): readonly NodeDefinition<
   any,
   any,
@@ -65,6 +109,7 @@ function createUnprefixedOverrides(): readonly NodeDefinition<
   return [
     redirect('device.prepare', devicePrepareInputSchema),
     redirect('device.recover', deviceRecoverInputSchema),
+    redirect('device.waitUntil', deviceWaitUntilInputSchema),
     defineNode({
       name: 'experienceAct',
       description: '多设备协作项目首期不接入 experienceAct。',
@@ -94,8 +139,10 @@ export function createMultiDeviceNodes(
     const agentClass = binding.platform === 'android' ? AndroidAgent : HarmonyAgent;
     const native = createMidsceneNodes<MultiDeviceProjectContext>({
       agentClass,
-      getAgent: ({ context }) =>
-        requireAliasedAgent(context, binding.alias, `${binding.alias}.*`),
+      // 经官方 agentProvider 契约提供别名 Agent 并登记报告来源（与单设备项目一致）。
+      agentProvider: createSharedAgentReportProvider((execution) =>
+        requireAliasedAgent(execution.context, binding.alias, `${binding.alias}.*`),
+      ),
     });
     waitNode ??= takeUnaliasedWaitNode(native);
     const aliasedNative = inflight.wrapAll(
@@ -105,7 +152,10 @@ export function createMultiDeviceNodes(
     for (const node of aliasedNative) nativeRegistry.set(node.name, node);
     aliased.push(
       ...aliasedNative,
-      ...inflight.wrapAll(binding.alias, createAliasedLifecycleNodes(binding.alias)),
+      ...inflight.wrapAll(binding.alias, [
+        ...createAliasedLifecycleNodes(binding.alias),
+        createAliasedWaitUntilNode(binding.alias),
+      ]),
     );
   }
 

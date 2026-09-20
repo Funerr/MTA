@@ -80,6 +80,7 @@ describe('研究协议与隔离入口（任务 1.1）', () => {
     expect(frameworkNodes.map((node) => node.name)).toEqual([
       'device.prepare',
       'device.recover',
+      'device.waitUntil',
       'experienceAct',
     ]);
     const config = await fs.readFile(path.join(repoRoot, 'midscene.config.ts'), 'utf8');

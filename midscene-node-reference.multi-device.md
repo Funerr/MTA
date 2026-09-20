@@ -13,6 +13,7 @@ This table lists all available Nodes. See [Node Details](#node-details) below fo
 | device.parallel | 同时在不同已绑定设备上执行各一个别名化原生操作，等待全部完成后汇合。不允许嵌套或子步骤级 $。 |
 | device.prepare | multi-device 项目请使用 <alias>.device.prepare。 |
 | device.recover | multi-device 项目请使用 <alias>.device.recover。 |
+| device.waitUntil | multi-device 项目请使用 <alias>.device.waitUntil。 |
 | experienceAct | 多设备协作项目首期不接入 experienceAct。 |
 | phone1.aiAct | Perform a natural-language task with a Midscene UI Agent. |
 | phone1.aiAsk | Run aiAsk with a Midscene UI Agent and store its value. |
@@ -24,6 +25,7 @@ This table lists all available Nodes. See [Node Details](#node-details) below fo
 | phone1.back | Trigger the Android system back operation. |
 | phone1.device.prepare | 准备设备 phone1：返回当前平台主屏（Home）。仅是原生导航基线。 |
 | phone1.device.recover | 恢复设备 phone1：返回当前平台主屏（Home）。保留系统设置与业务状态。 |
+| phone1.device.waitUntil | 显式等待设备 phone1：轮询判定界面上的自然语言条件，满足即继续，超时失败。 |
 | phone1.home | Trigger the Android system home operation. |
 | phone1.launch | Launch an application through the current Android Agent. |
 | phone1.recentApps | Trigger the Android system recent apps operation. |
@@ -40,6 +42,7 @@ This table lists all available Nodes. See [Node Details](#node-details) below fo
 | phone2.back | Trigger the Harmony system back operation. |
 | phone2.device.prepare | 准备设备 phone2：返回当前平台主屏（Home）。仅是原生导航基线。 |
 | phone2.device.recover | 恢复设备 phone2：返回当前平台主屏（Home）。保留系统设置与业务状态。 |
+| phone2.device.waitUntil | 显式等待设备 phone2：轮询判定界面上的自然语言条件，满足即继续，超时失败。 |
 | phone2.home | Trigger the Harmony system home operation. |
 | phone2.launch | Launch an application through the current Harmony Agent. |
 | phone2.recentApps | Trigger the Harmony system recent apps operation. |
@@ -151,6 +154,43 @@ multi-device 项目请使用 <alias>.device.recover。
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {},
+  "type": "object"
+}
+```
+
+### `device.waitUntil`
+
+multi-device 项目请使用 <alias>.device.waitUntil。
+
+**String shorthand:** Not supported by this Node.
+
+#### Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "intervalMs": {
+      "default": 500,
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    },
+    "prompt": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "timeoutMs": {
+      "default": 10000,
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "prompt"
+  ],
   "type": "object"
 }
 ```
@@ -901,6 +941,43 @@ Trigger the Android system back operation.
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {},
+  "type": "object"
+}
+```
+
+### `phone1.device.waitUntil`
+
+显式等待设备 phone1：轮询判定界面上的自然语言条件，满足即继续，超时失败。
+
+**String shorthand:** Maps to `{ prompt: value }`.
+
+#### Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "intervalMs": {
+      "default": 500,
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    },
+    "prompt": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "timeoutMs": {
+      "default": 10000,
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "prompt"
+  ],
   "type": "object"
 }
 ```
@@ -1801,6 +1878,43 @@ Trigger the Harmony system back operation.
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {},
+  "type": "object"
+}
+```
+
+### `phone2.device.waitUntil`
+
+显式等待设备 phone2：轮询判定界面上的自然语言条件，满足即继续，超时失败。
+
+**String shorthand:** Maps to `{ prompt: value }`.
+
+#### Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "intervalMs": {
+      "default": 500,
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    },
+    "prompt": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "timeoutMs": {
+      "default": 10000,
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "prompt"
+  ],
   "type": "object"
 }
 ```

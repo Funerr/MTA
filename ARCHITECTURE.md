@@ -13,7 +13,7 @@ flowchart LR
 
 | 边界 | 职责 | 当前落点 |
 | --- | --- | --- |
-| Case | 使用方定义测试目标、业务数据、流程及业务断言；当前通过 Expert Mode / Execution Workflow YAML 表达 | `cases/`；语法见 [YAML 指南](docs/midscene-yaml-guide.md) |
+| Case | 使用方定义测试目标、业务数据、流程及业务断言；当前通过 Expert Mode / Execution Workflow YAML 表达 | `cases/`；语法糖与 Node 能力见 [YAML 指南](docs/midscene-yaml-guide.md) |
 | Runtime | 设备选择、会话生命周期、多设备协作、通用节点、经验资格检查及学习/重放/回退组合 | `src/setup/` + `src/nodes/` + `src/experience/` |
 | Adapter | 隔离平台 Agent、原生 Node 执行上下文、动作派发、dump 解析与报告关联 | 分布于下述现有适配入口；尚无独立 `src/adapters/` |
 | Midscene | 工作流收集和运行、超时/取消机制、AI 规划、设备原生动作、截图与报告 | 锁定的 `@midscene/*` 依赖；`midscene.config.ts` 组装三个项目 |
@@ -37,11 +37,13 @@ flowchart LR
 | 契约 | 现有落点 |
 | --- | --- |
 | 平台 Agent、设备发现与会话 | `src/setup/android.ts`、`harmony.ts`、`harmony-experience.ts`、`multi-device.ts` |
+| 共享 Agent 的报告来源登记（官方 `agentProvider.releaseAgent` → `reportPaths`） | `src/setup/agent-report-provider.ts` |
 | 原生 Node 注册与 alias 转发 | `midscene.config.ts`、`src/nodes/alias-nodes.ts`、`multi-device.ts` |
 | Agent 截图、原生 AI、dump、报告观测 | `src/experience/runtime/adapters.ts`、`observe.ts` |
 | Node 身份与报告关联 | `src/experience/runtime/identity.ts`、`integration/wrap.ts`、`src/nodes/experience-act.ts` |
 | dump 轨迹格式解析 | `src/experience/promotion/trace-adapter.ts` |
 | 已定位动作与原生参数 | `src/experience/replay/replay.ts`、`native-actions.ts` |
+| 自定义 Node 的 Agent 执行轨迹关联 | `src/nodes/agent-traces.ts`（`addDumpUpdateListener` → `report.addTrace`，复用官方原生 Node 同一公开契约） |
 | 并行子调用报告关联 | `src/nodes/device-parallel.ts` |
 
 后续修改须复用这些适配职责，通过小接口向 Runtime 提供所需数据；不得在新 Node 或业务逻辑中复制 dump/report/executionId 等契约访问。若现有入口不足，先在相应适配边界封装，并以锁定依赖的契约测试验证。既有散落访问仅允许维护和逐步收口，不作为扩散的先例。

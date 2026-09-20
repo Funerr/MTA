@@ -20,6 +20,7 @@ This table lists all available Nodes. See [Node Details](#node-details) below fo
 | back | Trigger the Harmony system back operation. |
 | device.prepare | 准备当前绑定设备：返回当前平台主屏（Home）。仅是原生导航基线，不解锁设备、不重置网络、不准备业务初始状态。 |
 | device.recover | 恢复当前绑定设备：返回当前平台主屏（Home）。保留系统设置与业务状态；可在准备或用例步骤部分完成后调用。 |
+| device.waitUntil | 显式等待：轮询判定当前绑定设备界面上的自然语言条件，满足即继续，超时失败。用于等待预期最终出现的界面状态，替代按最坏情况预估的固定 wait，缩短用例耗时。 |
 | experienceAct | 实验性经验动作：仅对使用方登记的可重复纯动作目标尝试视觉重放；未登记、含判断或资产不可用时回退一次原生 aiAct。不覆盖原生 aiAct/aiAssert。 |
 | home | Trigger the Harmony system home operation. |
 | launch | Launch an application through the current Harmony Agent. |
@@ -783,6 +784,43 @@ Trigger the Harmony system back operation.
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {},
+  "type": "object"
+}
+```
+
+### `device.waitUntil`
+
+显式等待：轮询判定当前绑定设备界面上的自然语言条件，满足即继续，超时失败。用于等待预期最终出现的界面状态，替代按最坏情况预估的固定 wait，缩短用例耗时。
+
+**String shorthand:** Maps to `{ prompt: value }`.
+
+#### Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "intervalMs": {
+      "default": 500,
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    },
+    "prompt": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "timeoutMs": {
+      "default": 10000,
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "prompt"
+  ],
   "type": "object"
 }
 ```
