@@ -20,7 +20,7 @@ flowchart LR
 
 `setup + nodes + experience = Runtime capabilities` 是职责归属，不要求把它们合并成一个模块。Adapter 是其中对外部契约负责的部分。Midscene Runner 实际调度注册的 MTA Node；图中的箭头表达职责依赖，而非所有调用的时间顺序。
 
-当前 YAML 不是最终用户模型。更高层 Case Authoring 尚未实现，其规划只在 [Roadmap](openspec/roadmap.md) 中维护。
+当前 YAML 不是最终用户模型。Case Authoring 提供两条入口：[case-to-yaml Skill](.agents/skills/case-to-yaml/SKILL.md) 由宿主模型理解源用例并生成现有执行工作流；本地 [用例编写工作台](README.md#用例编写工作台)（`src/workbench/`）在其上补齐表单/导入、模型生成、分层静态检查、卡片与 YAML 编辑、确认导出，设备核查统一提交现有 MTA 项目配置与 Runtime，由 Midscene Runner 执行，不新增 Runtime 能力、业务 Node 或 Experience Skill。编写层 SDK 仍未实现，后续方向在 [Roadmap](openspec/roadmap.md) 中维护。
 
 ## Runtime 范围
 

@@ -8,6 +8,7 @@
 | [android/camera-gallery.yaml](android/camera-gallery.yaml) | Android 相机/图库演示 |
 | [harmony/e2e-comprehensive.yaml](harmony/e2e-comprehensive.yaml) | HarmonyOS 综合能力演示 |
 | [harmony-experience/experience-learn.yaml](harmony-experience/experience-learn.yaml) | 经验学习/重放演示 |
+| [workbench/settings-bluetooth.android.yaml](workbench/settings-bluetooth.android.yaml) | 编写工作台生成示例（见 [workbench/README.md](workbench/README.md)） |
 
 ```bash
 pnpm run test:cases --config midscene.examples.config.ts --project android

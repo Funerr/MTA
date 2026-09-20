@@ -1,0 +1,18 @@
+cases:
+  - name: 打开设置并检查蓝牙开关
+    steps:
+      - device.prepare:
+          target: home
+      - launch:
+          uri: com.android.settings
+      - wait:
+          duration: 500
+      - aiAssert:
+          prompt: 当前页面是系统设置的主页面。
+      - aiAssert:
+          prompt: 屏幕上存在“蓝牙”开关或“蓝牙”选项。
+      - terminate:
+          uri: com.android.settings
+      - device.recover: {}
+
+#由 MTA 编写工作台生成（业务修订 r3，平台 android）；人工可编辑，注释与未知结构会被保留

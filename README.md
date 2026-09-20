@@ -39,6 +39,24 @@ pnpm run test:cases --project multi-device   # 仅运行多设备协作项目
 
 运行报告写入 `midscene_run/report/`（不入库）。某项目发现范围内没有 YAML 时，CLI 会报“未找到 YAML 用例”的收集错误。当前业务目录为空；原有演示已迁入 [examples/](examples/README.md)，通过独立配置显式执行。冒烟是 level1，全量包含所有 level，不复制用例。
 
+## 用例转换 Skill
+
+项目提供 [case-to-yaml](.agents/skills/case-to-yaml/SKILL.md)，供支持 Skill 的 GUI/Agent 宿主将 Excel、Markdown 或文本用例转换为现有 Midscene YAML。可在宿主中调用 `$case-to-yaml` 并提供文件、目标项目及测试上下文；附件读取与模型调用由宿主提供。
+
+Skill 保留业务要求，允许非关键控件形态与位置变化，交付工作流、意图草稿和转换记录。证据不足或能力不支持的用例单独列出，不静默降低断言。转换不会执行测试，静态校验成功也不代表业务验收通过。[输入输出约定](.agents/skills/case-to-yaml/references/conversion-contract.md) 可供 GUI 接入参考。
+
+## 用例编写工作台
+
+`pnpm workbench` 启动本地单用户 Web 工作台（默认 `http://127.0.0.1:7788`，`MTA_WORKBENCH_PORT`/`MTA_WORKBENCH_DATA_DIR` 可覆盖；构建入口 `pnpm workbench:build`）。工作台覆盖：结构化表单与整段粘贴/Markdown/文本/Excel 导入、可配置模型生成双平台工作流（复用当前项目的 Skill 规则与 Node 契约）、分层静态检查（YAML 解析 / Node 输入 / 预期覆盖 / 证据路径）、步骤卡片与保留注释的 YAML 编辑、显式设备绑定后经现有 MTA 执行链路（Midscene Runner）做关键点核查、人工确认与按平台导出。
+
+约束与边界：
+
+- 生成模型默认复用 `.env` 的 `MIDSCENE_MODEL_*` 多模态模型（与设备核查共用）；如需单独的编写模型，可在 `<数据目录>/model-config.json` 自定义（密钥仅存服务端，不出现在响应、日志或导出文件）。
+- 关键点核查须显式绑定设备（不存在/不可用/多台歧义均报错，不静默切换）；设备执行走 `midscene.config.ts` 的项目 setup/teardown，工作台不另建旁路会话。请独占使用设备，外部命令行占用不受工作台锁保护。
+- 关键点核查不等于业务验收通过；完整执行仍走既有 `pnpm test:cases:*` 入口，确认导出不写入 `cases/`、不自动运行测试。
+- 无就绪内容时不生成空执行文件；导出默认写入 `artifacts/case-to-yaml/<会话>/`（不入库）。生成示例见 [examples/workbench](examples/workbench/README.md)。
+- 契约边界与停止语义见 [workbench-contracts](docs/workbench-contracts.md)。
+
 ## 设备会话与选择规则
 
 `src/setup/android.ts` 与 `src/setup/harmony.ts` 在**执行期**（项目 setup）建立设备会话，模块导入不产生任何设备或模型调用；接管前清理与单次释放的公共语义在 `src/setup/session.ts`（`bindAgentToDevice` / `SessionHandle`），平台各自保留选择逻辑与错误类型。
