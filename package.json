@@ -13,7 +13,9 @@
     "test:cases:full": "MTA_SUITE=full midscene-test",
     "test:cases:level1": "MTA_SUITE=level1 midscene-test",
     "test:cases:level2": "MTA_SUITE=level2 midscene-test",
-    "test:cases:level3": "MTA_SUITE=level3 midscene-test"
+    "test:cases:level3": "MTA_SUITE=level3 midscene-test",
+    "workbench:build": "node scripts/build-workbench-web.mjs && tsc --noEmit -p src/workbench/web/tsconfig.json",
+    "workbench": "pnpm workbench:build && tsx src/workbench/cli.ts"
   },
   "engines": {
     "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
@@ -25,9 +27,16 @@
     "@midscene/test": "1.12.7",
     "@types/node": "^20.0.0",
     "dotenv": "^16.4.5",
+    "esbuild": "^0.28.2",
+    "exceljs": "^4.4.0",
+    "htm": "^3.1.1",
+    "marked": "^18.0.13",
+    "preact": "^10.29.8",
     "sharp": "0.34.5",
+    "tsx": "^4.23.13",
     "typescript": "^5.8.3",
     "vitest": "^5.0.1",
+    "yaml": "^2.9.1",
     "zod": "^3.25.76"
   }
 }

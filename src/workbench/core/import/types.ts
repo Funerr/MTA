@@ -1,0 +1,55 @@
+import type { CaseLevel } from '../document';
+
+/**
+ * 导入解析的统一结果：解析出的用例草稿、解析问题与未转换清单。
+ * 解析器是确定性代码；语义不明的段落进入未转换清单，交给后续
+ * 模型生成阶段处理，不做猜测。
+ */
+
+export type ImportKind = 'paste' | 'text' | 'markdown' | 'excel';
+
+export interface ImportedExpectation {
+  text: string;
+  /** 关联步骤序号（零基）；缺省表示整条用例。 */
+  actionIndex?: number;
+}
+
+export interface ImportedCaseDraft {
+  sourceId: string;
+  name: string;
+  goal: string;
+  preconditions: string[];
+  actions: string[];
+  expectations: ImportedExpectation[];
+  level: CaseLevel;
+  /** 来源定位（行范围或单元格范围）。 */
+  sourceRange: string;
+  /** 原文片段（保留原文）。 */
+  excerpt: string;
+  data?: string;
+}
+
+export interface ImportIssue {
+  message: string;
+  /** 相关来源范围（可定位）。 */
+  range?: string;
+}
+
+export interface UnconvertedBlock {
+  /** 原文片段。 */
+  excerpt: string;
+  /** 未转换原因。 */
+  reason: string;
+  range?: string;
+}
+
+export interface ImportParseResult {
+  kind: ImportKind;
+  cases: ImportedCaseDraft[];
+  issues: ImportIssue[];
+  unconverted: UnconvertedBlock[];
+}
+
+export function emptyResult(kind: ImportKind): ImportParseResult {
+  return { kind, cases: [], issues: [], unconverted: [] };
+}

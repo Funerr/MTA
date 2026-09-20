@@ -1,0 +1,4 @@
+interface:
+  display_name: "用例转 YAML"
+  short_description: "将 Excel、Markdown 和文本用例转换为保留测试意图的 MTA 工作流"
+  default_prompt: "使用 $case-to-yaml 将提供的测试用例转换为 MTA YAML，保留业务要求，并解释断言改写与待澄清项。"

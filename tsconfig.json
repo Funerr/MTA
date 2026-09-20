@@ -17,5 +17,6 @@
     "src/**/*.ts",
     "tests/**/*.ts",
     "experiments/visual-assert/**/*.ts"
-  ]
+  ],
+  "exclude": ["src/workbench/web"]
 }
