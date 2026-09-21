@@ -5,10 +5,12 @@
   "scripts": {
     "test": "vitest run",
     "test:cases": "midscene-test",
+    "case": "node scripts/run-case.mjs",
     "experiment:visual-assert": "vitest run tests/unit/experience-visual-assert.test.ts",
     "nodes": "node scripts/generate-node-references.mjs",
     "typecheck": "tsc --noEmit",
     "postinstall": "node scripts/generate-node-references.mjs",
+    "mta:init": "node scripts/init.mjs",
     "test:cases:smoke": "MTA_SUITE=smoke midscene-test",
     "test:cases:full": "MTA_SUITE=full midscene-test",
     "test:cases:level1": "MTA_SUITE=level1 midscene-test",

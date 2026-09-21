@@ -14,5 +14,6 @@
 | 多设备协作 | [多设备验收](multi-device-yaml-workflows-acceptance.md) |
 | 视觉断言离线研究 | [实验报告](../experiments/visual-assert/outputs/report.md) |
 | 用例编写工作台（含 Android 真机核查） | [工作台验收](workbench-acceptance.md) |
+| 一键初始化入口 | [init 验收](project-init-acceptance.md) |
 
 已归档的实施过程见 [OpenSpec archive](../openspec/changes/archive/)。当前能力见 [README](../README.md)，未来工作见 [Roadmap](../openspec/roadmap.md)。

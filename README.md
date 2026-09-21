@@ -15,6 +15,17 @@ MTA 面向 Android / HarmonyOS，提供设备会话、多设备协作、通用 R
 
 ## 快速开始
 
+一条命令初始化（检测 Node / pnpm 前提 → 安装依赖 → 生成 `.env` 脚手架 → 输出环境预检与下一步指引）：
+
+```bash
+node scripts/init.mjs   # 只检测与报告，不替你安装 Node / pnpm、不替你选择设备；可安全重复执行
+                        # 依赖安装后亦可用别名：pnpm run mta:init
+```
+
+前提检测失败时脚本在任何安装动作之前非零退出并给出升级 / 安装指引；模型配置为空、adb / hdc 缺失或设备零台 / 多台只在预检报告中列出，不判定初始化失败，也不写回任何配置。
+
+手动路径（与 init 等效的分解步骤）：
+
 ```bash
 pnpm install --frozen-lockfile   # 安装锁定依赖（postinstall 自动生成各项目 Node 参考并刷新 YAML 指南清单）
 pnpm run typecheck               # 类型检查
@@ -24,7 +35,7 @@ pnpm run nodes                   # 重新生成各项目 Node 参考，并刷新
 
 ## 运行业务用例（使用方）
 
-1. 复制 `.env.example` 为 `.env`，填写模型四项配置（[模型配置说明](https://midscenejs.com/model-common-config.html)）；单设备多目标时按平台设置 `ANDROID_DEVICE_ID` / `HARMONY_DEVICE_ID`；协作项目设置 `MULTI_DEVICE_BINDINGS` 与各别名的设备 ID 变量。hdc 不在默认路径时设置 `HDC_HOME`。高分辨率设备可设置 `SCREENSHOT_SHRINK_FACTOR`（须为 ≥1 的数字，缺省 `1` 不缩放）：截图按该因子缩小后传给模型以降低 token 消耗，坐标由 Midscene 换算回逻辑分辨率；非法值在会话建立时报错。
+1. 复制 `.env.example` 为 `.env`（快速开始的 init 已自动生成时可跳过），填写模型四项配置（[模型配置说明](https://midscenejs.com/model-common-config.html)）；单设备多目标时按平台设置 `ANDROID_DEVICE_ID` / `HARMONY_DEVICE_ID`；协作项目设置 `MULTI_DEVICE_BINDINGS` 与各别名的设备 ID 变量。hdc 不在默认路径时设置 `HDC_HOME`。高分辨率设备可设置 `SCREENSHOT_SHRINK_FACTOR`（须为 ≥1 的数字，缺省 `1` 不缩放）：截图按该因子缩小后传给模型以降低 token 消耗，坐标由 Midscene 换算回逻辑分辨率；非法值在会话建立时报错。
 2. 将 Expert Mode 的合法 Midscene YAML 工作流按等级与业务模块放入 `cases/level1/`、`cases/level2/` 或 `cases/level3/`，并使用 `.android.yaml`、`.harmony.yaml` 或 `.multi-device.yaml` 后缀选择执行项目（目录说明见 [cases/README.md](cases/README.md)；协作 YAML 见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)）。
 3. 执行：
 
@@ -104,6 +115,7 @@ Skill 保留业务要求，允许非关键控件形态与位置变化，交付�
 | `src/setup/android.ts` / `src/setup/harmony.ts` | 平台各自的设备选择、会话生命周期与项目 setup |
 | `src/setup/multi-device.ts` | 协作项目：多别名绑定、精确选择与分别清理 |
 | `src/nodes/` | 框架通用 Nodes；协作项目别名 Node 与 `device.parallel` |
+| `scripts/init.mjs` | 一键初始化入口：Node / pnpm 前提检测（不替装）、`pnpm install`、`.env` 脚手架（不覆盖）与环境预检报告（别名 `pnpm run mta:init`） |
 | `scripts/generate-node-references.mjs` | 按项目生成 Node 参考（官方 CLI 多项目时需 `--project` 选择），并刷新 YAML 指南的 Node 清单生成区块（区块构建在 `scripts/lib/yaml-guide-regions.mjs`） |
 | `src/experience/`、`experiences/` | Experience 资产、Promotion、Matcher、Replay、Runtime；实验入口 `experienceAct`；可选 YAML `aiAct` 透明接入（默认关闭） |
 | `cases/level1/`、`cases/level2/`、`cases/level3/` | 按等级与业务模块组织的业务用例；文件后缀选择执行项目 |
