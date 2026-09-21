@@ -13,6 +13,6 @@
 | Integration | [透明 aiAct 接入验收](experience-transparent-ai-act-acceptance.md) |
 | 多设备协作 | [多设备验收](multi-device-yaml-workflows-acceptance.md) |
 | 视觉断言离线研究 | [实验报告](../experiments/visual-assert/outputs/report.md) |
-| 用例编写工作台（无设备部分） | [工作台验收](workbench-acceptance.md) |
+| 用例编写工作台（含 Android 真机核查） | [工作台验收](workbench-acceptance.md) |
 
 已归档的实施过程见 [OpenSpec archive](../openspec/changes/archive/)。当前能力见 [README](../README.md)，未来工作见 [Roadmap](../openspec/roadmap.md)。

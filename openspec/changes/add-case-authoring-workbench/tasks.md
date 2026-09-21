@@ -40,7 +40,7 @@
 ## 7. 集成验证与文档
 
 - [x] 7.1 完成从手工录入/文件导入到生成、卡片编辑、YAML 修改、确认导出的浏览器集成验证；核对每个源预期的覆盖及人工修改保留。（浏览器端到端：粘贴导入→真实模型生成→精确预期防线→解决待澄清→四层检查→确认快照→导出 ready 1/excluded 0；生成冲突经待合并差异合并，人工修改保留；记录见 docs/workbench-acceptance.md）
-- [ ] 7.2 在真实 Android 设备和真实模型上验证关键页面核查、停止接管与证据关联；记录日期、设备、应用、模型和实际覆盖，缺少环境时保留未完成状态。
+- [x] 7.2 在真实 Android 设备和真实模型上验证关键页面核查、停止接管与证据关联；记录日期、设备、应用、模型和实际覆盖，缺少环境时保留未完成状态。（2026-09-21：HC100/HC10006129200186 + mimo-v2.5 + com.android.settings；三目标全部 observed-pass，9 步全成；在途停止显示停止中且保留部分证据；释放/重绑/复跑先取新画面；6 条证据含真机截图与框架报告；记录见 docs/workbench-acceptance.md）
 - [ ] 7.3 在真实 HarmonyOS 设备和真实模型上完成同等验证；单独记录证据，不以 Android 结果或替身测试代替。
 - [x] 7.4 运行项目类型检查、相关单元/契约测试及 Web 构建，修复失败并保存结果；增加工作台提交 → MTA 项目 setup/Node 注册 → Midscene Runner → teardown/报告的集成契约验证，核对同一工作流在工作台与既有 CLI 入口下的执行语义一致。直接 Agent 替身测试不得替代此项验证。（tsc 无错误；单元 339 + 集成 61 全部通过；workbench:build 通过；midscene-test nodes CLI 正常；集成契约为 tests/unit/workbench-execution-contract.test.ts（真实 Runner + 可控 Node + 注入 loadProject），同一 NodeRegistry/resolveNode 语义与 CLI collect 一致；真实设备执行一致性依赖 7.2 环境，已记录未完成）
 - [x] 7.5 更新 README 使用入口、架构能力说明和路线图，追加带日期的验收记录及标明身份的 examples；核对相对链接、显式设备绑定和能力声明与已实现配置一致。（README 新增「用例编写工作台」段；ARCHITECTURE 与 roadmap 更新 Case Authoring 现状；docs/workbench-acceptance.md（2026-09-18，含未完成项）并登记 acceptance-index；examples/workbench/ 标明“生成示例、未真实执行”；contracts 文档同步新执行边界）
