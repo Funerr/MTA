@@ -393,6 +393,20 @@ describe('无预期时不伪造断言', () => {
     expect(observation.observation).toContain('证据不足');
   });
 
+  it('缺口消息区分断言失败与执行中断', () => {
+    const goalWithAssert: VerificationGoal = {
+      ...goal,
+      expectationIds: ['exp1'],
+      observations: ['设置页面显示'],
+      assertionIndices: [1, 2],
+    };
+    const failedStep = { phase: 'steps', stepIndex: 1, node: 'aiAssert', input: {}, meta: { continueOnError: false }, status: 'failed', continuedAfterError: false, startedAt: '', endedAt: '', durationMs: 1 } as unknown as StepRunResult;
+    // 断言 1 失败、断言 2 缺失（用例提前中断）
+    const observation = goalObservation(goalWithAssert, new Map([[1, failedStep]]));
+    expect(observation.observation).toContain('1 项结果断言未通过');
+    expect(observation.observation).toContain('未到达 1 项断言');
+  });
+
   it('目标步骤执行成功且断言全部通过才记录 observed-pass', () => {
     const goalWithAssert: VerificationGoal = {
       ...goal,

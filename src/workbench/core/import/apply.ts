@@ -53,7 +53,7 @@ export function applyImport(
         actionId: item.actionIndex !== undefined
           ? actionIds[item.actionIndex]?.id
           : undefined,
-        evidenceKind: 'unverified' as const,
+        evidenceKind: item.evidence ?? ('unverified' as const),
       };
     });
 

@@ -8,10 +8,11 @@ import { z } from 'zod/v4';
 export const ModelCoverageSchema = z.object({
   expectationId: z.string(),
   covered: z.boolean(),
-  caseIndex: z.number().int().nonnegative().optional(),
-  stepIndex: z.number().int().nonnegative().optional(),
-  node: z.string().optional(),
-  reason: z.string().optional(),
+  caseIndex: z.number().int().nonnegative().optional().catch(undefined),
+  stepIndex: z.number().int().nonnegative().optional().catch(undefined),
+  node: z.string().optional().catch(undefined),
+  // 模型常在 covered 为 true 时输出 null；视为未提供。
+  reason: z.string().optional().catch(undefined),
 });
 export type ModelCoverage = z.infer<typeof ModelCoverageSchema>;
 
@@ -25,9 +26,9 @@ export const ModelRewriteSchema = z.object({
 export type ModelRewrite = z.infer<typeof ModelRewriteSchema>;
 
 export const ModelIssueSchema = z.object({
-  field: z.string().optional(),
+  field: z.string().optional().catch(undefined),
   message: z.string(),
-  needed: z.string().optional(),
+  needed: z.string().optional().catch(undefined),
   /** blocking：缺信息/矛盾；capability：能力缺口；note：仅记录。 */
   kind: z.enum(['blocking', 'capability', 'note']).catch('blocking'),
 });
@@ -52,6 +53,6 @@ export type ModelCaseOutput = z.infer<typeof ModelCaseOutputSchema>;
 
 export const ModelOutputSchema = z.object({
   cases: z.array(ModelCaseOutputSchema),
-  notes: z.array(z.string()).optional(),
+  notes: z.array(z.string()).optional().catch(undefined),
 });
 export type ModelOutput = z.infer<typeof ModelOutputSchema>;

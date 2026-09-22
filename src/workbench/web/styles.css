@@ -177,6 +177,8 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); }
   border-radius: 0 10px 10px 0;
   padding: 8px 12px; margin: 10px 0;
 }
+/* 同一核查目标的历史轮次证据：降级展示，当前结论以最新一轮为准。 */
+.item-block.superseded { opacity: 0.55; }
 .step-no { min-width: 22px; text-align: right; }
 .check { display: flex; gap: 6px; align-items: center; font-size: 13px; margin: 6px 0; }
 

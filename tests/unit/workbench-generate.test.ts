@@ -93,6 +93,40 @@ describe('模型调用边界', () => {
     expect(parseJsonContent('```json\n{"b":2}\n```')).toEqual({ b: 2 });
     expect(() => parseJsonContent('nope')).toThrow(ModelCallError);
   });
+
+  it('parseJsonContent 容忍说明文字、数组根与多个围栏片段', () => {
+    // 前后夹杂说明文字（GLM 等不带 response_format 的模型常见输出）
+    expect(parseJsonContent('好的，以下是识别结果：{"cases":[]} 请核对。')).toEqual({
+      cases: [],
+    });
+    // 字符串内包含 } 不影响平衡提取
+    expect(parseJsonContent('前言 {"a":{"b":"含}括号"}} 结尾')).toEqual({
+      a: { b: '含}括号' },
+    });
+    // 数组根
+    expect(parseJsonContent('前缀 [{"x":1}] 后缀')).toEqual([{ x: 1 }]);
+    // 多个围栏片段：取第一个
+    expect(
+      parseJsonContent('```json\n{"first":1}\n```\n说明\n```json\n{"second":2}\n```'),
+    ).toEqual({ first: 1 });
+  });
+
+  it('parseJsonContent 修复字符串值内未转义的换行与引号', () => {
+    // 真实模型缺陷：整段 YAML 塞进 JSON 字符串，换行未转义、
+    // YAML 自身的双引号也未转义。
+    const broken = [
+      '```json',
+      '{"cases":[{"workflowYaml":"cases:',
+      '  - name: "打开设置"',
+      '    steps:',
+      '      - launch: x","coverage":[{"expectationId":"exp1","covered":true,"reason":null}]}]}',
+      '```',
+    ].join('\n');
+    const parsed = parseJsonContent<{ cases: { workflowYaml: string }[] }>(broken);
+    expect(parsed.cases).toHaveLength(1);
+    expect(parsed.cases[0]!.workflowYaml).toContain('- name: "打开设置"');
+    expect(parsed.cases[0]!.workflowYaml).toContain('- launch: x');
+  });
 });
 
 describe('项目规则与 Node 契约加载', () => {

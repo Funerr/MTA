@@ -158,20 +158,151 @@ export async function chatJson<T>(
   return parseJsonContent<T>(content);
 }
 
-/** 容忍 ```json 围栏与前缀文本，只要求能提取出完整 JSON 对象。 */
+/**
+ * 容忍 ```json 围栏、前后说明文字与多个片段，提取第一个完整 JSON 值。
+ * 对象与数组根都接受；用平衡括号扫描避免"首个 { 到最后一个 }"被中间
+ * 夹杂的散文破坏。
+ */
 export function parseJsonContent<T>(content: string): T {
-  const text = content.trim();
-  const fenced = /```(?:json)?\s*([\s\S]*?)```/.exec(text);
-  const candidates = fenced ? [fenced[1]!.trim(), text] : [text];
+  const text = content.replace(/\uFEFF|\u200B|\u200C|\u200D/g, '').trim();
+  const fenced = [...text.matchAll(/```(?:json)?\s*([\s\S]*?)```/g)].map(
+    (match) => match[1]!.trim(),
+  );
+  const candidates = [...fenced, text];
   for (const candidate of candidates) {
-    const start = candidate.indexOf('{');
-    const end = candidate.lastIndexOf('}');
-    if (start < 0 || end <= start) continue;
-    try {
-      return JSON.parse(candidate.slice(start, end + 1)) as T;
-    } catch {
-      continue;
-    }
+    // 先整段直接解析（模型常输出纯 JSON）
+    const direct = tryParse<T>(candidate);
+    if (direct !== PARSE_FAILED) return direct;
+    // 再平衡扫描：跳过说明文字，取第一个完整的对象/数组
+    const scanned = scanBalanced<T>(candidate);
+    if (scanned !== PARSE_FAILED) return scanned;
   }
   throw new ModelCallError('invalid-response', '模型响应中未找到可解析的 JSON 对象');
+}
+
+const PARSE_FAILED = Symbol('parse-failed');
+
+function tryParse<T>(text: string): T | typeof PARSE_FAILED {
+  if (!text) return PARSE_FAILED;
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    // 常见模型输出缺陷：字符串值内未转义的控制字符（把整段 YAML 塞进
+    // JSON 字符串时的字面换行）与未转义引号（YAML 自身的 "..."）。
+    // 按启发式修复后重试一次。
+    try {
+      return JSON.parse(repairJsonStrings(text)) as T;
+    } catch {
+      return PARSE_FAILED;
+    }
+  }
+}
+
+/** 收尾引号后允许出现的结构字符（跳过空白后）。 */
+const STRUCTURAL_AFTER_CLOSE = new Set([',', '}', ']', ':']);
+/** 开启引号前允许出现的结构字符。 */
+const STRUCTURAL_BEFORE_OPEN = new Set(['{', '[', ',', ':']);
+
+function escapeControlChar(code: number): string {
+  if (code === 0x0a) return '\\n';
+  if (code === 0x0d) return '\\r';
+  if (code === 0x09) return '\\t';
+  return `\\u${code.toString(16).padStart(4, '0')}`;
+}
+
+/**
+ * 修复 JSON 字符串值内的两类常见损坏：
+ * 1. 字面控制字符（换行/制表等 < 0x20）→ 转义；
+ * 2. 未转义引号 → 用“引号后第一个非空白字符是否为 JSON 结构字符”
+ *    判断收尾或内嵌：收尾引号后只能是 , } ] : 或文本结束，否则视为
+ *    内嵌引号转义保留。
+ */
+function repairJsonStrings(text: string): string {
+  let out = '';
+  let inString = false;
+  let escaped = false;
+  let lastOutside = '';
+  for (let i = 0; i < text.length; i += 1) {
+    const ch = text[i]!;
+    if (inString) {
+      if (escaped) {
+        out += ch;
+        escaped = false;
+        continue;
+      }
+      if (ch === '\\') {
+        out += ch;
+        escaped = true;
+        continue;
+      }
+      if (ch === '"') {
+        let j = i + 1;
+        while (j < text.length && /\s/.test(text[j]!)) j += 1;
+        const next = text[j];
+        if (next === undefined || STRUCTURAL_AFTER_CLOSE.has(next)) {
+          inString = false;
+          out += ch;
+        } else {
+          out += '\\"';
+        }
+        continue;
+      }
+      const code = ch.charCodeAt(0);
+      if (code < 0x20) {
+        out += escapeControlChar(code);
+        continue;
+      }
+      out += ch;
+      continue;
+    }
+    if (ch === '"') {
+      if (lastOutside === '' || STRUCTURAL_BEFORE_OPEN.has(lastOutside)) {
+        inString = true;
+        out += ch;
+      }
+      // 结构字符后以外的游离引号：丢弃，避免破坏外围结构。
+      continue;
+    }
+    if (!/\s/.test(ch)) lastOutside = ch;
+    out += ch;
+  }
+  return out;
+}
+
+/** 从任意文本中提取第一个可解析的平衡 JSON 对象/数组；忽略字符串内的括号。 */
+function scanBalanced<T>(text: string): T | typeof PARSE_FAILED {
+  // 逐个尝试文本里出现的每个顶层起始括号：说明文字夹杂杂散 { 或
+  // 多段输出时，第一个候选可能损坏，后续候选仍可命中。
+  for (let start = text.search(/[{[]/); start >= 0; ) {
+    const open = text[start]!;
+    const close = open === '{' ? '}' : ']';
+    let depth = 0;
+    let inString = false;
+    let escaped = false;
+    let end = -1;
+    for (let i = start; i < text.length; i += 1) {
+      const ch = text[i]!;
+      if (inString) {
+        if (escaped) escaped = false;
+        else if (ch === '\\') escaped = true;
+        else if (ch === '"') inString = false;
+        continue;
+      }
+      if (ch === '"') inString = true;
+      else if (ch === open) depth += 1;
+      else if (ch === close) {
+        depth -= 1;
+        if (depth === 0) {
+          end = i;
+          break;
+        }
+      }
+    }
+    if (end < 0) return PARSE_FAILED;
+    const parsed = tryParse<T>(text.slice(start, end + 1));
+    if (parsed !== PARSE_FAILED) return parsed;
+    const next = text.slice(end + 1).search(/[{[]/);
+    start = next < 0 ? -1 : end + 1 + next;
+  }
+  return PARSE_FAILED;
 }

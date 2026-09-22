@@ -8,6 +8,8 @@ export function VerificationPanel(props: {
   doc: AuthoringDocument;
   /** 受控平台：传入时隐藏内部切换器。 */
   platform?: AuthoringPlatform;
+  /** 启动核查读取已落盘文档；本地有未保存修改时先自动保存。 */
+  onEnsureSaved?: () => Promise<AuthoringDocument | null>;
   onDocumentSaved(document: AuthoringDocument): void;
 }) {
   const [internalPlatform, setInternalPlatform] = useState<AuthoringPlatform>('android');
@@ -67,7 +69,12 @@ export function VerificationPanel(props: {
     </div>
     <p>当前绑定：${binding ?? '未绑定'} · 控制状态：${control?.runnerState ?? '无运行任务'}</p>
     <div class="row"><select aria-label="核查用例" value=${caseId} onChange=${(event: Event) => setCaseId((event.target as HTMLSelectElement).value)}>${props.doc.cases.map((item) => html`<option value=${item.id}>${item.name}</option>`)}</select>
-      <button disabled=${busy || !!control || !binding || !variant} onClick=${() => void invoke(async () => { const result = await request<{ task: TaskView }>(`./api/documents/${props.doc.id}/verify`, { method: 'POST', body: JSON.stringify({ platform, caseId, baseSaveVersion: props.doc.saveVersion }) }); setTask(result.task); })}>启动关键点核查</button>
+      <button disabled=${busy || !!control || !binding || !variant} onClick=${() => void invoke(async () => {
+        const current = props.onEnsureSaved ? await props.onEnsureSaved() : props.doc;
+        if (!current) throw new Error('本地修改尚未保存，已取消核查；请重试或先手动保存。');
+        const result = await request<{ task: TaskView }>(`./api/documents/${current.id}/verify`, { method: 'POST', body: JSON.stringify({ platform, caseId, baseSaveVersion: current.saveVersion }) });
+        setTask(result.task);
+      })}>启动关键点核查</button>
       <button disabled=${!control} onClick=${() => void invoke(async () => { await request('./api/verify/stop', { method: 'POST', body: JSON.stringify({ platform }) }); })}>停止</button>
     </div>
     <p class="muted">接管后重新绑定并启动，将先获取新画面；不会自动续跑旧动作。</p>
@@ -77,7 +84,24 @@ export function VerificationPanel(props: {
     ${message ? html`<pre class="excerpt" role="status">${message}</pre>` : null}
     <h3>核查证据与缺口</h3>
     ${summary?.perExpectation.map((item) => html`<p>${item.expectationId}：${item.covered ? '已取得有效结果证据' : '证据不足或待复核'}</p>`)}
-    ${variant?.evidence.map((record) => html`<div class="item-block"><strong>${record.target}</strong><p>${record.platform} · ${record.deviceId} · ${record.capturedAt} · r${record.workflowRevision}</p><p>${evidenceStatus(props.doc, variant, record, binding ?? undefined).reasons.join('；') || '版本有效'}</p><p>${record.observation}</p><p class="muted">${record.notes}</p>${record.screenshotFile ? html`<img alt=${record.target} style="max-width:320px;max-height:500px" src=${`./api/${record.screenshotFile}`} />` : null}</div>`)}
+    ${(() => {
+      // 同一核查目标保留多轮记录：最新一轮为当前结论，历史轮次降级展示，
+      // 避免旧轮次的“证据不足”被误读为当前状态。
+      const records = [...(variant?.evidence ?? [])].sort((a, b) =>
+        b.capturedAt.localeCompare(a.capturedAt),
+      );
+      const goalKey = (record: (typeof records)[number]) =>
+        `${record.caseId}:${record.actionId ?? ''}:${record.expectationIds.join(',')}`;
+      const latestKey = new Map<string, string>();
+      for (const record of records) {
+        const key = goalKey(record);
+        if (!latestKey.has(key)) latestKey.set(key, record.capturedAt);
+      }
+      return records.map((record) => {
+        const isLatest = latestKey.get(goalKey(record)) === record.capturedAt;
+        return html`<div class=${`item-block${isLatest ? '' : ' superseded'}`}><strong>${record.target}</strong>${isLatest ? null : html`<p class="muted">历史轮次（已被更新证据取代）</p>`}<p>${record.platform} · ${record.deviceId} · ${record.capturedAt} · r${record.workflowRevision}</p><p>${evidenceStatus(props.doc, variant!, record, binding ?? undefined).reasons.join('；') || '版本有效'}</p><p>${record.observation}</p><p class="muted">${record.notes}</p>${record.screenshotFile ? html`<img alt=${record.target} style="max-width:320px;max-height:500px" src=${`./api/${record.screenshotFile}`} />` : null}</div>`;
+      });
+    })()}
   </div>`;
 }
 
@@ -85,11 +109,17 @@ export function VerificationPanel(props: {
 export function DeliverySection(props: {
   doc: AuthoringDocument;
   platform: AuthoringPlatform;
+  /** 确认/导出读取已落盘文档；本地有未保存修改时先自动保存。 */
+  onEnsureSaved?: () => Promise<AuthoringDocument | null>;
   onDocumentSaved(document: AuthoringDocument): void;
 }) {
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
   const variant = props.doc.variants[props.platform];
+  const ensureSaved = async (): Promise<AuthoringDocument | null> => {
+    if (!props.onEnsureSaved) return props.doc;
+    return props.onEnsureSaved();
+  };
   const invoke = async (work: () => Promise<void>) => {
     setBusy(true); setMessage('');
     try { await work(); } catch (error) { setMessage(error instanceof Error ? error.message : String(error)); }
@@ -101,9 +131,11 @@ export function DeliverySection(props: {
         class="primary"
         disabled=${busy || !variant}
         onClick=${() => void invoke(async () => {
+          const current = await ensureSaved();
+          if (!current) throw new Error('本地修改尚未保存，已取消确认；请重试或先手动保存。');
           const result = await request<{ document: AuthoringDocument }>(
-            `./api/documents/${props.doc.id}/confirm`,
-            { method: 'POST', body: JSON.stringify({ platform: props.platform, baseSaveVersion: props.doc.saveVersion }) },
+            `./api/documents/${current.id}/confirm`,
+            { method: 'POST', body: JSON.stringify({ platform: props.platform, baseSaveVersion: current.saveVersion }) },
           );
           props.onDocumentSaved(result.document);
           setMessage('已确认当前修订，保存不可变快照。');
@@ -112,9 +144,11 @@ export function DeliverySection(props: {
       <button
         disabled=${busy}
         onClick=${() => void invoke(async () => {
+          const current = await ensureSaved();
+          if (!current) throw new Error('本地修改尚未保存，已取消导出；请重试或先手动保存。');
           const result = await request<{ directory: string; files: string[] }>(
-            `./api/documents/${props.doc.id}/export`,
-            { method: 'POST', body: JSON.stringify({ baseSaveVersion: props.doc.saveVersion }) },
+            `./api/documents/${current.id}/export`,
+            { method: 'POST', body: JSON.stringify({ baseSaveVersion: current.saveVersion }) },
           );
           setMessage(`已交付到 ${result.directory}\n${result.files.join('\n')}\n排除项见 conversion-report.json；完整执行未运行。`);
         })}

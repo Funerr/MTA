@@ -18,6 +18,10 @@ const ModelExpectationSchema = z.union([
   z.object({
     text: z.string(),
     actionIndex: z.number().int().nonnegative().optional(),
+    evidence: z
+      .enum(['visual', 'state-change', 'shell', 'report'])
+      .optional()
+      .catch(undefined),
   }),
 ]);
 
@@ -43,13 +47,14 @@ const SYSTEM_PROMPT = [
   '输入可能是"编号：/名称："标签段落、编号步骤列表、表格、自然语言段落或它们的混合；不要因格式不同而拒绝。',
   '',
   '## 输出契约',
-  '只输出一个 JSON 对象：',
-  '{"cases":[{"sourceId":"原文用例编号，缺失则为空字符串","name":"用例名称（缺失时从内容提炼短语）","goal":"测试目的，缺失留空","preconditions":["前置条件，缺失为空数组"],"actions":["操作步骤，保持原文措辞与顺序"],"expectations":[{"text":"预期结果原文","actionIndex":0}],"level":"level1|level2|level3","data":"测试数据，缺失留空"}],"notes":["识别说明（可选）"]}',
+  '只输出一个 JSON 对象，不要输出任何 JSON 以外的文字：',
+  '{"cases":[{"sourceId":"原文用例编号，缺失则为空字符串","name":"用例名称（缺失时从内容提炼短语）","goal":"测试目的，缺失留空","preconditions":["前置条件，缺失为空数组"],"actions":["操作步骤，保持原文措辞与顺序"],"expectations":[{"text":"预期结果原文","actionIndex":0,"evidence":"visual"}],"level":"level1|level2|level3","data":"测试数据，缺失留空"}],"notes":["识别说明（可选）"]}',
   '',
   '## 硬性要求',
   '- 忠实原文：步骤与预期保持用户原文措辞与粒度，不合并、不拆分、不改写、不补充。',
   '- 不虚构：文本中没有的信息留空；无法判断是否属于用例的内容不要生造结构。',
   '- 预期关联：能判断对应步骤时填 actionIndex（零基）；属于整条用例的预期省略 actionIndex。字符串形式的预期视为整条用例级。',
+  '- 证据类型：按预期原文的验证方式填 evidence——界面可见（页面/控件可见）填 "visual"，状态变化（开关/数值/模式变化）填 "state-change"，需命令行验证填 "shell"，以执行报告为准填 "report"；无法判断时省略 evidence。',
   '- level 缺省 level2；只有原文明确给出优先级时才映射 level1/level3。',
   '- 用例边界：一段内容描述多个独立场景时按语义拆为多条；同一条用例内的编号步骤保持为 actions。',
   '- 文本完全不是测试用例时返回 {"cases":[],"notes":["原因"]}，不要强行拆分。',
@@ -174,7 +179,9 @@ function normalizeDraft(
         item.actionIndex < actions.length
           ? item.actionIndex
           : undefined;
-      return { text, actionIndex };
+      const evidence =
+        typeof item === 'object' && item.evidence ? item.evidence : undefined;
+      return { text, actionIndex, evidence };
     })
     .filter((item) => item !== null);
 

@@ -72,6 +72,46 @@ describe('整段粘贴 / 纯文本导入：跨段用例夹具', () => {
     expect(result.unconverted).toHaveLength(1);
     expect(result.unconverted[0]!.reason).toContain('未识别出任何用例结构');
   });
+
+  it('无编号格式：“用例名称：/步骤：/预期结果：”标签行直接开启用例', () => {
+    const result = parseTextCases(
+      [
+        '用例名称：设置页面修改设备名称后返回验证',
+        '',
+        '步骤：',
+        '1. 打开设备的“设置”应用',
+        '2. 保存修改',
+        '',
+        '预期结果：',
+        '1. 设置应用正常打开，显示设置列表',
+        '2. 保存成功，提示已更新',
+      ].join('\n'),
+      'paste',
+    );
+
+    expect(result.cases).toHaveLength(1);
+    const draft = result.cases[0]!;
+    expect(draft.name).toBe('设置页面修改设备名称后返回验证');
+    expect(draft.actions).toEqual(['打开设备的“设置”应用', '保存修改']);
+    // 步骤与预期数量一致且未显式关联 → 按顺序一一关联
+    expect(draft.expectations).toEqual([
+      { text: '设置应用正常打开，显示设置列表', actionIndex: 0 },
+      { text: '保存成功，提示已更新', actionIndex: 1 },
+    ]);
+    expect(result.unconverted).toHaveLength(0);
+  });
+
+  it('连续的“名称：”标签分隔多条无编号用例', () => {
+    const result = parseTextCases(
+      ['名称：用例A', '步骤：打开设置', '名称：用例B', '步骤：打开相机'].join('\n'),
+      'text',
+    );
+    expect(result.cases).toHaveLength(2);
+    expect(result.cases[0]!.name).toBe('用例A');
+    expect(result.cases[0]!.actions).toEqual(['打开设置']);
+    expect(result.cases[1]!.name).toBe('用例B');
+    expect(result.cases[1]!.actions).toEqual(['打开相机']);
+  });
 });
 
 describe('Markdown 导入：跨段用例夹具', () => {

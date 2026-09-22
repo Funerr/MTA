@@ -156,6 +156,8 @@ export function PlatformSection(props: {
     platform: AuthoringPlatform,
     mutator: (variant: PlatformWorkflowVariant) => void,
   ) => void;
+  /** 服务端读取已落盘文档的操作（生成/检查/合并）执行前自动保存本地修改。 */
+  onEnsureSaved?: () => Promise<AuthoringDocument | null>;
   onDocumentSaved: (document: AuthoringDocument) => void;
 }) {
   const { platform, doc, baseSaveVersion, onMutateVariant } = props;
@@ -189,10 +191,25 @@ export function PlatformSection(props: {
     return () => clearTimeout(timer);
   }, [task]);
 
-  const generate = (caseIds?: string[]) => {
+  // 生成/静态检查/合并读取的都是已落盘文档；本地有未保存修改时先保存。
+  const ensureSaved = async (): Promise<AuthoringDocument | null> => {
+    if (!props.onEnsureSaved) return doc;
+    return props.onEnsureSaved();
+  };
+
+  const generate = async (caseIds?: string[]) => {
     setError(null);
+    const current = await ensureSaved();
+    if (!current) {
+      setError('本地修改尚未保存，已取消生成；请重试或先手动保存。');
+      return;
+    }
     api
-      .generateWorkflow(doc.id, { platform, baseSaveVersion, caseIds })
+      .generateWorkflow(current.id, {
+        platform,
+        baseSaveVersion: current.saveVersion,
+        caseIds,
+      })
       .then(({ task: started }) => setTask(started))
       .catch((reason: unknown) =>
         setError(reason instanceof Error ? reason.message : String(reason)),
@@ -207,9 +224,14 @@ export function PlatformSection(props: {
     setMerging(true);
     setError(null);
     try {
-      const { document } = await api.mergeGenerated(doc.id, {
+      const current = await ensureSaved();
+      if (!current) {
+        setError('本地修改尚未保存，已取消合并；请重试或先手动保存。');
+        return;
+      }
+      const { document } = await api.mergeGenerated(current.id, {
         platform,
-        baseSaveVersion,
+        baseSaveVersion: current.saveVersion,
         cases: [
           {
             caseId: output.caseId,
@@ -238,18 +260,22 @@ export function PlatformSection(props: {
     );
   };
 
-  const validate = () => {
+  const validate = async () => {
     setValidating(true);
     setError(null);
-    api
-      .validateWorkflow(doc.id, platform)
-      .then((response) => {
-        props.onDocumentSaved(response.document);
-      })
-      .catch((reason: unknown) =>
-        setError(reason instanceof Error ? reason.message : String(reason)),
-      )
-      .finally(() => setValidating(false));
+    try {
+      const current = await ensureSaved();
+      if (!current) {
+        setError('本地修改尚未保存，已取消静态检查；请重试或先手动保存。');
+        return;
+      }
+      const response = await api.validateWorkflow(current.id, platform);
+      props.onDocumentSaved(response.document);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : String(reason));
+    } finally {
+      setValidating(false);
+    }
   };
 
   const layerBadge = (name: string, layer?: { status: string }) => {

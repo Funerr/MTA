@@ -22,6 +22,18 @@ import { WorkflowPanel } from './workflow-panel';
 
 type SaveState = 'clean' | 'dirty' | 'saving' | 'error' | 'conflict';
 
+/**
+ * 跨标签页保存广播：同一用例集被多个标签页打开时，干净的一方自动
+ * 采纳最新版本，避免下一次保存出现虚假的版本冲突；脏编辑区不被动覆盖。
+ */
+const docSyncChannel: BroadcastChannel | null = (() => {
+  try {
+    return new BroadcastChannel('mta-workbench-doc');
+  } catch {
+    return null;
+  }
+})();
+
 const LEVEL_OPTIONS = CASE_LEVELS.map((level) => ({
   value: level,
   label: level,
@@ -63,6 +75,24 @@ export function EditorView(props: { docId: string; onOpen: (id: string) => void 
       .catch((reason: unknown) =>
         setMessage(reason instanceof Error ? reason.message : String(reason)),
       );
+  }, [props.docId]);
+
+  // 其他标签页保存后：干净状态自动采纳最新文档；脏编辑区保持不动。
+  useEffect(() => {
+    if (!docSyncChannel) return;
+    const onSync = (event: MessageEvent) => {
+      const data = event.data as { type?: string; id?: string };
+      if (data?.type !== 'saved' || data.id !== props.docId) return;
+      if (dirty.current) return;
+      api
+        .getDocument(props.docId)
+        .then(({ document }) => {
+          if (!dirty.current) applySaved(document);
+        })
+        .catch(() => undefined);
+    };
+    docSyncChannel.addEventListener('message', onSync);
+    return () => docSyncChannel!.removeEventListener('message', onSync);
   }, [props.docId]);
 
   const applySaved = (saved: AuthoringDocument) => {
@@ -111,21 +141,46 @@ export function EditorView(props: { docId: string; onOpen: (id: string) => void 
     });
   };
 
-  const save = () => {
-    if (!doc) return;
+  const save = async (): Promise<AuthoringDocument | null> => {
+    if (!doc || saveState === 'saving') return null;
     setSaveState('saving');
-    api
-      .saveDocument(doc, baseVersion)
-      .then(({ document }) => applySaved(document))
-      .catch((reason: unknown) => {
-        if (reason instanceof ApiError && reason.status === 409) {
+    const attempt = async (base: number) => {
+      const { document: saved } = await api.saveDocument(doc, base);
+      applySaved(saved);
+      docSyncChannel?.postMessage({ type: 'saved', id: saved.id });
+      return saved;
+    };
+    try {
+      return await attempt(baseVersion);
+    } catch (reason) {
+      if (reason instanceof ApiError && reason.status === 409) {
+        // 单人工作台：多标签页互顶时拉取最新版本号，基于最新基线重试一次，
+        // 不再要求用户手动去侧边栏重新打开。
+        try {
+          const { document: latest } = await api.getDocument(doc.id);
+          const saved = await attempt(latest.saveVersion);
+          setMessage('检测到其他会话的修改，已基于最新版本保存本次内容。');
+          return saved;
+        } catch {
           setSaveState('conflict');
-          setMessage('文档已被其他标签页修改；请在侧边栏重新打开后再编辑。');
-        } else {
-          setSaveState('error');
-          setMessage(reason instanceof Error ? reason.message : String(reason));
+          setMessage('文档已被其他会话修改且自动重试失败；请从侧边栏重新打开本文档。');
+          return null;
         }
-      });
+      }
+      setSaveState('error');
+      setMessage(reason instanceof Error ? reason.message : String(reason));
+      return null;
+    }
+  };
+
+  /**
+   * 服务端生成/核查/确认等操作读取的是已落盘文档；执行前确保本地
+   * 修改已保存，返回可直接用于 baseSaveVersion 的最新文档。
+   */
+  const ensureSaved = async (): Promise<AuthoringDocument | null> => {
+    if (!doc) return null;
+    if (!dirty.current) return doc;
+    return save();
   };
 
   if (!doc) {
@@ -319,6 +374,7 @@ export function EditorView(props: { docId: string; onOpen: (id: string) => void 
           baseSaveVersion=${baseVersion}
           onMutateBusiness=${mutateBusiness}
           onMutateVariant=${mutateVariant}
+          onEnsureSaved=${ensureSaved}
           onDocumentSaved=${(saved: AuthoringDocument) => {
             if (guardDirty()) return;
             applySaved(saved);
@@ -354,6 +410,7 @@ export function EditorView(props: { docId: string; onOpen: (id: string) => void 
         <${VerificationPanel}
           doc=${doc}
           platform=${platform}
+          onEnsureSaved=${ensureSaved}
           onDocumentSaved=${(saved: AuthoringDocument) => {
             if (guardDirty()) return;
             applySaved(saved);
@@ -371,6 +428,7 @@ export function EditorView(props: { docId: string; onOpen: (id: string) => void 
         <${DeliverySection}
           doc=${doc}
           platform=${platform}
+          onEnsureSaved=${ensureSaved}
           onDocumentSaved=${(saved: AuthoringDocument) => {
             if (guardDirty()) return;
             applySaved(saved);
@@ -618,9 +676,11 @@ function CaseForm(props: {
         <//>
         <fieldset class="fieldset">
           <legend>前置条件</legend>
-          <label class="check">
+          <label class="check" for=${`no-precond-${caseItem.id}`}>
             <input
               type="checkbox"
+              id=${`no-precond-${caseItem.id}`}
+              name="noPreconditionsDeclared"
               checked=${caseItem.noPreconditionsDeclared}
               onChange=${(event: Event) =>
                 withCase(

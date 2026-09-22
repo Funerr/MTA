@@ -1,4 +1,4 @@
-import type { CaseLevel } from '../document';
+import type { CaseLevel, ExpectationEvidenceKind } from '../document';
 
 /**
  * 导入解析的统一结果：解析出的用例草稿、解析问题与未转换清单。
@@ -13,6 +13,8 @@ export interface ImportedExpectation {
   text: string;
   /** 关联步骤序号（零基）；缺省表示整条用例。 */
   actionIndex?: number;
+  /** 模型识别推断的证据类型；缺省表示未判定（unverified）。 */
+  evidence?: ExpectationEvidenceKind;
 }
 
 export interface ImportedCaseDraft {

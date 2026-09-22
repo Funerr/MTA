@@ -8,9 +8,22 @@ import type { CaseLevel } from '../document';
  * 支持的形态：
  * - “编号：TC-001” 等标签行开启一条用例；
  * - 行首裸编号（“TC-001 打开设置”，空行后出现）开启一条用例；
+ * - 无编号时“用例名称：/名称：”等标签行也可开启一条用例（连续的
+ *   “名称：”标签分隔多条用例）；
  * - 名称/目的/前置条件/步骤/预期/数据/等级 标签段；
  * - 步骤/预期段内允许编号、多行续写与跨段文本。
  */
+
+/**
+ * 名称类标签是否应开启新用例：当前用例已有名称时，再次出现的
+ * “名称：/标题：”视为下一条无编号用例的边界。
+ */
+function labelStartsNewCase(
+  label: readonly [RegExp, string],
+  current: CaseBuilder,
+): boolean {
+  return label[1] === 'name' && current.name !== '';
+}
 
 const LABEL_CASE_ID = /^(?:用例\s*)?(?:编号|ID|id|序号)\s*[：:]\s*(\S+)\s*$/;
 
@@ -52,7 +65,7 @@ export function parseTextCases(
   const startCase = (sourceId: string, name: string, startLine: number, boundaryLine: string) => {
     flushCase();
     const builder = new CaseBuilder(sourceId, name, startLine);
-    builder.excerptLines.push(boundaryLine);
+    if (boundaryLine) builder.excerptLines.push(boundaryLine);
     builder.endLine = startLine;
     state.current = builder;
     const seen = seenSourceIds.get(sourceId) ?? 0;
@@ -112,6 +125,11 @@ export function parseTextCases(
 
     // 段落标签
     const label = SECTION_LABELS.find(([pattern]) => pattern.test(line));
+    if (label && (!state.current || labelStartsNewCase(label, state.current))) {
+      // 无编号格式：“用例名称：… 步骤：… 预期结果：…”直接用标签行开启用例；
+      // 连续出现的“名称：”标签分隔多条无编号用例。
+      startCase('', '', lineNumber, '');
+    }
     if (label && state.current) {
       const current = state.current;
       current.excerptLines.push(line);
@@ -143,14 +161,6 @@ export function parseTextCases(
         }
       }
       lastLineBlank = false;
-      continue;
-    }
-    if (label && !state.current) {
-      result.unconverted.push({
-        excerpt: line.slice(0, 200),
-        reason: '标签段落出现在任何用例编号之前',
-        range: `L${lineNumber}`,
-      });
       continue;
     }
 
