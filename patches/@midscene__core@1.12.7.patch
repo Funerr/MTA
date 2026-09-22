@@ -55,6 +55,33 @@ index ed9e1d92cd12ba2d7ca48d8e090042b6c9b76d09..a60b3e2848622b2a78804492cfe725d9
              assertLocateResultStructure(result);
              assertLocateResultCoordinateRangeAndOrder(result, preparedSize.width - 1, preparedSize.height - 1);
              const center = clampPixelPointToSize(mapLocateResultToPixelPoint(result, preparedSize), contentSize);
+diff --git a/dist/es/utils.mjs b/dist/es/utils.mjs
+index 0c57d6e57c674d723b1276ea36228d25ab1c6c9a..3e2aebc08b3b53fd9fd069ab9012a861a4e43071 100644
+--- a/dist/es/utils.mjs
++++ b/dist/es/utils.mjs
+@@ -35,9 +35,21 @@ function processCacheConfig(cache, cacheId) {
+ }
+ const reportInitializedMap = new Map();
+ const reportGroupIdMap = new Map();
++// [MTA patch: report branding - @midscene/core@1.12.7]
++// The upstream report template ships a Midscene logo (.logo element in the
++// header) and a favicon fetched from a CDN. Post-process the template string
++// here instead of editing the generated single-line report-html-template
++// module: hide the logo via CSS and swap the favicon for an MTA icon
++// embedded as a data URI (no network request). Re-evaluate this patch when
++// upgrading @midscene/core.
++const MTA_REPORT_FAVICON_PNG = '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';
++const MTA_MIDSCENE_CDN_FAVICON_URL = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/vhaeh7vhabf/favicon-32x32.png';
++function mtaRebrandReportTemplate(tpl) {
++    return tpl.replace('href="' + MTA_MIDSCENE_CDN_FAVICON_URL + '"', 'href="data:image/png;base64,' + MTA_REPORT_FAVICON_PNG + '"').replace('sizes="32x32"', 'sizes="64x64"').replace('</head>', '<style id="mta-branding">.logo{display:none!important}</style></head>');
++}
+ function getReportTpl() {
+     if (IS_REPORT_BUILD) return '';
+-    const reportTpl = REPORT_HTML_TEMPLATE;
++    const reportTpl = mtaRebrandReportTemplate(REPORT_HTML_TEMPLATE);
+     if (reportTpl.includes('REPLACE_ME_WITH_REPORT_HTML')) throw new Error('Report template contains an unresolved placeholder. Build Report with "pnpm exec nx build @midscene/report", or run "pnpm --filter @midscene/core sync-report-template" if apps/report/dist/index.html already exists.');
+     return reportTpl;
+ }
 diff --git a/dist/lib/ai-model/shared/model-locate-result/factory.js b/dist/lib/ai-model/shared/model-locate-result/factory.js
 index 0c1ab77d11c0b7782d13a1788bff8d5d0c08eb9c..4674bd8c86fe035d8ce8ff867ea1ae4da0b30fda 100644
 --- a/dist/lib/ai-model/shared/model-locate-result/factory.js
@@ -112,3 +139,30 @@ index 0c1ab77d11c0b7782d13a1788bff8d5d0c08eb9c..4674bd8c86fe035d8ce8ff867ea1ae4d
              (0, external_validation_js_namespaceObject.assertLocateResultStructure)(result);
              (0, external_validation_js_namespaceObject.assertLocateResultCoordinateRangeAndOrder)(result, preparedSize.width - 1, preparedSize.height - 1);
              const center = (0, external_pixel_mapper_js_namespaceObject.clampPixelPointToSize)((0, external_pixel_mapper_js_namespaceObject.mapLocateResultToPixelPoint)(result, preparedSize), contentSize);
+diff --git a/dist/lib/utils.js b/dist/lib/utils.js
+index c2b75bee817ead9f5786d71147f11c60ad9f8961..af96a69c8963d5838a11897f614c1b3d0dce35aa 100644
+--- a/dist/lib/utils.js
++++ b/dist/lib/utils.js
+@@ -79,9 +79,21 @@ function processCacheConfig(cache, cacheId) {
+ }
+ const reportInitializedMap = new Map();
+ const reportGroupIdMap = new Map();
++// [MTA patch: report branding - @midscene/core@1.12.7]
++// The upstream report template ships a Midscene logo (.logo element in the
++// header) and a favicon fetched from a CDN. Post-process the template string
++// here instead of editing the generated single-line report-html-template
++// module: hide the logo via CSS and swap the favicon for an MTA icon
++// embedded as a data URI (no network request). Re-evaluate this patch when
++// upgrading @midscene/core.
++const MTA_REPORT_FAVICON_PNG = 'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAGxklEQVR4nNRaW2wVRRj+Z3Z7bvR2WuQi9AJITwVb7lVKuQgENTHBJ2MiiYlRE0j0gRB90FeCjQEhIcYXH0zAxMQnnzDewqVNuZiUEgjlZlMMpaSXUwo95+yes+Ped/bs7Hb3hNA98zD9+p25/N/Mzvz/zC5PCAGXNNCfu3Ipe2dQHB8rTKWlTJYghOTyCECugxDIVY38GfPRGEomuWQdbnk5srEj2rYm6mYkcgooFOD3M09/Pv1kYrwAyGCVruYM19Vx7+2r2v1GguPAS4AML5zLnP5xemSkoIyEPh6IgIHp/LnzS5by+z6o6uyKI+Qi4PzZzIljaUEg+hhYufYH5pyXH61DXyRf3RxjCOjtyX59eEJ7MjX1WiVNvY5DwGOMDn1eu3V7XDMba3+G/hWPfjMpaeUQkkCZNh0TCoeAL0jk+Lfpu3dFS4AkQXf3ZE4AszRQNUOIswI5djQtm60LOHNmZvh+QXmSlHLqc2ViOg8TPzSUl81WBGQy5NSpaVUfKM8cUp44C4eYl82emSH4Qk82PSXZVYKL+nDx6cdST2+WH7iWI9TOpXlE+14WXv7moIBHHxUolSBROPz8/f/y+OFowZwjqnR54IlJiZ9IS5om0NZHWWHZeCyIhLFzlUn+dIbwpo8o0xwTykuXI8amGkmfF/qJKgOel9S4TzJibqCwB9/cyJ3ong+sdOuOeOircWY7iTj89MMiOpo30+274sEvx2ft18nzRSsDXFZMEZ+s4xJxxBTQtipCXNrp6ozPS7BrLV3C++nXyWNC7Ur+sUeST33Ll3HMups3RT0qBrVBw9jQBJQ+X9gj7ehKMOu2tkS8qgW3QZsBKFGDe1rfHnGWl/eL+iT2qFXaOGI1rlBmRHHI/rFnWtbAO+u2r44gz3kLbIOKsXqsUdVgFAy7p1gM1VTjovI7OuOelaAUG7DiB4DyC0D5OS8eHIOpHfDM9PqWWFE7a1ZXuBXWk49+nTy2fIRxVpAo7Mnb0vikzajNG2NF5V9cxJu/jk0wFPju18Zbntjp87z5ou4nH0vylZ6ZWpbboqzFC/mINQEwaNwpsGYgmD1Y82o6S6jZmZV3pJFHloLaaow5q/yuLpsH6P0n56zut187j8GKLiAQdlpw/bZIjSZ0boiZ5TvWxuiSF/tzDutLscH0A8o5n5h+zh92Cuixj+vWjqhZfkWjtQDkw7hQYFQvwQYZ8wQZI6aywbA9nb+cBagx/21rjWg9xWOoqtIqf3soz9yFSUk2YMq3uflCF96RhDxMP7F+WfwCp5Xf1mFbAH3y88PS77dfO49ZLNgjJxbPHEKAO8N58185qlvZrER1XRttAv7qyzL3AF/9Ong6FgqYs8bv0oBtGezsjMv8qpVWDCeI8HBMAvCegQA5pvQV+dpZeJYF5M++LM10KFEdLKi3Yrj7I3m9BfCYgQD2KDNAKL9A4dl4pwCEhkcKecqdNS3h2lMVmFLbPyhq7bD0++vXzmP23bwPzLJA4R9Q7iweRXt3J+gyf1/Mgh4FOGcgsA2SdisBrDt4b0zcLbg6aAsT9myxXJjsPK7cECUX/aW9K8ClrmCHBca+ds7uznjqveLElKRG8+wnsDRLMGuVMNeTg2dYoPC9V3Pgkm7cE812WHX99etyJkYOfzEL77RP42V3NjXNHuKefsFqB9w0BLNH24XAzIHCHjzTevPXW8Mi08I/lBXsqwX/9hR7Yv/39EwLtF/7rgnOXzM5kn5CrHacyV+/Rbx2JtbnKBgGNw3oN7s709LQSIFux61uUHt4NS7VRpT4xxmhWIKYJ8bMkAdjRMxDBW8rcPm6YLYjOaJx2f2RgDZoGK19f1T/KqE8c+eZuMxyXjtr6t8mAIXLhLe/HwBTGZQLj/kKdV3r78QJ6F9ZgGTgMPOV8xCeX8sZ+uh4VVMZdr6uBuP6GqRqUv0C/W0CkPDz82sxTjVVaHsypbVscKqRxzs3MO7yywW/9VoUb3klkmrizOhCv3cvB5xq4ttXyOdVBPv3zrNiDGN9hB8feEc5rCr3BTvXRVqbK/RVYvk5BQd9b/Dc+FQDt2t9VBcgT8LhDyujEWzoK/YdYeOjEXTk4yp1GRtfLbY28kc+qnTUJ0VthYGXh7/7k6pUA28TIKc3N0VPflodizJbKZrNOeOjEfjus+o9G6y7yuJvp28M5w9+Pz00qtztEADz3BEG3LyQO76/qrXBds5gffwtwS/nsyd/nXk0JRkflqvNzB1ekOQOvJ14d1uMc7xoRsT98/u+m+LZAaH/Xl5WMj4lzQiuJZ95SkRRfRValOTWvcRvb4tsaqlwK/k/AAAA///7cAncAAAABklEQVQDADwCNMFYUvnIAAAAAElFTkSuQmCC';
++const MTA_MIDSCENE_CDN_FAVICON_URL = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/vhaeh7vhabf/favicon-32x32.png';
++function mtaRebrandReportTemplate(tpl) {
++    return tpl.replace('href="' + MTA_MIDSCENE_CDN_FAVICON_URL + '"', 'href="data:image/png;base64,' + MTA_REPORT_FAVICON_PNG + '"').replace('sizes="32x32"', 'sizes="64x64"').replace('</head>', '<style id="mta-branding">.logo{display:none!important}</style></head>');
++}
+ function getReportTpl() {
+     if (external_constants_js_namespaceObject.IS_REPORT_BUILD) return '';
+-    const reportTpl = external_report_html_template_js_namespaceObject.REPORT_HTML_TEMPLATE;
++    const reportTpl = mtaRebrandReportTemplate(external_report_html_template_js_namespaceObject.REPORT_HTML_TEMPLATE);
+     if (reportTpl.includes('REPLACE_ME_WITH_REPORT_HTML')) throw new Error('Report template contains an unresolved placeholder. Build Report with "pnpm exec nx build @midscene/report", or run "pnpm --filter @midscene/core sync-report-template" if apps/report/dist/index.html already exists.');
+     return reportTpl;
+ }

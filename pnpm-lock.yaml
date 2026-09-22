@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@midscene/core@1.12.7':
-    hash: 30590c2ea0d35882fe8ce47e564c4202f3f65b21b5a5a1de9618bb684e86d977
+    hash: 4bd41327b4f3d155c846ec701ee4916e19941f9891a536e32d53f2aa86b69777
     path: patches/@midscene__core@1.12.7.patch
 
 importers:
@@ -18,7 +18,7 @@ importers:
         version: 1.12.7
       '@midscene/core':
         specifier: 1.12.7
-        version: 1.12.7(patch_hash=30590c2ea0d35882fe8ce47e564c4202f3f65b21b5a5a1de9618bb684e86d977)
+        version: 1.12.7(patch_hash=4bd41327b4f3d155c846ec701ee4916e19941f9891a536e32d53f2aa86b69777)
       '@midscene/harmony':
         specifier: 1.12.7
         version: 1.12.7(@types/node@20.19.43)
@@ -3310,7 +3310,7 @@ snapshots:
 
   '@midscene/android@1.12.7':
     dependencies:
-      '@midscene/core': 1.12.7(patch_hash=30590c2ea0d35882fe8ce47e564c4202f3f65b21b5a5a1de9618bb684e86d977)
+      '@midscene/core': 1.12.7(patch_hash=4bd41327b4f3d155c846ec701ee4916e19941f9891a536e32d53f2aa86b69777)
       '@midscene/shared': 1.12.7
       '@yume-chan/adb': 2.6.3
       '@yume-chan/adb-scrcpy': 2.3.2
@@ -3330,7 +3330,7 @@ snapshots:
       - supports-color
       - ws
 
-  '@midscene/core@1.12.7(patch_hash=30590c2ea0d35882fe8ce47e564c4202f3f65b21b5a5a1de9618bb684e86d977)':
+  '@midscene/core@1.12.7(patch_hash=4bd41327b4f3d155c846ec701ee4916e19941f9891a536e32d53f2aa86b69777)':
     dependencies:
       '@midscene/shared': 1.12.7
       '@ui-tars/action-parser': 1.2.3
@@ -3352,7 +3352,7 @@ snapshots:
   '@midscene/harmony@1.12.7(@types/node@20.19.43)':
     dependencies:
       '@inquirer/prompts': 7.10.1(@types/node@20.19.43)
-      '@midscene/core': 1.12.7(patch_hash=30590c2ea0d35882fe8ce47e564c4202f3f65b21b5a5a1de9618bb684e86d977)
+      '@midscene/core': 1.12.7(patch_hash=4bd41327b4f3d155c846ec701ee4916e19941f9891a536e32d53f2aa86b69777)
       '@midscene/playground': 1.12.7
       '@midscene/shared': 1.12.7
       open: 10.1.0
@@ -3364,7 +3364,7 @@ snapshots:
 
   '@midscene/playground@1.12.7':
     dependencies:
-      '@midscene/core': 1.12.7(patch_hash=30590c2ea0d35882fe8ce47e564c4202f3f65b21b5a5a1de9618bb684e86d977)
+      '@midscene/core': 1.12.7(patch_hash=4bd41327b4f3d155c846ec701ee4916e19941f9891a536e32d53f2aa86b69777)
       '@midscene/shared': 1.12.7
       cors: 2.8.6
       dotenv: 16.6.1
@@ -3390,7 +3390,7 @@ snapshots:
   '@midscene/test@1.12.7(@types/node@20.19.43)':
     dependencies:
       '@inquirer/prompts': 7.10.1(@types/node@20.19.43)
-      '@midscene/core': 1.12.7(patch_hash=30590c2ea0d35882fe8ce47e564c4202f3f65b21b5a5a1de9618bb684e86d977)
+      '@midscene/core': 1.12.7(patch_hash=4bd41327b4f3d155c846ec701ee4916e19941f9891a536e32d53f2aa86b69777)
       '@midscene/shared': 1.12.7
       execa: 9.3.0
       js-yaml: 4.1.0
