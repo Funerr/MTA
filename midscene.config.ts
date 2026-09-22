@@ -29,6 +29,7 @@ import {
   loadExperienceIntegrationConfig,
   wrapMidsceneNodesWithExperience,
 } from './src/experience/integration';
+import { loadKnowledgeInjectionConfig, wrapNodesWithKnowledge } from './src/knowledge';
 
 loadEnv({ path: fileURLToPath(new URL('.env', import.meta.url)) });
 
@@ -41,32 +42,45 @@ loadEnv({ path: fileURLToPath(new URL('.env', import.meta.url)) });
 // 参数与错误契约全部保留 Midscene 原生定义，android 侧另有 runAdbShell、
 // harmony 侧另有 runHdcShell。
 // experience.enabled 默认关闭：包装返回原始 aiAct 定义，不实例化 Runtime/Store。
+// 知识注入同默认关闭（KNOWLEDGE_INDEX_ENABLED）：关闭时不读 knowledge/ 目录。
+// 组装层次：knowledge 在内层（增强 instruction）、experience 在外层（经验匹配键
+// 基于原始 instruction，不随知识索引编辑漂移；原生回退路径必得注入）。
 const experienceIntegration = loadExperienceIntegrationConfig();
+const knowledgeInjection = loadKnowledgeInjectionConfig();
 
 const androidNodes = wrapMidsceneNodesWithExperience(
-  createMidsceneNodes<AndroidProjectContext>({
-    agentClass: AndroidAgent,
-    agentProvider: createSharedAgentReportProvider(
-      ({ context }: NodeExecutionContext<unknown, AndroidProjectContext>) =>
-        context.agent,
-    ),
-  }),
+  wrapNodesWithKnowledge(
+    createMidsceneNodes<AndroidProjectContext>({
+      agentClass: AndroidAgent,
+      agentProvider: createSharedAgentReportProvider(
+        ({ context }: NodeExecutionContext<unknown, AndroidProjectContext>) =>
+          context.agent,
+      ),
+    }),
+    knowledgeInjection,
+  ),
   experienceIntegration,
 );
 
 const harmonyNodes = wrapMidsceneNodesWithExperience(
-  createMidsceneNodes<HarmonyProjectContext>({
-    agentClass: HarmonyAgent,
-    agentProvider: createSharedAgentReportProvider(
-      ({ context }: NodeExecutionContext<unknown, HarmonyProjectContext>) =>
-        context.agent,
-    ),
-  }),
+  wrapNodesWithKnowledge(
+    createMidsceneNodes<HarmonyProjectContext>({
+      agentClass: HarmonyAgent,
+      agentProvider: createSharedAgentReportProvider(
+        ({ context }: NodeExecutionContext<unknown, HarmonyProjectContext>) =>
+          context.agent,
+      ),
+    }),
+    knowledgeInjection,
+  ),
   experienceIntegration,
 );
 
 const multiDeviceBindings = loadMultiDeviceBindings();
-const multiDeviceNodes = createMultiDeviceNodes(multiDeviceBindings);
+// 协作项目内部自建原生 Nodes（不复用上方已包装节点），知识注入在其内部独立挂载。
+const multiDeviceNodes = createMultiDeviceNodes(multiDeviceBindings, {
+  knowledge: knowledgeInjection,
+});
 const multiDeviceProjectSetup = createMultiDeviceProjectSetup({
   bindings: multiDeviceBindings,
 });

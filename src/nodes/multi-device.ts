@@ -26,6 +26,15 @@ import {
 } from './alias-nodes';
 import { DeviceInFlightGuard } from './device-inflight';
 import { createDeviceParallelNode } from './device-parallel';
+import type { KnowledgeInjectionOptions } from '../knowledge';
+import { wrapNodesWithKnowledge } from '../knowledge/wrap';
+
+/** 协作项目原生 Nodes 的可选包装配置；缺省全部关闭、行为与无配置一致。 */
+export interface MultiDeviceNodesOptions {
+  inflight?: DeviceInFlightGuard;
+  /** aiAct 知识注入：在别名化之前包装原生 Nodes，使 <alias>.aiAct 同等生效。 */
+  knowledge?: KnowledgeInjectionOptions;
+}
 
 export function createAliasedLifecycleNodes(
   alias: string,
@@ -125,8 +134,9 @@ function createUnprefixedOverrides(): readonly NodeDefinition<
 
 export function createMultiDeviceNodes(
   bindings: readonly MultiDeviceBinding[],
-  inflight: DeviceInFlightGuard = new DeviceInFlightGuard(),
+  options: MultiDeviceNodesOptions = {},
 ): readonly NodeDefinition<any, any, MultiDeviceProjectContext>[] {
+  const inflight = options.inflight ?? new DeviceInFlightGuard();
   const aliases = new Set(bindings.map((binding) => binding.alias));
   const aliased: NodeDefinition<any, any, MultiDeviceProjectContext>[] = [];
   const nativeRegistry = new Map<
@@ -137,13 +147,18 @@ export function createMultiDeviceNodes(
 
   for (const binding of bindings) {
     const agentClass = binding.platform === 'android' ? AndroidAgent : HarmonyAgent;
-    const native = createMidsceneNodes<MultiDeviceProjectContext>({
-      agentClass,
-      // 经官方 agentProvider 契约提供别名 Agent 并登记报告来源（与单设备项目一致）。
-      agentProvider: createSharedAgentReportProvider((execution) =>
-        requireAliasedAgent(execution.context, binding.alias, `${binding.alias}.*`),
-      ),
-    });
+    // 原生 Nodes 先做知识注入包装再别名化：renameNodeDefinition 保留 execute 委托，
+    // <alias>.aiAct 因此获得与单设备项目一致的注入行为。关闭时包装原样返回。
+    const native = wrapNodesWithKnowledge(
+      createMidsceneNodes<MultiDeviceProjectContext>({
+        agentClass,
+        // 经官方 agentProvider 契约提供别名 Agent 并登记报告来源（与单设备项目一致）。
+        agentProvider: createSharedAgentReportProvider((execution) =>
+          requireAliasedAgent(execution.context, binding.alias, `${binding.alias}.*`),
+        ),
+      }),
+      options.knowledge,
+    );
     waitNode ??= takeUnaliasedWaitNode(native);
     const aliasedNative = inflight.wrapAll(
       binding.alias,

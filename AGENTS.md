@@ -6,6 +6,7 @@
 - 新 Node 只允许 Runtime 基础能力（会话、设备协作、执行控制、通用观测等）。必须说明可复用的运行职责；禁止把业务知识、应用流程、领域断言或业务恢复策略写入 Node。业务语义放在使用方 Case 中。
 - 当前 Midscene YAML 是 Expert Mode / Execution Workflow；禁止把它当最终用户模型或以扩展 Node 的方式替代高层 Case Authoring。
 - Experience 范围冻结在已有 Schema/Store/Promotion/Matcher/Replay/Runtime/Integration。先验证现有闭环；允许缺陷修复、契约收口和验证，暂停新增 Memory、Skill、通用 Recovery 等大能力。解除冻结须由用户明确调整范围。
+- 运行时知识注入（`src/knowledge/`，默认关闭）是经用户 2026-09-22 授权的独立 Runtime 能力，不属于 Experience 冻结范围；包装层只做通用索引匹配与 instruction 注入，业务知识只存在于项目 `knowledge/` 数据文件，不得写入 Node、包装层或 Experience。
 - 禁止新增散落的 Midscene 内部契约访问，包括 dump 结构、报告结构和 executionId 关联。复用架构文档列出的适配入口；新增契约先在适配边界封装并补充针对锁定依赖的契约验证，不复制到调用点。
 - `src/setup/ + src/nodes/ + src/experience/` 共同承担 Runtime capabilities；本轮治理不移动源码目录。
 - 新增演示 YAML 放 `examples/`，框架夹具放 `tests/fixtures/`；保留在 `cases/` 的既有示例必须有文件头标识并登记在 `cases/README.md`，不得宣称为已通过的业务验收。

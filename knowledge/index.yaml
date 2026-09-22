@@ -1,0 +1,9 @@
+# 运行时知识索引（默认关闭，需 KNOWLEDGE_INDEX_ENABLED=1 启用）
+# 条目字段：id（稳定标识，进入注入标记 [knowledge:<id>]）、
+# triggers（触发词，对 aiAct instruction 做子串匹配，ASCII 不区分大小写）、
+# file（正文文件，相对本目录，禁止越界）。
+# 维护指引见 README.md。
+entries:
+  - id: control-center-gesture
+    triggers: [控制中心, 下拉控制中心]
+    file: entries/control-center.md

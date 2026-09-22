@@ -101,6 +101,7 @@ Skill 保留业务要求，允许非关键控件形态与位置变化，交付�
   - `device.waitUntil: { prompt, timeoutMs?, intervalMs? }` —— 显式等待。轮询判定当前绑定设备界面上的自然语言条件，满足即继续、超时即失败；替代按最坏情况预估的固定 `wait`，缩短用例耗时。协作项目写 `<alias>.device.waitUntil`（顺序步骤，不能进入 `device.parallel`）。
   - `experienceAct: { prompt }` —— 实验性经验动作。仅对使用方登记的可重复纯动作目标尝试视觉重放；默认资格表为空，未登记或含判断时回退一次原生 `aiAct`。不覆盖原生 `aiAssert`。
 - **可选透明接入**：默认关闭。设置 `EXPERIENCE_ENABLED=true` 后，本仓库 YAML 的 `aiAct` 对合格纯动作复用 Experience Runtime；图片、未知 options、未登记目标仍原样走原生。不拦截脚本直接调用 `agent.aiAct`。说明见 [docs/experience-transparent-ai-act.md](docs/experience-transparent-ai-act.md)。
+- **可选知识注入**：默认关闭。设置 `KNOWLEDGE_INDEX_ENABLED=1` 后，`aiAct` 的 instruction 命中 [knowledge/](knowledge/README.md) 索引触发词时，对应条目正文以 `[knowledge:<id>]` 标记按需懒加载追加进 prompt（仅命中步骤读取；索引/正文非法时步骤显式失败）。单设备与协作项目（`<alias>.aiAct`）同等生效，用例 YAML 不变，报告中可见增强后的完整 prompt。
 
 两个设备生命周期节点均直接传播设备操作失败，超时与重试交给原生运行器，不吞异常、不私自重试。
 
@@ -118,6 +119,7 @@ Skill 保留业务要求，允许非关键控件形态与位置变化，交付�
 | `scripts/init.mjs` | 一键初始化入口：Node / pnpm 前提检测（不替装）、`pnpm install`、`.env` 脚手架（不覆盖）与环境预检报告（别名 `pnpm run mta:init`） |
 | `scripts/generate-node-references.mjs` | 按项目生成 Node 参考（官方 CLI 多项目时需 `--project` 选择），并刷新 YAML 指南的 Node 清单生成区块（区块构建在 `scripts/lib/yaml-guide-regions.mjs`） |
 | `src/experience/`、`experiences/` | Experience 资产、Promotion、Matcher、Replay、Runtime；实验入口 `experienceAct`；可选 YAML `aiAct` 透明接入（默认关闭） |
+| `src/knowledge/`、`knowledge/` | 运行时知识注入（默认关闭）：索引加载、触发词匹配与 `aiAct` 包装；条目数据与维护指引在 `knowledge/` |
 | `cases/level1/`、`cases/level2/`、`cases/level3/` | 按等级与业务模块组织的业务用例；文件后缀选择执行项目 |
 | `cases.config.ts` | 冒烟、全量和单级测试集的发现规则 |
 | `examples/`、`midscene.examples.config.ts` | 演示工作流及显式运行入口 |

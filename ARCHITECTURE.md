@@ -27,6 +27,7 @@ flowchart LR
 - setup 管理 Android/HarmonyOS 的确定性设备选择、Agent 接管与释放；协作项目通过显式 alias 绑定设备。
 - nodes 暴露通用运行能力：原生节点适配、设备生命周期、跨设备并行、实验经验动作。业务流程和业务状态判定属于 Case。
 - Experience 已包含 Schema、Store、Promotion、Matcher、Replay、Runtime、Integration。Schema/Store 管资产；Promotion 转换轨迹；Matcher 校验画面；Replay 派发已定位动作；Runtime 决定查找、重放、至多一次原生 AI 回退与学习；Integration 提供默认关闭的 YAML `aiAct` 包装。
+- 运行时知识注入（`src/knowledge/`）是独立于 Experience 的默认关闭能力：`aiAct` instruction 命中项目 `knowledge/` 索引触发词时，懒加载条目正文并以 `[knowledge:<id>]` 标记追加进 instruction 后走官方节点。仅改写公开节点输入，不访问 Midscene 内部契约；业务知识留在 `knowledge/` 数据文件；与 Experience 叠加时位于其内层（经验匹配键基于原始 instruction）。
 - 纯动作资格策略由使用方注入，默认空表。取消、超时或未知副作用不能引发盲目追加操作；视觉终态检查不替代业务语义断言。
 - 现有 `device.recover` 仅回到主屏；Experience 已有受限回退。它们不表示已经提供通用业务恢复系统。
 
