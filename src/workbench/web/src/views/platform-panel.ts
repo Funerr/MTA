@@ -11,8 +11,8 @@ import { Badge, Field, Select, TextInput } from '../ui';
 
 /**
  * 平台面板：应用上下文、生成/静态检查入口、工作流与覆盖映射展示。
- * 耗时生成走任务轮询。单页工作台直接使用 PlatformSection（单平台）
- * 与 ModelConfigCard（侧边栏浮层）。
+ * 耗时生成走任务轮询。单页工作台直接使用 PlatformSection（单平台）；
+ * ModelConfigCard 由顶栏右侧模型状态徽标以浮层挂载。
  */
 
 const MODEL_FAMILY_OPTIONS = [

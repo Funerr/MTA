@@ -295,6 +295,14 @@ textarea.yaml-editor:focus { border-color: var(--accent); box-shadow: 0 0 0 3px 
   border-radius: 12px; box-shadow: 0 8px 32px rgba(15, 23, 42, 0.16);
   padding: 14px 16px;
 }
+/* 顶栏模型徽标按钮：保持徽章形态，可点击打开配置浮层 */
+button.badge-button { min-height: auto; cursor: pointer; }
+button.badge-button:hover:not(:disabled) { filter: brightness(0.96); }
+/* 模型配置卡片浮层：字段纵向排布，去掉卡片自带 fieldset 边框避免双层嵌套 */
+.popover.model-config { width: 360px; }
+.popover.model-config .fieldset { border: 0; background: none; padding: 0; margin: 0; }
+.popover.model-config .fieldset legend { padding: 0; }
+.popover.model-config .grid-3 { grid-template-columns: 1fr; gap: 0; }
 
 /* ---------- 其他 ---------- */
 .muted { color: var(--muted); }

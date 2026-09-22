@@ -1,8 +1,9 @@
 import { html } from 'htm/preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { api, type DocumentSummary } from '../api';
+import { ModelConfigCard } from './platform-panel';
 
-/** 顶部导航：品牌、用例集选择与新建、生成模型状态。 */
+/** 顶部导航：品牌、用例集选择与新建；右侧模型状态徽标点开编写模型配置浮层。 */
 export function Topbar(props: {
   activeDocId: string | null;
   onOpen: (id: string) => void;
@@ -13,6 +14,8 @@ export function Topbar(props: {
     text: '',
     tone: '',
   });
+  const [modelPanelOpen, setModelPanelOpen] = useState(false);
+  const modelPanelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     api
@@ -21,7 +24,7 @@ export function Topbar(props: {
       .catch(() => setDocuments([]));
   }, [props.activeDocId]);
 
-  useEffect(() => {
+  const refreshModelLabel = () =>
     api
       .getModelConfig()
       .then((config) => {
@@ -35,7 +38,33 @@ export function Topbar(props: {
         }
       })
       .catch(() => setModelLabel({ text: '生成模型未配置', tone: 'warn' }));
+
+  useEffect(() => {
+    refreshModelLabel();
   }, []);
+
+  // 浮层打开期间：点到浮层外或按 Esc 关闭。
+  useEffect(() => {
+    if (!modelPanelOpen) return;
+    const onPointerDown = (event: MouseEvent) => {
+      if (
+        modelPanelRef.current &&
+        event.target instanceof Node &&
+        !modelPanelRef.current.contains(event.target)
+      ) {
+        setModelPanelOpen(false);
+      }
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setModelPanelOpen(false);
+    };
+    document.addEventListener('mousedown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [modelPanelOpen]);
 
   const create = () => {
     api
@@ -70,7 +99,20 @@ export function Topbar(props: {
       </select>
       <button class="small" onClick=${create} title="新建用例集">＋ 新建</button>
       <span class="spacer"></span>
-      <span class=${`badge ${modelLabel.tone}`}>${modelLabel.text}</span>
+      <div class="popover-wrap" ref=${modelPanelRef}>
+        <button
+          class=${`badge badge-button ${modelLabel.tone || 'muted'}`}
+          aria-expanded=${modelPanelOpen}
+          aria-haspopup="dialog"
+          title="配置生成模型"
+          onClick=${() => setModelPanelOpen((open) => !open)}
+        >${modelLabel.text}</button>
+        ${modelPanelOpen
+          ? html`<div class="popover model-config" role="dialog" aria-label="生成模型配置">
+              <${ModelConfigCard} onConfigured=${refreshModelLabel} />
+            </div>`
+          : null}
+      </div>
     </header>
   `;
 }
