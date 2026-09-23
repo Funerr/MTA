@@ -11,7 +11,7 @@
 | 设备 | 每项目一台；只有显式绑定互异设备时才应把 `maxConcurrency` 调到大于 1 | 协作项目在配置里声明至少两台别名 |
 | 语法 | 官方能力 | 自定义 Node，不是 Midscene 原生 YAML 语法 |
 
-协作用例按等级与业务模块放入 `cases/level1|level2|level3/`，使用 `.multi-device.yaml` 后缀；冒烟、全量与单级运行见 [测试集说明](../cases/README.md)。
+协作用例按项目结构放入 `cases/<项目>/<大模块>/<特性>/`，multi-device 归属由 `cases/<项目>/project.yaml` 的 `platform` 声明，文件名不带平台后缀；用例可在头部以 `# devices: DUT1, DUT2` 注释声明所需别名。执行范围选择见 [测试集说明](../cases/README.md)。
 
 ## 配置
 

@@ -215,10 +215,10 @@ function printNextSteps() {
   console.log('[mta] 下一步：');
   console.log('  1. 编辑 .env，填写模型四项配置（说明见 .env.example 头部注释）。');
   console.log(
-    '  2. 将用例 YAML 放入 cases/level1|level2|level3/，以 .android.yaml / .harmony.yaml / .multi-device.yaml 后缀选择执行项目。',
+    '  2. 新建项目骨架：pnpm case --new-project <项目> --platform <android|harmony|multi-device>；用例 YAML 放入 cases/<项目>/<大模块>/<特性>/，执行平台由 cases/<项目>/project.yaml 声明，文件名不带平台后缀。',
   );
   console.log(
-    '  3. 运行冒烟集：pnpm run test:cases:smoke --project android（或 --project harmony / --project multi-device）。',
+    '  3. 运行用例：pnpm case 进入菜单（环境自检 + 编号下钻），或 pnpm case <项目>/<大模块>/<特性>/<用例> 直接执行。',
   );
 }
 

@@ -19,7 +19,7 @@ import {
   type MultiDeviceProjectContext,
 } from './src/setup/multi-device';
 import { loadMultiDeviceBindings } from './src/setup/multi-device-config';
-import { createSharedAgentReportProvider } from './src/setup/agent-report-provider';
+import { createScopedAgentReportProvider } from './src/setup/agent-report-provider';
 import {
   createMultiDeviceNodes,
   frameworkNodes,
@@ -33,8 +33,9 @@ import { loadKnowledgeInjectionConfig, wrapNodesWithKnowledge } from './src/know
 
 loadEnv({ path: fileURLToPath(new URL('.env', import.meta.url)) });
 
-// 经官方 agentProvider 契约提供共享 Agent：releaseAgent 上报报告文件路径，
-// 由运行器按用例作用域登记为报告来源（否则报告组装器无法解析 AI 执行详情）。
+// 经官方 agentProvider 契约按作用域提供 Agent：共享设备、每作用域独立实例与
+// 报告文件；releaseAgent 上报该作用域的报告来源（报告组装要求 sourcePath 归属
+// 单一 scope，共享实例的单一报告文件会让多用例运行在组装期失败）。
 
 // 两平台原生 Nodes 存在大量同名节点（aiAct/launch/home…），不能同时进全局
 // nodes；各自在项目本地注册，按平台互不覆盖（项目本地节点按同名覆盖全局节点）。
@@ -52,7 +53,7 @@ const androidNodes = wrapMidsceneNodesWithExperience(
   wrapNodesWithKnowledge(
     createMidsceneNodes<AndroidProjectContext>({
       agentClass: AndroidAgent,
-      agentProvider: createSharedAgentReportProvider(
+      agentProvider: createScopedAgentReportProvider(
         ({ context }: NodeExecutionContext<unknown, AndroidProjectContext>) =>
           context.agent,
       ),
@@ -66,7 +67,7 @@ const harmonyNodes = wrapMidsceneNodesWithExperience(
   wrapNodesWithKnowledge(
     createMidsceneNodes<HarmonyProjectContext>({
       agentClass: HarmonyAgent,
-      agentProvider: createSharedAgentReportProvider(
+      agentProvider: createScopedAgentReportProvider(
         ({ context }: NodeExecutionContext<unknown, HarmonyProjectContext>) =>
           context.agent,
       ),

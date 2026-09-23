@@ -10,6 +10,7 @@
 - 禁止新增散落的 Midscene 内部契约访问，包括 dump 结构、报告结构和 executionId 关联。复用架构文档列出的适配入口；新增契约先在适配边界封装并补充针对锁定依赖的契约验证，不复制到调用点。
 - `src/setup/ + src/nodes/ + src/experience/` 共同承担 Runtime capabilities；本轮治理不移动源码目录。
 - 新增演示 YAML 放 `examples/`，框架夹具放 `tests/fixtures/`；保留在 `cases/` 的既有示例必须有文件头标识并登记在 `cases/README.md`，不得宣称为已通过的业务验收。
+- 业务用例按 `cases/<项目>/<大模块>/<特性>/` 组织（项目 = 机型代号，`project.yaml` 声明 `platform` 与设备需求），命名全部英文 kebab-case；不要再引入 `cases/level*` 分级目录或 `.android.yaml` 等平台文件名后缀（语义已退役），level / smoke 取值也不再作为执行维度。
 - 新文档和示例推荐 `DUT1/DUT2/DUT3`，配套声明显式设备绑定；底层 alias 保持任意合法名称，不因文档命名约定修改兼容默认值。
 - README 维护当前能力与使用入口；Roadmap 只维护未来工作；Acceptance 只保存带日期、环境和覆盖范围的阶段证据。不要把历史测试数改成当前统计；新验证追加独立记录。
 

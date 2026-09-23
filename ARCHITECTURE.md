@@ -38,7 +38,7 @@ flowchart LR
 | 契约 | 现有落点 |
 | --- | --- |
 | 平台 Agent、设备发现与会话 | `src/setup/android.ts`、`harmony.ts`、`harmony-experience.ts`、`multi-device.ts` |
-| 共享 Agent 的报告来源登记（官方 `agentProvider.releaseAgent` → `reportPaths`） | `src/setup/agent-report-provider.ts` |
+| 共享设备、按作用域派生 Agent 的报告来源登记（官方 `agentProvider.releaseAgent` → `reportPaths`） | `src/setup/agent-report-provider.ts` |
 | 原生 Node 注册与 alias 转发 | `midscene.config.ts`、`src/nodes/alias-nodes.ts`、`multi-device.ts` |
 | Agent 截图、原生 AI、dump、报告观测 | `src/experience/runtime/adapters.ts`、`observe.ts` |
 | Node 身份与报告关联 | `src/experience/runtime/identity.ts`、`integration/wrap.ts`、`src/nodes/experience-act.ts` |

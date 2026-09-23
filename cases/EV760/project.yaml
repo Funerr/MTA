@@ -1,0 +1,7 @@
+# MTA 项目声明（cases/EV760/project.yaml）：执行平台在项目级声明一次，用例文件不带平台后缀。
+# platform 可选：android | harmony | multi-device
+platform: android
+# devices 为项目所需设备别名（协作项目需要至少两台）；实际绑定在 .env 的 MULTI_DEVICE_BINDINGS 显式声明。
+# devices:
+#   - DUT1
+#   - DUT2

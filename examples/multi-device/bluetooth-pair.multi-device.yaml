@@ -1,0 +1,50 @@
+# 框架多设备协作演示：两台真实设备（DUT1 Android = HC100，DUT2 鸿蒙 = Funer的MatePad）。
+# 覆盖：并行 aiAct 操控、并行 aiAssert 断言、逐设备显式等待与设备名断言。
+# 需显式设备绑定（.env）：
+#   MULTI_DEVICE_BINDINGS=DUT1:android:MULTI_DEVICE_DUT1_ID,DUT2:harmony:MULTI_DEVICE_DUT2_ID
+#   MULTI_DEVICE_DUT1_ID=<adb udid> / MULTI_DEVICE_DUT2_ID=<hdc deviceId>
+# 运行：pnpm case examples/multi-device/bluetooth-pair.multi-device.yaml
+# 前置条件：两台设备已解锁亮屏、模型配置可用（MIDSCENE_MODEL_*，规划模型须支持视觉）。
+beforeEach:
+  - DUT1.device.prepare:
+      target: home
+  - DUT2.device.prepare:
+      target: home
+afterEach:
+  - DUT1.device.recover: {}
+  - DUT2.device.recover: {}
+cases:
+  - name: 双设备并行操控蓝牙并各自断言
+    steps:
+      - DUT1.launch:
+          uri: com.android.settings
+      - DUT2.launch:
+          uri: com.huawei.hmos.settings
+      - device.parallel:
+          steps:
+            - DUT1.aiAct: 在设置中找到并进入蓝牙页面，把蓝牙开关设置为开启状态；如果蓝牙已经开启，保持开关不变
+            - DUT2.aiAct: 在设置中找到并进入蓝牙页面（星闪和蓝牙），把蓝牙开关设置为开启状态；如果蓝牙已经开启，保持开关不变
+          $:
+            timeout: 240000
+      - device.parallel:
+          steps:
+            - DUT1.aiAssert: 当前页面是蓝牙设置页面，且蓝牙开关处于开启状态
+            - DUT2.aiAssert: 当前页面是蓝牙设置页面，且蓝牙开关处于开启状态
+          $:
+            timeout: 120000
+      - DUT1.device.waitUntil:
+          prompt: 屏幕上可以看到本机的蓝牙设备名称为 HC100
+          timeoutMs: 30000
+          $:
+            timeout: 40000
+      - DUT2.device.waitUntil:
+          prompt: 屏幕上可以看到本机可被发现的蓝牙设备名称，且该名称包含 MatePad
+          timeoutMs: 30000
+          $:
+            timeout: 40000
+      - device.parallel:
+          steps:
+            - DUT1.aiAssert: 本机蓝牙设备名称显示为 HC100
+            - DUT2.aiAssert: 本机蓝牙设备名称包含 MatePad 且蓝牙开关处于开启状态
+          $:
+            timeout: 120000

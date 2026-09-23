@@ -15,6 +15,8 @@
 | 视觉断言离线研究 | [实验报告](../experiments/visual-assert/outputs/report.md) |
 | 用例编写工作台（含 Android 真机核查） | [工作台验收](workbench-acceptance.md) |
 | 一键初始化入口 | [init 验收](project-init-acceptance.md) |
+| 单文件用例执行入口（`pnpm case` / run-case Skill，含 Android 真机冒烟） | [执行入口验收](case-execution-entry-acceptance.md) |
+| 项目域用例执行（统一入口 + 项目声明结构；含 Android 真机冒烟，HarmonyOS 按裁决免重复） | [项目域执行验收](project-scoped-case-execution-acceptance.md) |
 | 运行时知识索引与注入（默认关闭，框架夹具级） | [知识注入验收](runtime-knowledge-index-acceptance.md) |
 
 已归档的实施过程见 [OpenSpec archive](../openspec/changes/archive/)。当前能力见 [README](../README.md)，未来工作见 [Roadmap](../openspec/roadmap.md)。

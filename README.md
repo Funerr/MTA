@@ -36,25 +36,51 @@ pnpm run nodes                   # 重新生成各项目 Node 参考，并刷新
 ## 运行业务用例（使用方）
 
 1. 复制 `.env.example` 为 `.env`（快速开始的 init 已自动生成时可跳过），填写模型四项配置（[模型配置说明](https://midscenejs.com/model-common-config.html)）；单设备多目标时按平台设置 `ANDROID_DEVICE_ID` / `HARMONY_DEVICE_ID`；协作项目设置 `MULTI_DEVICE_BINDINGS` 与各别名的设备 ID 变量。hdc 不在默认路径时设置 `HDC_HOME`。高分辨率设备可设置 `SCREENSHOT_SHRINK_FACTOR`（须为 ≥1 的数字，缺省 `1` 不缩放）：截图按该因子缩小后传给模型以降低 token 消耗，坐标由 Midscene 换算回逻辑分辨率；非法值在会话建立时报错。
-2. 将 Expert Mode 的合法 Midscene YAML 工作流按等级与业务模块放入 `cases/level1/`、`cases/level2/` 或 `cases/level3/`，并使用 `.android.yaml`、`.harmony.yaml` 或 `.multi-device.yaml` 后缀选择执行项目（目录说明见 [cases/README.md](cases/README.md)；协作 YAML 见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)）。
-3. 执行：
+2. 按「项目 → 大模块 → 特性 → 用例」组织业务用例：项目即机型代号（如 `EV760`），执行平台与设备需求在 `cases/<项目>/project.yaml` 声明一次，用例文件不带平台后缀，文件夹与文件名全部英文 kebab-case（结构与命名详见 [cases/README.md](cases/README.md)；协作 YAML 见 [docs/multi-device-yaml-workflows.md](docs/multi-device-yaml-workflows.md)）。新建项目生成四大模块骨架（protocols / system / core / stability）：
 
 ```bash
-pnpm run test:cases:smoke --project android  # 冒烟集（level1），安卓环境
-pnpm run test:cases:level2 --project harmony # 仅 level2，鸿蒙环境
-pnpm run test:cases:full                     # 全量（level1/2/3），项目默认串行
-pnpm run test:cases --project android        # 仅运行 android 项目
-pnpm run test:cases --project harmony        # 仅运行 harmony 项目
-pnpm run test:cases --project multi-device   # 仅运行多设备协作项目
+pnpm case --new-project EV760 --platform android
 ```
 
-运行报告写入 `midscene_run/report/`（不入库）。某项目发现范围内没有 YAML 时，CLI 会报“未找到 YAML 用例”的收集错误。当前业务目录为空；原有演示已迁入 [examples/](examples/README.md)，通过独立配置显式执行。冒烟是 level1，全量包含所有 level，不复制用例。
+3. 执行。一条命令，按意图选：
+
+| 想做什么 | 命令 |
+| --- | --- |
+| 不确定怎么跑 / 按菜单选 | `pnpm case`（环境自检 + 编号下钻菜单） |
+| 跑一个项目的全部用例 | `pnpm case EV760` |
+| 跑一个大模块 / 特性 | `pnpm case EV760/system`、`pnpm case EV760/system/display` |
+| 跑单条用例 | `pnpm case EV760/system/display/adjust-brightness` |
+| 跑全部项目的全部用例 | `pnpm case --all`（或 `pnpm run test:cases`） |
+| 跑演示示例 | `pnpm case examples/android/camera-gallery.yaml` |
+
+多目标可一次给出（可混合项目与演示），按（配置根 × 执行平台）分组顺序执行。可选参数：`--verbose`（完整官方日志）、`--no-open`（不自动打开报告）、`--result-dir <目录>`（透传官方 CLI）。
+
+入口在启动执行前完成全部校验与环境自检（模型配置、设备连接与调试），失败以非零码退出并给出单一修复动作，不静默降级：目标不存在、项目缺 `project.yaml` 声明、路径含非 ASCII 或不合命名规范、设备需求未绑定（协作项目 `# devices: DUT1, DUT2` 与 `MULTI_DEVICE_BINDINGS` 比对）等均显式报错。执行仍由官方 Midscene CLI 完成，退出码与报告语义一致；结束输出结果摘要并自动打开报告（报告写入 `midscene_run/report/`，不入库）。
+
+旧命令迁移对照（退役维度均在启动前报错并指引新写法）：
+
+| 旧写法 | 新写法 |
+| --- | --- |
+| `pnpm case cases/level1/<模块>/<名称>.android.yaml` | `pnpm case <项目>/<大模块>/<特性>/<用例>`（平台由 project.yaml 声明） |
+| `pnpm run test:cases:smoke` / `:level1` / `:level2` / `:level3` | `pnpm case <项目>[/<大模块>]`（level 分级已退役） |
+| `pnpm run test:cases:full` / `pnpm run test:cases` | `pnpm case --all` |
+| `--project <android\|harmony\|multi-device>` | 删除该参数；平台由项目声明决定 |
+| `MTA_SUITE=<smoke\|level1\|…>` | 删除该变量；范围用目标表达 |
+| `--config midscene.examples.config.ts …` | `pnpm case examples/<演示目录>/<文件>.yaml` |
+
+当前业务用例目录为空（骨架待创建）；原有演示在 [examples/](examples/README.md)，经 `pnpm case examples/…` 自动使用演示配置执行。
 
 ## 用例转换 Skill
 
 项目提供 [case-to-yaml](.agents/skills/case-to-yaml/SKILL.md)，供支持 Skill 的 GUI/Agent 宿主将 Excel、Markdown 或文本用例转换为现有 Midscene YAML。可在宿主中调用 `$case-to-yaml` 并提供文件、目标项目及测试上下文；附件读取与模型调用由宿主提供。
 
-Skill 保留业务要求，允许非关键控件形态与位置变化，交付工作流、意图草稿和转换记录。证据不足或能力不支持的用例单独列出，不静默降低断言。转换不会执行测试，静态校验成功也不代表业务验收通过。[输入输出约定](.agents/skills/case-to-yaml/references/conversion-contract.md) 可供 GUI 接入参考。
+Skill 保留业务要求，允许非关键控件形态与位置变化，交付工作流、意图草稿和转换记录。证据不足或能力不支持的用例单独列出，不静默降低断言。转换不会执行测试，静态校验成功也不代表业务验收通过；转换结果的执行见下方 `run-case` Skill。[输入输出约定](.agents/skills/case-to-yaml/references/conversion-contract.md) 可供 GUI 接入参考。
+
+## 用例执行 Skill
+
+项目提供 [run-case](.agents/skills/run-case/SKILL.md)，供支持 Skill 的 GUI/Agent 宿主在无需阅读工程代码的情况下运行用例：提供用例名、命名空间目标（`<项目>/<大模块>/<特性>/<用例>`）或 YAML 路径，宿主经 `$run-case` 调用 `pnpm case` 完成执行与结果回报。
+
+Skill 按项目声明（`project.yaml`）确定执行平台并只启动该项目；失败模式（目标不存在 / 项目声明缺失 / 命名不合规 / 设备需求未满足等）原样回报并给出修复指引，不重试、不猜测。执行委托官方 Midscene CLI，语义与命令行直调一致；项目级 / 模块级批量请求同样走 `pnpm case` 的命名空间目标，不自动扩大执行范围。Skill 不生成或转换用例（`case-to-yaml` 职责），两个 Skill 边界互指、互不替代。
 
 ## 批量转换调试 Skill
 
@@ -126,8 +152,8 @@ Skill 是编排层，只定义 loop 与 goal：「忠实通过」= 退出码 0 �
 | `scripts/generate-node-references.mjs` | 按项目生成 Node 参考（官方 CLI 多项目时需 `--project` 选择），并刷新 YAML 指南的 Node 清单生成区块（区块构建在 `scripts/lib/yaml-guide-regions.mjs`） |
 | `src/experience/`、`experiences/` | Experience 资产、Promotion、Matcher、Replay、Runtime；实验入口 `experienceAct`；可选 YAML `aiAct` 透明接入（默认关闭） |
 | `src/knowledge/`、`knowledge/` | 运行时知识注入（默认关闭）：索引加载、触发词匹配与 `aiAct` 包装；条目数据与维护指引在 `knowledge/` |
-| `cases/level1/`、`cases/level2/`、`cases/level3/` | 按等级与业务模块组织的业务用例；文件后缀选择执行项目 |
-| `cases.config.ts` | 冒烟、全量和单级测试集的发现规则 |
+| `cases/<项目>/` | 业务用例：项目（机型代号）→ 大模块 → 特性 → 用例；`project.yaml` 声明执行平台与设备需求 |
+| `cases.config.ts` | 按项目声明的用例发现与选择规则（level/smoke 分级已退役） |
 | `examples/`、`midscene.examples.config.ts` | 演示工作流及显式运行入口 |
 | `experiments/visual-assert/` | 视觉断言离线评估实验（不接入生产 `aiAssert`） |
 | `patches/`、`pnpm-workspace.yaml` | 锁定依赖补丁及登记；当前仅 `@midscene/core` 的 locate 坐标归一化兼容（见下"框架验证"） |
