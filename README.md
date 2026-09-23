@@ -56,6 +56,12 @@ pnpm run test:cases --project multi-device   # 仅运行多设备协作项目
 
 Skill 保留业务要求，允许非关键控件形态与位置变化，交付工作流、意图草稿和转换记录。证据不足或能力不支持的用例单独列出，不静默降低断言。转换不会执行测试，静态校验成功也不代表业务验收通过。[输入输出约定](.agents/skills/case-to-yaml/references/conversion-contract.md) 可供 GUI 接入参考。
 
+## 批量转换调试 Skill
+
+项目提供 [case-debug-loop](.agents/skills/case-debug-loop/SKILL.md)，面向一批用例（如 10~20 条）「先转换、再循环调试直到成功」的批量场景：一次性澄清阻塞项后批量转换（委托 `case-to-yaml`）、离线静态检查，再逐条单文件执行（委托 `run-case` / `pnpm case`）循环修复，全程台账（`artifacts/case-debug-loop/`）驱动、可中断续跑。
+
+Skill 是编排层，只定义 loop 与 goal：「忠实通过」= 退出码 0 且断言语义未被放宽，改动逐条留痕（before→after）；放宽断言、删验收点不静默执行，标记待用户裁决。失败先分诊——编写缺陷与操作不适配自动修，疑似业务缺陷原样交付（这是测试成果而非待修失败），环境受阻暂停循环。每条用例限次 3 次执行尝试，不重试拖绿 flaky。不新增执行面，不改造 Runtime。
+
 ## 用例编写工作台
 
 `pnpm workbench` 启动本地单用户 Web 工作台（默认 `http://127.0.0.1:7788`，`MTA_WORKBENCH_PORT`/`MTA_WORKBENCH_DATA_DIR` 可覆盖；构建入口 `pnpm workbench:build`）。工作台覆盖：结构化表单与整段粘贴/Markdown/文本/Excel 导入（规则识别不出结构时自动改用编写模型整理，结果标注模型识别并要求人工核对）、可配置模型生成双平台工作流（复用当前项目的 Skill 规则与 Node 契约）、分层静态检查（YAML 解析 / Node 输入 / 预期覆盖 / 证据路径）、步骤卡片与保留注释的 YAML 编辑、显式设备绑定后经现有 MTA 执行链路（Midscene Runner）做关键点核查、人工确认与按平台导出。
