@@ -71,22 +71,20 @@ describe('真实配置加载与双项目 Node 注册', () => {
 
     const android = loaded.projects[0]!;
     const harmony = loaded.projects[1]!;
-    expect(android.files?.include).toContain('cases/level{1,2,3}/**/*.android.{yaml,yml}');
-    expect(android.files?.exclude).toContain('tests/**/*.{yaml,yml}');
-    expect(harmony.files?.include).toContain('cases/level{1,2,3}/**/*.harmony.{yaml,yml}');
-    expect(harmony.files?.exclude).toContain('tests/**/*.{yaml,yml}');
-
     const multiDevice = loaded.projects[2]!;
-    expect(multiDevice.files?.include).toContain(
-      'cases/level{1,2,3}/**/*.multi-device.{yaml,yml}',
-    );
-    expect(multiDevice.files?.exclude).toContain('tests/**/*.{yaml,yml}');
-    expect(multiDevice.files?.include).not.toContain(
-      'cases/level{1,2,3}/**/*.android.{yaml,yml}',
-    );
-    expect(multiDevice.files?.include).not.toContain(
-      'cases/level{1,2,3}/**/*.harmony.{yaml,yml}',
-    );
+    for (const project of [android, harmony, multiDevice]) {
+      // 发现范围由项目声明（project.yaml）推导：仅 cases/<项目>/** 形状或空集哨兵；
+      // level 分级与平台后缀 glob 已退役，框架测试与声明文件永不进入业务发现范围。
+      for (const pattern of project.files?.include ?? []) {
+        expect(pattern).toMatch(
+          /^cases\/[A-Za-z0-9.-]+\/\*\*\/\*\.\{yaml,yml\}$|^__mta_no_matched_files__\//,
+        );
+        expect(pattern).not.toContain('level');
+        expect(pattern).not.toMatch(/\.(android|harmony|multi-device)\./);
+      }
+      expect(project.files?.exclude).toContain('tests/**/*.{yaml,yml}');
+      expect(project.files?.exclude).toContain('cases/*/project.yaml');
+    }
   });
 
   it('两平台原生 Nodes 按项目本地注册：android 含 runAdbShell、harmony 含 runHdcShell，同名节点各自解析', async () => {

@@ -1,5 +1,6 @@
 import { defineNode, type NodeDefinition, type NodeExecutionContext, type NodeResult } from '@midscene/test';
 import type { AiActNodeInput } from '@midscene/test/midscene';
+import { scopedRunAgentFor } from '../../setup/agent-report-provider';
 import { openExperienceStore } from '../store/experience-store';
 import {
   captureScreenshotFromAgent,
@@ -36,8 +37,7 @@ function contextOf(value: unknown): TransparentAiActContext {
   return value as TransparentAiActContext;
 }
 
-function dumpOf(context: TransparentAiActContext): unknown {
-  const agent = context.agent;
+function dumpOfAgent(agent: unknown): unknown {
   if (!agent || typeof agent !== 'object' || !('dump' in agent)) return undefined;
   return (agent as { dump?: unknown }).dump;
 }
@@ -59,7 +59,7 @@ function attachNewDumpTraces(
   execution: NodeExecutionContext<AiActNodeInput, unknown>,
   beforeIds: ReadonlySet<string>,
 ): void {
-  for (const id of executionIdsOf(dumpOf(contextOf(execution.context)))) {
+  for (const id of executionIdsOf(dumpOfAgent(scopedRunAgentFor(execution, contextOf(execution.context).agent)))) {
     if (!beforeIds.has(id)) {
       execution.report.addTrace({ type: 'midscene-execution', executionId: id });
     }
@@ -94,8 +94,9 @@ function resolveRuntime(
   context: TransparentAiActContext,
   options: ExperienceIntegrationOptions,
   nativeExecute: NativeActExecute,
+  scopedAgent: unknown,
 ): ExperienceRuntime {
-  const agent = asExperienceAgent(context.agent);
+  const agent = asExperienceAgent(scopedAgent);
   return new ExperienceRuntime({
     store: context.experienceStore ?? openExperienceStore(
       context.experienceStoreRoot ?? options.storeRoot ?? DEFAULT_EXPERIENCE_STORE_ROOT,
@@ -135,15 +136,16 @@ function wrapAiActNode<TContext>(
         return officialExecute(execution);
       }
 
+      const agent = scopedRunAgentFor(execution, context.agent);
       let captured: NodeResult | void | undefined;
       const nativeExecute: NativeActExecute = async () => {
         captured = await officialExecute(execution);
-        return nativeResultFromNode(captured, dumpOf(context));
+        return nativeResultFromNode(captured, dumpOfAgent(agent));
       };
 
-      const beforeIds = new Set(executionIdsOf(dumpOf(context)));
+      const beforeIds = new Set(executionIdsOf(dumpOfAgent(agent)));
       try {
-        const runtime = resolveRuntime(context, options, nativeExecute);
+        const runtime = resolveRuntime(context, options, nativeExecute, agent);
         const result = await runtime.run({
           request: transparentRuntimeRequestOf(execution.input),
           identity,

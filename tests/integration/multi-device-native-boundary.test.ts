@@ -128,24 +128,25 @@ describe('2.3 协作项目发现范围与配置加载', () => {
     const android = loaded.projects.find((project) => project.name === 'android')!;
     const harmony = loaded.projects.find((project) => project.name === 'harmony')!;
     expect(multi).toBeDefined();
-    expect(multi!.files?.include).toEqual(['cases/level{1,2,3}/**/*.multi-device.{yaml,yml}']);
-    expect(android.files?.include).toEqual(['cases/level{1,2,3}/**/*.android.{yaml,yml}']);
-    expect(harmony.files?.include).toEqual(['cases/level{1,2,3}/**/*.harmony.{yaml,yml}']);
+    // 发现范围由项目声明（project.yaml）推导：仅 cases/<项目>/** 形状或空集哨兵，
+    // 平台归属与项目隔离由声明决定（细粒度断言见 tests/unit/case-suites.test.ts）；
+    // level 分级与平台后缀 glob 已退役。
+    for (const project of [android, harmony, multi!]) {
+      for (const pattern of project.files?.include ?? []) {
+        expect(pattern).toMatch(
+          /^cases\/[A-Za-z0-9.-]+\/\*\*\/\*\.\{yaml,yml\}$|^__mta_no_matched_files__\//,
+        );
+        expect(pattern).not.toContain('level');
+        expect(pattern).not.toMatch(/\.(android|harmony|multi-device)\./);
+      }
+      expect(project.files?.exclude).toContain('tests/**/*.{yaml,yml}');
+    }
 
     const multiFiles = discoverTestFiles(projectRoot, multi!.files);
     const androidFiles = discoverTestFiles(projectRoot, android.files);
-    expect(multiFiles.every((file) => file.includes('.multi-device.'))).toBe(
-      true,
-    );
-    expect(androidFiles.some((file) => file.includes('.multi-device.'))).toBe(
-      false,
-    );
-    expect(
-      multiFiles.some(
-        (file) =>
-          file.includes('.android.') || file.includes('.harmony.'),
-      ),
-    ).toBe(false);
+    // 框架夹具与演示永不进入业务发现范围。
+    expect(multiFiles.every((file) => !file.includes(`${'tests'}/`))).toBe(true);
+    expect(androidFiles.every((file) => !file.includes(`${'tests'}/`))).toBe(true);
   });
 
   it('协作项目 Node 参考名包含已配置别名与 device.parallel，wait 无前缀', async () => {

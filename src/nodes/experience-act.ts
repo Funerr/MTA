@@ -1,5 +1,6 @@
 import { z } from 'zod/v4';
 import { defineNode, type NodeExecutionContext } from '@midscene/test';
+import { scopedRunAgentFor } from '../setup/agent-report-provider';
 import { openExperienceStore } from '../experience/store/experience-store';
 import type { ExperienceEnvironment } from '../experience/schema/environment';
 import {
@@ -41,9 +42,12 @@ function asExperienceAgent(agent: ExperienceActProjectContext['agent']): Experie
   return agent as ExperienceActAgent;
 }
 
-function resolveRuntime(context: ExperienceActProjectContext): ExperienceRuntime {
+function resolveRuntime(
+  execution: NodeExecutionContext<ExperienceActInput, ExperienceActProjectContext>,
+): ExperienceRuntime {
+  const context = execution.context;
   if (context.experienceRuntime) return context.experienceRuntime;
-  const agent = asExperienceAgent(context.agent);
+  const agent = asExperienceAgent(scopedRunAgentFor(execution, context.agent));
     return new ExperienceRuntime({
     store: openExperienceStore(context.experienceStoreRoot ?? DEFAULT_EXPERIENCE_STORE_ROOT),
     policy: context.experienceActionPolicy,
@@ -61,8 +65,9 @@ function attachDumpTraces(
   execution: NodeExecutionContext<ExperienceActInput, ExperienceActProjectContext>,
   result: ExperienceRuntimeResult,
 ): void {
-  const dump = execution.context.agent && 'dump' in execution.context.agent
-    ? (execution.context.agent as ExperienceActAgent).dump
+  const scopedAgent = scopedRunAgentFor(execution, execution.context.agent);
+  const dump = scopedAgent && 'dump' in scopedAgent
+    ? (scopedAgent as ExperienceActAgent).dump
     : undefined;
   const executions = dump?.executions ?? [];
   for (const item of executions) {
@@ -88,7 +93,7 @@ export const experienceActNode = defineNode<
   stringInputKey: 'prompt',
   inputSchema: experienceActInputSchema,
   async execute(execution) {
-    const runtime = resolveRuntime(execution.context);
+    const runtime = resolveRuntime(execution);
     const deadlineAtMs =
       execution.$.timeoutMs === undefined ? undefined : Date.now() + execution.$.timeoutMs;
     const result = await runtime.run({

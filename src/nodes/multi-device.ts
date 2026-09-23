@@ -4,7 +4,10 @@ import { createMidsceneNodes } from '@midscene/test/midscene';
 import { AndroidAgent } from '@midscene/android';
 import { HarmonyAgent } from '@midscene/harmony';
 import type { MultiDeviceBinding } from '../setup/multi-device-config';
-import { createSharedAgentReportProvider } from '../setup/agent-report-provider';
+import {
+  createScopedAgentReportProvider,
+  scopedRunAgentFor,
+} from '../setup/agent-report-provider';
 import {
   requireAliasedAgent,
   type MultiDeviceProjectContext,
@@ -44,8 +47,11 @@ export function createAliasedLifecycleNodes(
       name: `${alias}.device.prepare`,
       description: `准备设备 ${alias}：返回当前平台主屏（Home）。仅是原生导航基线。`,
       inputSchema: devicePrepareInputSchema,
-      async execute({ context }) {
-        const agent = requireAliasedAgent(context, alias, `${alias}.device.prepare`);
+      async execute(execution) {
+        const agent = scopedRunAgentFor(
+          execution,
+          requireAliasedAgent(execution.context, alias, `${alias}.device.prepare`),
+        );
         await agent.home();
       },
     }),
@@ -53,8 +59,11 @@ export function createAliasedLifecycleNodes(
       name: `${alias}.device.recover`,
       description: `恢复设备 ${alias}：返回当前平台主屏（Home）。保留系统设置与业务状态。`,
       inputSchema: deviceRecoverInputSchema,
-      async execute({ context }) {
-        const agent = requireAliasedAgent(context, alias, `${alias}.device.recover`);
+      async execute(execution) {
+        const agent = scopedRunAgentFor(
+          execution,
+          requireAliasedAgent(execution.context, alias, `${alias}.device.recover`),
+        );
         await agent.home();
       },
     }),
@@ -72,7 +81,10 @@ function createAliasedWaitUntilNode(
     inputSchema: deviceWaitUntilInputSchema,
     async execute(execution) {
       const agent = asWaitUntilAgent(
-        requireAliasedAgent(execution.context, alias, `${alias}.device.waitUntil`),
+        scopedRunAgentFor(
+          execution,
+          requireAliasedAgent(execution.context, alias, `${alias}.device.waitUntil`),
+        ),
         `${alias}.device.waitUntil`,
       );
       const now = Date.now();
@@ -153,7 +165,7 @@ export function createMultiDeviceNodes(
       createMidsceneNodes<MultiDeviceProjectContext>({
         agentClass,
         // 经官方 agentProvider 契约提供别名 Agent 并登记报告来源（与单设备项目一致）。
-        agentProvider: createSharedAgentReportProvider((execution) =>
+        agentProvider: createScopedAgentReportProvider((execution) =>
           requireAliasedAgent(execution.context, binding.alias, `${binding.alias}.*`),
         ),
       }),

@@ -1,6 +1,7 @@
 import { z } from 'zod/v4';
 import { defineNode } from '@midscene/test';
 import { attachAgentExecutionTraces } from './agent-traces';
+import { scopedRunAgentFor } from '../setup/agent-report-provider';
 import type { DeviceLifecycleProjectContext } from './device-lifecycle';
 
 /**
@@ -147,7 +148,10 @@ export const deviceWaitUntilNode = defineNode<
   stringInputKey: 'prompt',
   inputSchema: deviceWaitUntilInputSchema,
   async execute(execution) {
-    const agent = asWaitUntilAgent(execution.context?.agent, 'device.waitUntil');
+    const agent = asWaitUntilAgent(
+      scopedRunAgentFor(execution, execution.context?.agent),
+      'device.waitUntil',
+    );
     const now = Date.now();
     const deadlineAtMs = Math.min(
       now + execution.input.timeoutMs,

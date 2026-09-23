@@ -1,5 +1,6 @@
 import { z } from 'zod/v4';
 import { defineNode } from '@midscene/test';
+import { scopedRunAgentFor } from '../setup/agent-report-provider';
 
 /** 生命周期节点依赖的最小 Agent 契约：两平台原生 Agent 均具备 home。 */
 export interface LifecycleAgent {
@@ -34,8 +35,11 @@ export const devicePrepareNode = defineNode<
   description:
     '准备当前绑定设备：返回当前平台主屏（Home）。仅是原生导航基线，不解锁设备、不重置网络、不准备业务初始状态。',
   inputSchema: devicePrepareInputSchema,
-  async execute({ context }) {
-    const agent = requireProjectAgent(context, 'device.prepare');
+  async execute(execution) {
+    const agent = scopedRunAgentFor(
+      execution,
+      requireProjectAgent(execution.context, 'device.prepare'),
+    );
     await agent.home();
   },
 });
@@ -53,8 +57,11 @@ export const deviceRecoverNode = defineNode<
   description:
     '恢复当前绑定设备：返回当前平台主屏（Home）。保留系统设置与业务状态；可在准备或用例步骤部分完成后调用。',
   inputSchema: deviceRecoverInputSchema,
-  async execute({ context }) {
-    const agent = requireProjectAgent(context, 'device.recover');
+  async execute(execution) {
+    const agent = scopedRunAgentFor(
+      execution,
+      requireProjectAgent(execution.context, 'device.recover'),
+    );
     await agent.home();
   },
 });
