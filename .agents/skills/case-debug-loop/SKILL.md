@@ -20,7 +20,7 @@ description: 批量转换测试用例为 YAML 并循环调试直到忠实通过�
 1. **改动留痕**：循环内每次修改 YAML 都记一条 before→after 改动及依据（因哪个失败而改、为何这样改），最终报告可逐条核对。
 2. **放宽须确认**：放宽断言、删除验收点、降低验收阈值是对测试目标的修改，不在循环内静默执行——标记为待确认项，该用例转 `needs_clarification` 终态，继续其他用例，最终报告汇总请用户裁决。操作方式的适配（换控件描述、加显式等待、补导航步骤、修语法）不属于放宽，可直接修。
 
-「断言语义未被放宽」以 case-to-yaml 的[断言策略](../case-to-yaml/references/assertion-policy.md)与意图草稿为基准：单断言单判定、判断对象限当前界面可观察证据、精确业务值保持精确。
+「断言语义未被放宽」以 case-to-yaml 的[断言策略](../case-to-yaml/references/assertion-policy.md)与意图草稿为基准：断言粒度同屏合并、跨屏拆分，判断对象限当前界面可观察证据，精确业务值保持精确。
 
 ## 失败分诊
 
@@ -28,7 +28,7 @@ description: 批量转换测试用例为 YAML 并循环调试直到忠实通过�
 
 | 失败类型 | 判定线索 | 循环动作 |
 | --- | --- | --- |
-| 编写缺陷 | YAML 语法、Node 输入不合法、生命周期钩子缺失、文件名含 glob 元字符、缺平台后缀、断言复合或跨界面 | 自动修，记改动记录 |
+| 编写缺陷 | YAML 语法、Node 输入不合法、生命周期钩子缺失、文件名含 glob 元字符、路径命名不合英文 kebab-case 规范、断言跨界面或跨时刻 | 自动修，记改动记录 |
 | 操作不适配 | 控件描述现场识别不到、异步界面未显式等待、缺导航步骤 | 自动修（适配操作方式，不动验收结果），记改动记录 |
 | 验收结果不符 | 动作执行成功但业务结果与预期不符，且疑似放宽断言才能过 | 不修断言；标记待确认，转 `needs_clarification` |
 | 疑似业务缺陷 | 断言正确表达了原文预期，现场证据显示被测系统不满足 | 不改用例；记证据，转 `real-failure`——这是测试的成果，不是要修的失败 |
@@ -53,7 +53,7 @@ drafted → static-ok → running → passed
 ```markdown
 | 源用例 | YAML 路径 | 状态 | 尝试次数 | 最后失败分类 | 改动记录 |
 | --- | --- | --- | --- | --- | --- |
-| TC-001 登录 | cases/level2/account/login.android.yaml | running | 2 | 操作不适配 | #3 #5 |
+| TC-001 登录 | cases/EV760/system/account/login.yaml | running | 2 | 操作不适配 | #3 #5 |
 ```
 
 改动记录逐条追加在同一目录的 `changes.md`：`#编号 | 用例 | 失败分类 | before → after | 依据`。
@@ -66,13 +66,13 @@ drafted → static-ok → running → passed
 
 ### 0. 一次性澄清（全程唯一需要用户介入的节点）
 
-把这批用例的全部阻塞项汇总成一张清单一次问完，不逐条打断：平台与应用、包名、账号、设备角色与绑定（多设备用 DUT1/DUT2/DUT3 显式绑定）、验收阈值、证据路径、原文歧义、**落位**（目标 level 与模块目录，如 `cases/level2/account/`）。用户已明确回答的不重复确认。确实无法交互时，受影响用例标 `needs_clarification` 排除，其余独立用例继续。
+把这批用例的全部阻塞项汇总成一张清单一次问完，不逐条打断：平台与应用、包名、账号、设备角色与绑定（多设备用 DUT1/DUT2/DUT3 显式绑定）、验收阈值、证据路径、原文歧义、**落位**（目标项目与大模块目录，如 `cases/EV760/system/`）。用户已明确回答的不重复确认。确实无法交互时，受影响用例标 `needs_clarification` 排除，其余独立用例继续。
 
 ### 1. 批量转换 + 静态检查（离线，便宜）
 
-按 case-to-yaml 全流程一次批量转换全部用例：意图草稿、可判定断言、编译与静态检查，产物放置遵循其[转换交付契约](../case-to-yaml/references/conversion-contract.md)。可执行 YAML 直接写入第 0 步确定的 `cases/level*/<模块>/`（用户在澄清中已授权落位）——调试无法在 `artifacts/` 下进行：`pnpm case` 只接受 `cases/` 与 `examples/` 根内路径，且平台后缀（`.android.yaml` 等）决定执行项目。
+按 case-to-yaml 全流程一次批量转换全部用例：意图草稿、可判定断言、编译与静态检查，产物放置遵循其[转换交付契约](../case-to-yaml/references/conversion-contract.md)。可执行 YAML 直接写入第 0 步确定的 `cases/<项目>/<大模块>/<特性>/`（用户在澄清中已授权落位）——调试无法在 `artifacts/` 下进行：`pnpm case` 只接受 `cases/` 与 `examples/` 根内路径；执行平台由 `cases/<项目>/project.yaml` 声明，文件名不带平台后缀。
 
-本阶段把确定性错误全部修完：YAML 语法、Node 输入、生命周期钩子、文件命名（无 glob 元字符、带平台后缀）。设备时间只留给真正需要设备的阶段。完成后全部用例置 `static-ok`。
+本阶段把确定性错误全部修完：YAML 语法、Node 输入、生命周期钩子、文件与目录命名（英文 kebab-case，无 glob 元字符）。设备时间只留给真正需要设备的阶段。完成后全部用例置 `static-ok`。
 
 ### 2. 试点 1 条
 
@@ -91,6 +91,6 @@ drafted → static-ok → running → passed
 ## 边界与反模式
 
 - 编排 Skill 不复制 case-to-yaml 与 run-case 的规则细节；转换按其契约执行，执行只经 `pnpm case`。生成、断言改写细节问 case-to-yaml 的职责范围，命令与失败语义问 run-case 的职责范围。
-- 不新增执行面：单条/文件集走 `pnpm case`，套件级走既有 `MTA_SUITE=… pnpm test:cases:*`；不手工拼装官方 CLI 长命令，不设置 `MTA_CASE_FILES`。
+- 不新增执行面：单条、文件集、项目级与套件级一律走 `pnpm case` 命名空间目标（如 `pnpm case <项目>/<大模块>`、`pnpm case --all`）；不手工拼装官方 CLI 长命令，不使用已退役的 `MTA_SUITE` / `test:cases:level*` 维度或内部契约环境变量。
 - 不改造 Runtime、Node、Experience；修复只发生在用例 YAML 与编排产物内。
 - 反模式：重试把 flaky 断言拖成通过（该用 `device.waitUntil` 显式等待）；循环内静默放宽断言；整批执行当调试循环；把疑似业务缺陷改写成通过；环境问题反复重试；把全部转换记录刷进上下文。
