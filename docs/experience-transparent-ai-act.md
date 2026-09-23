@@ -10,6 +10,7 @@
 - **范围外**：脚本直接调用 `agent.aiAct`、其他仓库/项目、`aiAssert` 及其他 Nodes、实验入口 `experienceAct`（仍保留）。
 - **开关**：项目配置 `experience.enabled`，由环境变量 `EXPERIENCE_ENABLED` 读取（`true` / `1` / `yes` / `on`）。缺省、空值或无法识别的值均为关闭。
 - **关闭时**：包装返回官方原始定义对象，不实例化 Runtime / Store，不读写经验。关闭开关即可回滚，不必改用例或删除资产。
+- **与知识注入叠加**：可选运行时知识注入（`KNOWLEDGE_INDEX_ENABLED`，说明见 [../knowledge/README.md](../knowledge/README.md)）可与本接入同时开启。组装上知识注入位于内层：经验匹配/学习键基于原始 instruction，不随知识索引编辑漂移；重放路径不注入，MISS 回退原生时仍获得注入。
 
 ```bash
 EXPERIENCE_ENABLED=true pnpm run test:cases --project android
