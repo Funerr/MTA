@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "MTA 架构总览",
+    "subtitle": "移动终端 AI 自动化测试框架 — 四层职责边界",
+    "output": "mta-architecture.html"
+  },
+  "components": [
+    { "id": "author", "type": "external", "label": "测试工程师", "sublabel": "编写/管理用例", "pos": [370, 20], "size": [160, 60] },
+
+    { "id": "yaml", "type": "frontend", "label": "YAML Cases", "sublabel": "cases/ 用例工作流", "pos": [50, 150], "size": [150, 60] },
+    { "id": "skill", "type": "backend", "label": "case-to-yaml", "sublabel": "Skill 转换", "pos": [310, 150], "size": [150, 60] },
+    { "id": "workbench", "type": "frontend", "label": "Workbench", "sublabel": "可视化编写", "pos": [570, 150], "size": [150, 60] },
+
+    { "id": "setup", "type": "backend", "label": "Setup", "sublabel": "设备选择/会话生命周期", "pos": [50, 310], "size": [150, 60], "tag": "android.ts / harmony.ts" },
+    { "id": "nodes", "type": "backend", "label": "Nodes", "sublabel": "通用运行能力", "pos": [310, 310], "size": [150, 60], "tag": "lifecycle / parallel" },
+    { "id": "exp", "type": "backend", "label": "Experience", "sublabel": "经验闭环", "pos": [570, 310], "size": [150, 60], "tag": "replay / learn" },
+
+    { "id": "config", "type": "backend", "label": "midscene.config", "sublabel": "项目配置", "pos": [50, 470], "size": [150, 60] },
+    { "id": "reportprov", "type": "backend", "label": "report-provider", "sublabel": "Agent 报告来源", "pos": [260, 470], "size": [150, 60] },
+    { "id": "traceadapt", "type": "backend", "label": "trace-adapter", "sublabel": "dump 轨迹解析", "pos": [470, 470], "size": [150, 60] },
+    { "id": "identity", "type": "backend", "label": "identity", "sublabel": "Node 报告关联", "pos": [680, 470], "size": [150, 60] },
+
+    { "id": "runner", "type": "backend", "label": "Runner", "sublabel": "工作流调度", "pos": [40, 630], "size": [120, 60] },
+    { "id": "agent", "type": "backend", "label": "Agent", "sublabel": "Android / Harmony", "pos": [200, 630], "size": [120, 60] },
+    { "id": "planner", "type": "cloud", "label": "Planner", "sublabel": "AI 规划", "pos": [360, 630], "size": [120, 60] },
+    { "id": "actions", "type": "messagebus", "label": "Native Actions", "sublabel": "设备原生操作", "pos": [520, 630], "size": [130, 60] },
+    { "id": "report", "type": "database", "label": "Report", "sublabel": "截图/轨迹/报告", "pos": [690, 630], "size": [120, 60] },
+
+    { "id": "android", "type": "external", "label": "Android", "sublabel": "ADB / UIAutomator", "pos": [200, 790], "size": [140, 60] },
+    { "id": "harmony", "type": "external", "label": "HarmonyOS", "sublabel": "HDC / ArkUI", "pos": [520, 790], "size": [140, 60] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Case 层 — 测试意图与工作流", "wraps": ["yaml", "skill", "workbench"] },
+    { "kind": "region", "label": "Runtime 层 — 会话 / 协作 / 经验", "wraps": ["setup", "nodes", "exp"] },
+    { "kind": "region", "label": "Adapter 层 — 平台契约适配", "wraps": ["config", "reportprov", "traceadapt", "identity"] },
+    { "kind": "security-group", "label": "Midscene 引擎 — 锁定依赖", "wraps": ["runner", "agent", "planner", "actions", "report"] }
+  ],
+  "connections": [
+    { "from": "author", "to": "yaml", "label": "编写用例", "variant": "emphasis" },
+    { "from": "author", "to": "workbench", "label": "可视化", "variant": "default" },
+    { "from": "skill", "to": "yaml", "label": "生成 YAML" },
+    { "from": "workbench", "to": "yaml", "fromSide": "left", "toSide": "right" },
+    { "from": "yaml", "to": "setup", "variant": "emphasis", "fromSide": "bottom", "toSide": "top" },
+    { "from": "yaml", "to": "nodes", "fromSide": "bottom", "toSide": "top" },
+    { "from": "setup", "to": "config", "variant": "emphasis", "fromSide": "bottom", "toSide": "top" },
+    { "from": "nodes", "to": "config", "fromSide": "bottom", "toSide": "top" },
+    { "from": "exp", "to": "traceadapt", "variant": "dashed", "fromSide": "bottom", "toSide": "top" },
+    { "from": "config", "to": "runner", "variant": "emphasis", "fromSide": "bottom", "toSide": "top" },
+    { "from": "reportprov", "to": "agent", "fromSide": "bottom", "toSide": "top" },
+    { "from": "runner", "to": "agent", "variant": "emphasis" },
+    { "from": "agent", "to": "planner" },
+    { "from": "planner", "to": "actions" },
+    { "from": "actions", "to": "android", "label": "ADB", "variant": "emphasis", "fromSide": "bottom", "toSide": "top" },
+    { "from": "actions", "to": "harmony", "label": "HDC", "variant": "emphasis", "fromSide": "bottom", "toSide": "top" },
+    { "from": "agent", "to": "report", "variant": "dashed" },
+    { "from": "traceadapt", "to": "report", "variant": "dashed", "fromSide": "bottom", "toSide": "top" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Case 层",
+      "items": [
+        "YAML 定义测试意图与执行工作流",
+        "case-to-yaml Skill 转换源用例",
+        "Workbench 提供可视化编写入口"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Runtime 层",
+      "items": [
+        "Setup 管理设备选择与会话生命周期",
+        "Nodes 暴露通用运行能力",
+        "Experience 实现经验查找/重放/学习闭环"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Adapter + Midscene",
+      "items": [
+        "Adapter 隔离平台契约与 Midscene 内部结构",
+        "Midscene Runner 调度注册的 MTA Node",
+        "Planner 进行 AI 规划，Agent 执行原生动作"
+      ]
+    }
+  ]
+}

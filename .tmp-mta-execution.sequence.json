@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Midscene 关键执行流程",
+    "subtitle": "MTA 用例从加载到执行到报告的完整生命周期",
+    "output": "mta-execution-flow.html",
+    "viewBox": [920, 860]
+  },
+  "participants": [
+    { "id": "case", "type": "frontend", "label": "YAML Case", "sublabel": "测试用例" },
+    { "id": "setup", "type": "backend", "label": "Setup", "sublabel": "设备/会话" },
+    { "id": "runner", "type": "backend", "label": "Runner", "sublabel": "工作流调度" },
+    { "id": "agent", "type": "backend", "label": "Agent", "sublabel": "执行引擎" },
+    { "id": "exp", "type": "backend", "label": "Experience", "sublabel": "经验闭环" },
+    { "id": "planner", "type": "cloud", "label": "Planner", "sublabel": "AI 规划" },
+    { "id": "device", "type": "external", "label": "Device", "sublabel": "Android/Harmony" },
+    { "id": "report", "type": "database", "label": "Report", "sublabel": "报告/截图" }
+  ],
+  "segments": [
+    { "from": 150, "to": 280, "label": "01 / 初始化" },
+    { "from": 300, "to": 520, "label": "02 / 执行" },
+    { "from": 540, "to": 740, "label": "03 / 学习 + 报告" }
+  ],
+  "messages": [
+    { "from": "case", "to": "setup", "y": 180, "label": "加载设备配置", "variant": "emphasis" },
+    { "from": "setup", "to": "device", "y": 215, "label": "建立 ADB/HDC 会话", "variant": "default" },
+    { "from": "setup", "to": "runner", "y": 250, "label": "注册节点 + 项目", "variant": "emphasis" },
+
+    { "from": "runner", "to": "agent", "y": 330, "label": "创建 Agent 实例", "variant": "emphasis" },
+    { "from": "agent", "to": "exp", "y": 370, "label": "检查经验资格", "variant": "security" },
+    { "from": "exp", "to": "agent", "y": 405, "label": "返回资格结果", "variant": "return" },
+
+    { "from": "agent", "to": "planner", "y": 450, "label": "请求 AI 规划", "variant": "emphasis" },
+    { "from": "planner", "to": "agent", "y": 485, "label": "返回动作计划", "variant": "return" },
+    { "from": "agent", "to": "device", "y": 520, "label": "执行原生动作", "variant": "emphasis" },
+
+    { "from": "agent", "to": "exp", "y": 570, "label": "捕获执行轨迹", "variant": "dashed" },
+    { "from": "exp", "to": "runner", "y": 605, "label": "经验提升完成", "variant": "dashed" },
+    { "from": "exp", "to": "device", "y": 640, "label": "重放已定位动作", "variant": "dashed" },
+
+    { "from": "agent", "to": "report", "y": 690, "label": "关联报告 + 截图", "variant": "emphasis" },
+    { "from": "report", "to": "case", "y": 730, "label": "输出测试结果", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "setup", "from": 175, "to": 260, "type": "backend" },
+    { "participant": "runner", "from": 245, "to": 530, "type": "backend" },
+    { "participant": "agent", "from": 325, "to": 700, "type": "backend" },
+    { "participant": "exp", "from": 365, "to": 650, "type": "backend" },
+    { "participant": "planner", "from": 445, "to": 490, "type": "cloud" },
+    { "participant": "device", "from": 210, "to": 530, "type": "external" },
+    { "participant": "report", "from": 685, "to": 740, "type": "database" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "初始化阶段",
+      "items": [
+        "Setup 建立设备会话并注册节点",
+        "Runner 接收项目配置创建执行环境"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "执行阶段",
+      "items": [
+        "Experience 资格检查决定走重放还是 AI 回退",
+        "Planner 进行 AI 规划后 Agent 执行原生动作",
+        "执行轨迹被捕获用于后续经验提升"
+      ]
+    },
+    {
+      "dot": "orange",
+      "title": "学习 + 报告",
+      "items": [
+        "轨迹提升为经验供后续重放",
+        "Agent 关联报告与截图输出最终结果"
+      ]
+    }
+  ]
+}

@@ -21,3 +21,6 @@ experiences/*
 # 编写工作台产物（构建生成）与本地数据（草稿、上传、证据、导出）
 src/workbench/web/dist/
 artifacts/
+
+# 本地 Agent 会话状态（plans 等按会话生成）
+.zcode/
