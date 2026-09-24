@@ -68,7 +68,7 @@ pnpm case --new-project EV760 --platform android
 | `MTA_SUITE=<smoke\|level1\|…>` | 删除该变量；范围用目标表达 |
 | `--config midscene.examples.config.ts …` | `pnpm case examples/<演示目录>/<文件>.yaml` |
 
-当前业务用例目录为空（骨架待创建）；原有演示在 [examples/](examples/README.md)，经 `pnpm case examples/…` 自动使用演示配置执行。
+当前业务用例目录收录 `EV760`（android）项目两条入口验证用例（`system/settings/open-settings`、`system/bluetooth/open-bluetooth-page`；文件头标明真机冒烟、非业务验收，清单见 [cases/README.md](cases/README.md)）；原有演示在 [examples/](examples/README.md)，经 `pnpm case examples/…` 自动使用演示配置执行。
 
 ## 用例转换 Skill
 
@@ -148,21 +148,24 @@ Skill 是编排层，只定义 loop 与 goal：「忠实通过」= 退出码 0 �
 | `src/setup/android.ts` / `src/setup/harmony.ts` | 平台各自的设备选择、会话生命周期与项目 setup |
 | `src/setup/multi-device.ts` | 协作项目：多别名绑定、精确选择与分别清理 |
 | `src/nodes/` | 框架通用 Nodes；协作项目别名 Node 与 `device.parallel` |
+| `scripts/run-case.mjs` | 统一执行入口（`pnpm case`）：环境自检 + 编号菜单、命名空间目标、退役维度报错指引与新建项目骨架；执行委托官方 Midscene CLI |
 | `scripts/init.mjs` | 一键初始化入口：Node / pnpm 前提检测（不替装）、`pnpm install`、`.env` 脚手架（不覆盖）与环境预检报告（别名 `pnpm run mta:init`） |
 | `scripts/generate-node-references.mjs` | 按项目生成 Node 参考（官方 CLI 多项目时需 `--project` 选择），并刷新 YAML 指南的 Node 清单生成区块（区块构建在 `scripts/lib/yaml-guide-regions.mjs`） |
 | `src/experience/`、`experiences/` | Experience 资产、Promotion、Matcher、Replay、Runtime；实验入口 `experienceAct`；可选 YAML `aiAct` 透明接入（默认关闭） |
 | `src/knowledge/`、`knowledge/` | 运行时知识注入（默认关闭）：索引加载、触发词匹配与 `aiAct` 包装；条目数据与维护指引在 `knowledge/` |
+| `src/workbench/` | 用例编写工作台服务与 Web 前端（`pnpm workbench`，本地单用户；构建产物与本地数据不入库） |
 | `cases/<项目>/` | 业务用例：项目（机型代号）→ 大模块 → 特性 → 用例；`project.yaml` 声明执行平台与设备需求 |
 | `cases.config.ts` | 按项目声明的用例发现与选择规则（level/smoke 分级已退役） |
 | `examples/`、`midscene.examples.config.ts` | 演示工作流及显式运行入口 |
 | `experiments/visual-assert/` | 视觉断言离线评估实验（不接入生产 `aiAssert`） |
-| `patches/`、`pnpm-workspace.yaml` | 锁定依赖补丁及登记；当前仅 `@midscene/core` 的 locate 坐标归一化兼容（见下"框架验证"） |
+| `.tmp-*`（根目录） | 人工收录的临时架构图渲染产物与原生矩阵实验脚本（一次性参考产物，非工程入口，不由任何脚本生成或消费） |
+| `patches/`、`pnpm-workspace.yaml` | 锁定依赖补丁及登记；当前仅 `@midscene/core` 的 locate 坐标归一化兼容与报告标识替换（见下"框架验证"） |
 | `tests/` | 框架自身测试与夹具，不进入任何平台的业务发现范围 |
 | `docs/` | 依赖版本核对、框架验收与 Experience 能力说明（含 YAML `aiAct` 透明接入） |
 
 ## 框架验证
 
 - `pnpm test`：运行框架单元与原生边界集成测试。测试数量、环境和结果只在对应日期的[阶段验收记录](docs/acceptance-index.md)中保存，不作为本文的实时统计。
-- 锁定依赖补丁：`patches/@midscene__core@1.12.7.patch` 在 locate codec 解析后、校验前兼容"模型返回截图像素坐标而协议声明归一化"的越界结果（不触碰校验与其他模块）。升级 `@midscene/core` 前必须重跑 `tests/unit/midscene-locate-coordinate-contract.test.ts`：补丁失效或上游已原生兼容时按该契约测试与 `patches/` 内说明重新评估，不得静默移除或保留失配补丁。
+- 锁定依赖补丁：`patches/@midscene__core@1.12.7.patch` 含两处修改——① 在 locate codec 解析后、校验前兼容"模型返回截图像素坐标而协议声明归一化"的越界结果；② 报告页隐藏 Midscene logo 并将 favicon 替换为内嵌 MTA 图标（不再请求 CDN）。升级 `@midscene/core` 前必须重跑 `tests/unit/midscene-locate-coordinate-contract.test.ts`：补丁失效或上游已原生兼容时按该契约测试与 `patches/` 内说明重新评估，不得静默移除或保留失配补丁。
 - 边界集成测试加载**实际锁定的** `@midscene/test`/`@midscene/android`/`@midscene/harmony` 包与真实 `midscene.config.ts`，仅将设备/Agent 边界替换为受控替身；真实硬件与模型调用未在框架验收中覆盖。
 - 有真实设备时，可选执行连接/截图/释放单能力检查（见[双平台阶段记录](docs/acceptance.md)的“可选设备检查”一节），该检查不是框架验收的必要条件。

@@ -5,11 +5,10 @@
 ## 身份声明
 
 - 这是**工作台生成的示例**，展示导出形态（锚点注释、结构化输入、`$` 元数据保留）；它**未在真实设备上执行**，不代表业务验收通过。
-- 执行需显式绑定设备（`ANDROID_DEVICE_ID`），并通过独立配置运行：
+- 执行需显式绑定设备（`ANDROID_DEVICE_ID`），经统一入口自动使用演示配置运行：
 
 ```bash
-MTA_SUITE=full ANDROID_DEVICE_ID=<udid> \
-  npx midscene-test --config midscene.examples.config.ts
+ANDROID_DEVICE_ID=<udid> pnpm case examples/workbench/settings-bluetooth.android.yaml
 ```
 
 - 生成过程（导入 → 模型生成 → 静态检查 → 确认 → 导出）的验收记录见 [docs/workbench-acceptance.md](../../docs/workbench-acceptance.md)。

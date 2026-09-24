@@ -1,6 +1,6 @@
 # 业务测试集
 
-用例按「项目 → 大模块 → 特性 → 用例」组织：项目即机型代号（如 `EV760`），执行平台与设备需求在项目级声明一次，用例文件不带平台后缀。
+用例按「项目 → 大模块 → 特性 → 用例」组织：项目即机型代号（如 `EV760`），执行平台与设备需求在项目级声明一次，用例文件不带平台后缀。下图为结构示意（模板默认值，非当前实际收录）：
 
 ```text
 cases/
@@ -24,6 +24,7 @@ cases/
 - **层级不限**：大模块、特性之下可继续建目录分组，选择与执行按实际目录组织呈现；新建项目骨架只是模板默认值。
 - **协作用例**：文件头部以注释声明设备需求（`# devices: DUT1, DUT2`），执行前与项目 `devices` 及 `.env` 的 `MULTI_DEVICE_BINDINGS` 显式绑定比对，未满足在执行前失败（推荐别名 DUT1/DUT2/DUT3）。
 - **新建项目**：`pnpm case --new-project EV760 --platform android`（生成 `project.yaml` 模板 + 四大模块目录）。
+- **当前收录**：`EV760`（android）项目的两条入口验证用例——`system/settings/open-settings.yaml` 与 `system/bluetooth/open-bluetooth-page.yaml`，文件头已标明「真机冒烟（入口验证），非业务验收」；真机执行证据见 [项目域执行验收](../docs/project-scoped-case-execution-acceptance.md)。
 
 ```bash
 pnpm case                                          # 菜单：环境自检 + 按编号下钻
